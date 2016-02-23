@@ -17,13 +17,31 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
         $scope.$on("$stateChangeSuccess", function() {
 
             $scope.map = {
-                defaults: {
-                },
                 markers: {},
                 events: {
                     map: {
                         enable: ['context'],
                         logic: 'emit'
+                    }
+                },
+                layers: {
+                    baselayers: {
+                        mapbox_streets: {
+                            name: 'Mapbox Streets',
+                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                            type: 'xyz',
+                            layerOptions: {
+                                mapid: 'mapbox.streets'
+                            }
+                        },
+                        mapbox_satellite: {
+                            name: 'Mapbox Satellite',
+                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                            type: 'xyz',
+                            layerOptions: {
+                                mapid: 'mapbox.satellite'
+                            }
+                        }
                     }
                 }
             };
