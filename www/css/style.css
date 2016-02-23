@@ -1,0 +1,107 @@
+body {
+  height: auto;
+  min-height: 100%;
+}
+
+.pane {
+    background-color: #b7b7b7;
+}
+
+.scroll, .angular-leaflet-map {
+  height: 100%;
+}
+
+.leaflet-bottom {
+  bottom : 10px;
+}
+
+.item.item-body p {
+  margin-top: 0;
+}
+
+.tabs.border-top {
+  border-top: 1px solid #ddd !important;
+}
+
+.card-positive .item{
+	background: #387ef5;
+}
+
+.card-calm .item{
+	background: #11c1f3;
+}
+
+.card-balanced .item{
+	background: #33cd5f;
+}
+
+.card-energized .item{
+	background: #ffc900;
+}
+
+.card-assertive .item{
+	background: #ef473a;
+}
+
+.card-royal .item{
+	background: #886aea;
+}
+
+.card-dark .item{
+	background: #444444;
+}
+
+ion-side-menu.menu-left.menu {
+  background-color: #a7a7a7 !important;
+}  /*side menu background color*/
+
+.ion-drive-icon:before {
+content: url('/img/drive.png') !important; 
+}
+
+.ion-forms-icon:before {
+content: url('/img/google-forms.png') !important; 
+}
+
+.ion-mapbox-icon:before {
+content: url('/img/mapbox.png') !important; 
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src:    url('../lib/ionic/fonts/icomoon.eot?j0ag16');
+    src:    url('../lib/ionic/fonts/icomoon.eot?j0ag16#iefix') format('embedded-opentype'),
+        url('../lib/ionic/fonts/icomoon.ttf?j0ag16') format('truetype'),
+        url('../lib/ionic/fonts/icomoon.woff?j0ag16') format('woff'),
+        url('../lib/ionic/fonts/icomoon.svg?j0ag16#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-file-text2:before {
+    content: "\e901";
+}
+.icon-map:before {
+    content: "\e902";
+}
+.icon-google-drive:before {
+    content: "\e900";
+}
+.icon-tux:before {
+    content: "\e903";
+}
