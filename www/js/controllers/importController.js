@@ -11,11 +11,11 @@ angular.module('TractNotes').controller('ImportCtrl', function($scope, $ionicPop
             cssClass: 'popup-import',
             buttons: [{
                 text: '<b>From Drive</b>', // @TODO : drive icon
-                type: 'button icon-left icon-google-drive button-positive',
+                type: 'button-positive',
                 //@TODO : picker screen file -> variable, download file/open or whatever
             }, {
                 text: '<b>From URL</b>', // @TODO : WMS icon
-                type: 'button icon-left ion-link button-positive',
+                type: 'button-positive',
                 onTap: function(e) {
                     $scope.url();
                     // @TODO run function on scope.url here
