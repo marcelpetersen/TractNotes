@@ -105,11 +105,12 @@ content: url('/img/mapbox.png') !important;
 .icon-tux:before {
     content: "\e903";
 }
-
+/*style for import popup boxes*/
 .popup-import .popup
 {
-  /*border for import popup box*/
+  /*border and bg color for import popup box*/
   border: 1px solid black;
+  background-color: #b7b7b7;
 }
 .popup-import .popup-head
 {

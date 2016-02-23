@@ -32,8 +32,10 @@ angular.module('TractNotes').controller('ImportCtrl', function($scope, $ionicPop
         $scope.data = {};
 
         var urlPopup = $ionicPopup.show({
+            title: 'Enter URL',
             template: '<input type="url" ng-model="data.url">', // @TODO: if not valid url, output error message, @TODO make field more visible
             scope: $scope,
+            cssClass: 'popup-import',
             buttons: [{
                 text: '<b>Submit</b>',
                 type: 'button-positive',
