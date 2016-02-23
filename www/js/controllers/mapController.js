@@ -25,6 +25,28 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
                         enable: ['context'],
                         logic: 'emit'
                     }
+                },
+                layers: {
+                    baselayers: {
+                        mapbox_streets: {
+                            name: 'Mapbox Streets',
+                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                            type: 'xyz',
+                            layerOptions: {
+                                apikey:
+                                mapid: 'mapbox.streets'
+                            }
+                        },
+                        mapbox_satellite: {
+                            name: 'Mapbox Satellite',
+                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                            type: 'xyz',
+                            layerOptions: {
+                                apikey:
+                                mapid: 'mapbox.satellite'
+                            }
+                        }
+                    }
                 }
             };
 
