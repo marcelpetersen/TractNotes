@@ -5,16 +5,17 @@ angular.module('TractNotes').controller('ImportCtrl', function($scope, $ionicPop
         $scope.data = {};
 
         var importPopup = $ionicPopup.show({
-            title: 'Select import source',
-            subTitle: 'GPX, KML or WMS layer',
+            title: 'Import File',
+            subTitle: '(GPX, KML or WMS layer)',
             scope: $scope,
+            cssClass: 'popup-import',
             buttons: [{
-                text: '<b>From Drive<b>', // @TODO : drive icon
-                type: 'button-positive',
+                text: '<b>From Drive</b>', // @TODO : drive icon
+                type: 'button icon-left icon-google-drive button-positive',
                 //@TODO : picker screen file -> variable, download file/open or whatever
             }, {
                 text: '<b>From URL</b>', // @TODO : WMS icon
-                type: 'button-positive',
+                type: 'button icon-left ion-link button-positive',
                 onTap: function(e) {
                     $scope.url();
                     // @TODO run function on scope.url here
