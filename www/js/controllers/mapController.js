@@ -17,8 +17,6 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
         $scope.$on("$stateChangeSuccess", function() {
 
             $scope.map = {
-                defaults: {
-                },
                 markers: {},
                 events: {
                     map: {
@@ -33,7 +31,6 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
                             url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                             type: 'xyz',
                             layerOptions: {
-                                apikey:
                                 mapid: 'mapbox.streets'
                             }
                         },
@@ -42,7 +39,6 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
                             url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                             type: 'xyz',
                             layerOptions: {
-                                apikey:
                                 mapid: 'mapbox.satellite'
                             }
                         }
