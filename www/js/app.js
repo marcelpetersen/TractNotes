@@ -1,6 +1,6 @@
 // TractNotes
 
-angular.module('TractNotes', ['ionic', 'leaflet-directive', 'lk-google-picker', 'ngCordova', 'igTruncate'])
+angular.module('TractNotes', ['ionic', 'ionic.closePopup', 'leaflet-directive', 'lk-google-picker', 'ngCordova', 'igTruncate'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {

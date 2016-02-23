@@ -1,4 +1,4 @@
-angular.module('TractNotes').controller('ImportCtrl', function($scope, $ionicPopup) {
+angular.module('TractNotes').controller('ImportCtrl', function($scope, IonicClosePopupService, $ionicPopup) {
     $scope.url = '';
 
     $scope.import = function() {
@@ -22,10 +22,13 @@ angular.module('TractNotes').controller('ImportCtrl', function($scope, $ionicPop
                 }
             }]
         });
+        IonicClosePopupService.register(importPopup);
 
         importPopup.then(function(res) {
             console.log('Tapped!', res);
         });
+
+        
     },
 
     $scope.url = function() {
@@ -44,6 +47,8 @@ angular.module('TractNotes').controller('ImportCtrl', function($scope, $ionicPop
                 }
             }]
         });
+
+        IonicClosePopupService.register(urlPopup);
 
         urlPopup.then(function(res) {
             console.log('Tapped!', res);
