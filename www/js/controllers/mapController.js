@@ -17,6 +17,12 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
         $scope.$on("$stateChangeSuccess", function() {
 
             $scope.map = {
+                Layercontrol: {
+                    icons: {
+                      uncheck: "fa fa-toggle-off",
+                      check: "fa fa-toggle-on"
+                    }
+                },
                 markers: {},
                 events: {
                     map: {
