@@ -1,56 +1,65 @@
-// Ionic Starter App
+// TractNotes
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate'])
+angular.module('TractNotes', ['ionic', 'ionic.closePopup', 'leaflet-directive', 'lk-google-picker', 'ngCordova', 'igTruncate'])
 
-  .run(function($ionicPlatform) {
+.run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-
-      $timeout(function() {
-    $state.go('home');
-}, 5000);
-      if(window.cordova && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        window.cordova.plugins.Keyboard.disableScroll(true);
-      }
-      if(window.StatusBar) {
-        StatusBar.styleDefault();
-      }
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            window.cordova.plugins.Keyboard.disableScroll(true);
+        }
+        if (window.StatusBar) {
+            StatusBar.styleDefault();
+        }
     });
-  })
+})
 
-  .config(function($stateProvider, $urlRouterProvider) {
+.config(['lkGoogleSettingsProvider',
+    function(lkGoogleSettingsProvider) {
+
+        // Configure the API credentials here
+        lkGoogleSettingsProvider.configure({
+        });
+    }
+])
+
+.filter('getExtension', function() {
+    return function(url) {
+        return url.split('.').pop();
+    };
+})
+
+.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
-      .state('app', {
+    .state('app', {
         url: "/app",
         abstract: true,
         templateUrl: "templates/menu.html",
-        controller: 'MapController'
-      })
+        controller: 'MapCtrl'
+    })
 
-      .state('app.map', {
+    .state('app.form', {
+        url: "/form",
+        controller: 'PickerCtrl',
+        views: {
+            'menuContent': {
+                templateUrl: "templates/form.html"
+            }
+        }
+    })
+
+    .state('app.map', {
         url: "/map",
         views: {
-          'menuContent' :{
-            templateUrl: "templates/map.html"
-          }
+            'menuContent': {
+                templateUrl: "templates/map.html"
+            }
         }
-      })
-
-      .state('app.pepe', {
-        url: '/pepe',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/pepe.html'
-          }
-        }
-      })
+    })
 
     $urlRouterProvider.otherwise('/app/map');
 
-  });
+});

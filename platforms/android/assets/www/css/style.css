@@ -3,6 +3,10 @@ body {
   min-height: 100%;
 }
 
+.pane {
+    background-color: #b7b7b7;
+}
+
 .scroll, .angular-leaflet-map {
   height: 100%;
 }
@@ -63,10 +67,6 @@ content: url('/img/google-forms.png') !important;
 content: url('/img/mapbox.png') !important; 
 }
 
-.ion-meme-icon:before {
-content: url('/img/face.png') !important; 
-}
-
 @font-face {
     font-family: 'icomoon';
     src:    url('../lib/ionic/fonts/icomoon.eot?j0ag16');
@@ -104,4 +104,23 @@ content: url('/img/face.png') !important;
 }
 .icon-tux:before {
     content: "\e903";
+}
+/*style for import popup boxes*/
+.popup-import .popup
+{
+  /*border and bg color for import popup box*/
+  border: 1px solid black;
+  background-color: #b7b7b7;
+}
+.popup-import .popup-head
+{
+  background-color: #444444;
+}
+.popup-import .popup-title
+{
+  color: white;
+}
+.popup-import .popup-sub-title
+{
+  color: white;
 }

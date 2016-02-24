@@ -145,7 +145,7 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
                 }]
             });
 
-            //IonicClosePopupService.register(urlPopup);
+            IonicClosePopupService.register(urlPopup);
 
             urlPopup.then(function(res) {
                 console.log('Tapped!', res);
@@ -173,7 +173,7 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
                     }
                 }]
             });
-            //IonicClosePopupService.register(importPopup);
+            IonicClosePopupService.register(importPopup);
 
             importPopup.then(function(res) {
                 console.log('Tapped!', res);
