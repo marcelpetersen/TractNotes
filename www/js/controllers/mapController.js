@@ -4,13 +4,15 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
     '$ionicModal',
     '$ionicPopup',
     '$ionicPopover',
+    'IonicClosePopupService',
     function(
         $scope,
         $cordovaGeolocation,
         $stateParams,
         $ionicModal,
         $ionicPopup,
-        $ionicPopover
+        $ionicPopover,
+        IonicClosePopupService
     ) {
 
         /**
@@ -21,8 +23,8 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
             $scope.map = {
                 Layercontrol: {
                     icons: {
-                      uncheck: "fa fa-toggle-off",
-                      check: "fa fa-toggle-on"
+                        uncheck: "fa fa-toggle-off",
+                        check: "fa fa-toggle-on"
                     }
                 },
                 markers: {},
@@ -96,29 +98,88 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
 
         // .fromTemplateUrl() method
         $ionicPopover.fromTemplateUrl('templates/filePopover.html', {
-          scope: $scope
+            scope: $scope
         }).then(function(popover) {
-          $scope.popover = popover;
+            $scope.popover = popover;
         });
 
 
         $scope.openPopover = function($event) {
-          $scope.popover.show($event);
+            $scope.popover.show($event);
         };
         $scope.closePopover = function() {
-          $scope.popover.hide();
+            $scope.popover.hide();
         };
         //Cleanup the popover when we're done with it!
         $scope.$on('$destroy', function() {
-          $scope.popover.remove();
+            $scope.popover.remove();
         });
         // Execute action on hide popover
         $scope.$on('popover.hidden', function() {
-          // Execute action
+            // Execute action
         });
         // Execute action on remove popover
         $scope.$on('popover.removed', function() {
-          // Execute action
+            // Execute action
         });
+
+
+        $scope.url = '';
+
+
+
+        $scope.url = function() {
+            $scope.data = {};
+
+            var urlPopup = $ionicPopup.show({
+                title: 'Enter URL',
+                template: '<input type="url" ng-model="data.url">', // @TODO: if not valid url, output error message, @TODO make field more visible
+                scope: $scope,
+                cssClass: 'popup-import',
+                buttons: [{
+                    text: '<b>Submit</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        return $scope.data.url;
+                    }
+                }]
+            });
+
+            //IonicClosePopupService.register(urlPopup);
+
+            urlPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+        };
+
+        $scope.import = function() {
+            $scope.data = {};
+
+            var importPopup = $ionicPopup.show({
+                title: 'Import File',
+                subTitle: '(GPX, KML or WMS layer)',
+                scope: $scope,
+                cssClass: 'popup-import',
+                buttons: [{
+                    text: '<b>From Drive</b>', // @TODO : drive icon
+                    type: 'button-positive',
+                    //@TODO : picker screen file -> variable, download file/open or whatever
+                }, {
+                    text: '<b>From URL</b>', // @TODO : WMS icon
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        $scope.url();
+                        // @TODO run function on scope.url here
+                    }
+                }]
+            });
+            //IonicClosePopupService.register(importPopup);
+
+            importPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+
+
+        };
     }
 ]);
