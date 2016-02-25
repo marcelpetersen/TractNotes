@@ -6,7 +6,7 @@
         .controller('PickerController', PickerController);
 
     /* @ngInject */
-    function PickerController($scope, $lkGoogleSettings) {
+    function PickerController($scope, $lkGoogleSettings, $cordovaOauth) {
         var vm = this;
         vm.file = '';
         vm.title = 'PickerController';
@@ -14,10 +14,18 @@
         activate();
 
         ////////////////
-
-        function activate() {
+        //
+        
+        $scope.googleLogin = function() {
+                console.log(JSON.stringify(result));
+            }, function(error) {
+                console.log(JSON.stringify(error));
+            });
         }
 
+
+        function activate() {}
+        /*
         $scope.files = [];
 
         // Callback triggered after Picker is shown
@@ -42,7 +50,8 @@
         $scope.changeLocale = function(locale) {
             lkGoogleSettings.locale = locale.code;
         };
+        */
     }
 
-    PickerController.$inject = ['$scope', 'lkGoogleSettings'];
+    PickerController.$inject = ['$scope', 'lkGoogleSettings', '$cordovaOauth'];
 })();

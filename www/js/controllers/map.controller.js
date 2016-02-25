@@ -51,6 +51,9 @@
                             }
                         }
                     }
+                },
+                controls: {
+                    scale: true
                 }
             };
 

@@ -8,7 +8,8 @@
             'ionic.closePopup',
             'leaflet-directive',
             'lk-google-picker',
-            'ngCordova'
+            'ngCordova',
+            'ngCordovaOauth'
         ])
 
     .run(function($ionicPlatform) {
@@ -24,15 +25,18 @@
             }
         });
     })
-
+    /*
     .config(['lkGoogleSettingsProvider',
         function(lkGoogleSettingsProvider) {
 
             // Configure the API credentials here
             lkGoogleSettingsProvider.configure({
+                apiKey: 'AIzaSyDJ38qrLrTAZMsp0Kaq1ynKP5jKsjNFFy4',
+                clientId: '775512295394-b73trc22sril3j04nhfa7fn2nuekkv0b.apps.googleusercontent.com'
             });
         }
     ])
+    */
 
     .filter('getExtension', function() {
         return function(url) {
