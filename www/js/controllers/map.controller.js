@@ -39,6 +39,7 @@
                             url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                             type: 'xyz',
                             layerOptions: {
+                                apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
                                 mapid: 'mapbox.streets'
                             }
                         },
@@ -47,6 +48,7 @@
                             url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                             type: 'xyz',
                             layerOptions: {
+                                apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
                                 mapid: 'mapbox.satellite'
                             }
                         }

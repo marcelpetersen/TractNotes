@@ -25,7 +25,7 @@
             }
         });
     })
-    /*
+
     .config(['lkGoogleSettingsProvider',
         function(lkGoogleSettingsProvider) {
 
@@ -36,7 +36,6 @@
             });
         }
     ])
-    */
 
     .filter('getExtension', function() {
         return function(url) {

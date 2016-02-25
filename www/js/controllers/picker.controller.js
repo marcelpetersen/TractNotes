@@ -10,13 +10,9 @@
         var vm = this;
         vm.file = '';
         vm.title = 'PickerController';
-
-        activate();
-
-        ////////////////
-
-
+        
         $scope.googleLogin = function() {
+            $cordovaOauth.google("775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com  ", ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email",
                 "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/plus.me"
             ]).
             then(function(result) {
@@ -56,9 +52,6 @@
             });
         }
 
-
-        function activate() {}
-        /*
         $scope.files = [];
 
         // Callback triggered after Picker is shown
@@ -83,7 +76,6 @@
         $scope.changeLocale = function(locale) {
             lkGoogleSettings.locale = locale.code;
         };
-        */
     }
 
     PickerController.$inject = ['$scope', 'lkGoogleSettings', '$cordovaOauth', '$http'];
