@@ -1,23 +1,21 @@
-angular.module('TractNotes').controller('MapCtrl', ['$scope',
-    '$cordovaGeolocation',
-    '$stateParams',
-    '$ionicModal',
-    '$ionicPopup',
-    '$ionicPopover',
-    'IonicClosePopupService',
-    function(
-        $scope,
-        $cordovaGeolocation,
-        $stateParams,
-        $ionicModal,
-        $ionicPopup,
-        $ionicPopover,
-        IonicClosePopupService
-    ) {
+(function() {
+    'use strict';
 
-        /**
-         * Once state loaded, get put map on scope.
-         */
+    angular
+        .module('TractNotes')
+        .controller('MapController', MapController);
+
+    /* @ngInject */
+    function MapController($scope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicPopup, $ionicPopover, IonicClosePopupService) {
+        var vm = this;
+        vm.title = 'MapController';
+
+        activate();
+
+        ////////////////
+
+        function activate() {}
+
         $scope.$on("$stateChangeSuccess", function() {
 
             $scope.map = {
@@ -178,8 +176,9 @@ angular.module('TractNotes').controller('MapCtrl', ['$scope',
             importPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
-
-
         };
+
     }
-]);
+
+    MapController.$inject = ['$scope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicPopup', '$ionicPopover', 'IonicClosePopupService'];
+})();
