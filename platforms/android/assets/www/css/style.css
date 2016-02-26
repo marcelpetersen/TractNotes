@@ -55,18 +55,6 @@ ion-side-menu.menu-left.menu {
   background-color: #a7a7a7 !important;
 }  /*side menu background color*/
 
-.ion-drive-icon:before {
-content: url('/img/drive.png') !important; 
-}
-
-.ion-forms-icon:before {
-content: url('/img/google-forms.png') !important; 
-}
-
-.ion-mapbox-icon:before {
-content: url('/img/mapbox.png') !important; 
-}
-
 @font-face {
     font-family: 'icomoon';
     src:    url('../lib/ionic/fonts/icomoon.eot?j0ag16');

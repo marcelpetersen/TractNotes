@@ -1,17 +1,12 @@
 <ion-view title="Map">
 	<ion-nav-buttons side="left">
-		<!-- <button menu-toggle="left" class="button button-icon icon ion-navicon"></button> -->
-		<!-- <button ng-click="import()" ng-controller="ImportCtrl" class="button button-icon icon ion-android-download"></button> -->
-		<!-- <button ng-click="export()" class="button button-icon icon ion-android-upload"></button> -->
 		<button ng-click="popover.show($event)" class="button button-icon icon ion-navicon"></button>
 	</ion-nav-buttons>
 	<ion-nav-buttons side="right">
-		<!-- <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button> -->
 		<button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
 		<a href="#/app/form" class="button button-icon icon icon-file-text2"></a>
-		<!-- button with text <a href="#/app/form" class="button button-icon icon icon-file-text2"> <b> Form Mode</b></a> -->
 	</ion-nav-buttons>
 	<ion-content data-tap-disabled="true">
-		<leaflet defaults="map.defaults" center="map.center" markers="map.markers" layers="map.layers" ng-if="map"></leaflet>
+		<leaflet defaults="map.defaults" center="map.center" controls="map.controls" markers="map.markers" layers="map.layers" ng-if="map"></leaflet>
 	</ion-content>
 </ion-view>

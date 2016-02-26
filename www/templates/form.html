@@ -1,11 +1,5 @@
 <ion-view title="Form">
-    <!--
-    <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons>
-    -->
     <ion-nav-buttons side="right">
-        <!-- button with text <a href="#/app/map" class="button button-icon icon icon-map"> <b>Map Mode</b></a> -->
         <a href="#/app/map" class="button button-icon icon icon-map"></a>
     </ion-nav-buttons>
     <!-- Google fonts -->
@@ -37,8 +31,8 @@
                                         <div class="icon">
                                             <div class="document">
                                                 <span class="ng-binding">
-											{{ file.name | getExtension }}
-										</span>
+                                            {{ file.name | getExtension }}
+                                        </span>
                                             </div>
                                         </div>
                                         <span>{{ file.name | limitTo:20 }}</span><span ng-if="file.name.length >=20">...</span>

@@ -6,7 +6,7 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($scope, $cordovaGeolocation, $stateParams, $ionicModal, $ionicPopup, $ionicPopover, IonicClosePopupService) {
+    function MapController($scope, $cordovaGeolocation, ctecoService, $stateParams, $ionicModal, $ionicPopover, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -52,6 +52,9 @@
                                 mapid: 'mapbox.satellite'
                             }
                         }
+                    },
+                    overlays: {
+
                     }
                 },
                 controls: {
@@ -62,13 +65,6 @@
             $scope.map.center = {
                 autoDiscover: true
             };
-        });
-
-        $ionicModal.fromTemplateUrl('templates/addLocation.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.modal = modal;
         });
 
         /**
@@ -99,13 +95,16 @@
 
         };
 
-        // .fromTemplateUrl() method
-        $ionicPopover.fromTemplateUrl('templates/filePopover.html', {
+        $scope.addCTLayer = function(layer) {
+            $scope.map.layers.overlays[layer] = ctecoService.getCTLayer(layer);
+        };
+
+        // Create popover instance from template
+        $ionicPopover.fromTemplateUrl('templates/map.popover.html', {
             scope: $scope
         }).then(function(popover) {
             $scope.popover = popover;
         });
-
 
         $scope.openPopover = function($event) {
             $scope.popover.show($event);
@@ -113,69 +112,15 @@
         $scope.closePopover = function() {
             $scope.popover.hide();
         };
-        //Cleanup the popover when we're done with it!
         $scope.$on('$destroy', function() {
             $scope.popover.remove();
         });
-        // Execute action on hide popover
-        $scope.$on('popover.hidden', function() {
-            // Execute action
-        });
-        // Execute action on remove popover
-        $scope.$on('popover.removed', function() {
-            // Execute action
-        });
 
-
-        $scope.url = '';
-
-
-
-        $scope.url = function() {
+        // Create importPopup and WMSPopup functions
+        $scope.importPopup = function() {
             $scope.data = {};
 
-            var urlPopup = $ionicPopup.show({
-                title: 'Enter URL',
-                template: '<input type="url" ng-model="data.url">', // @TODO: if not valid url, output error message, @TODO make field more visible
-                scope: $scope,
-                cssClass: 'popup-import',
-                buttons: [{
-                    text: '<b>Submit</b>',
-                    type: 'button-positive',
-                    onTap: function(e) {
-                        return $scope.data.url;
-                    }
-                }]
-            });
-
-            IonicClosePopupService.register(urlPopup);
-
-            urlPopup.then(function(res) {
-                console.log('Tapped!', res);
-            });
-        };
-
-        $scope.import = function() {
-            $scope.data = {};
-
-            var importPopup = $ionicPopup.show({
-                title: 'Import File',
-                subTitle: '(GPX, KML or WMS layer)',
-                scope: $scope,
-                cssClass: 'popup-import',
-                buttons: [{
-                    text: '<b>From Drive</b>', // @TODO : drive icon
-                    type: 'button-positive',
-                    //@TODO : picker screen file -> variable, download file/open or whatever
-                }, {
-                    text: '<b>From URL</b>', // @TODO : WMS icon
-                    type: 'button-positive',
-                    onTap: function(e) {
-                        $scope.url();
-                        // @TODO run function on scope.url here
-                    }
-                }]
-            });
+            var importPopup = popupService.getImportPopup($scope);
             IonicClosePopupService.register(importPopup);
 
             importPopup.then(function(res) {
@@ -183,7 +128,17 @@
             });
         };
 
+        $scope.wmsPopup = function() {
+            $scope.data = {};
+
+            var wmsPopup = popupService.getWMSPopup($scope);
+            IonicClosePopupService.register(wmsPopup);
+
+            wmsPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+        };
     }
 
-    MapController.$inject = ['$scope', '$cordovaGeolocation', '$stateParams', '$ionicModal', '$ionicPopup', '$ionicPopover', 'IonicClosePopupService'];
+    MapController.$inject = ['$scope', '$cordovaGeolocation', 'ctecoService', '$stateParams', '$ionicModal', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();

@@ -8,7 +8,8 @@
             'ionic.closePopup',
             'leaflet-directive',
             'lk-google-picker',
-            'ngCordova'
+            'ngCordova',
+            'ngCordovaOauth'
         ])
 
     .run(function($ionicPlatform) {
