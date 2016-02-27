@@ -8,7 +8,6 @@
             'ionic.closePopup',
             'leaflet-directive',
             'lk-google-picker',
-            'ngCordova',
             'ngCordovaOauth'
         ])
         .config(config);

@@ -98,7 +98,6 @@
         function getCTLayer(layer) {
             switch (layer) {
                 case 'openSpace0':
-                    console.log('asdf');
                     return openSpace0;
                 case 'openSpace1':
                     return openSpace1;

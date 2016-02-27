@@ -1,14 +1,9 @@
+<!--
 <ion-view title="Form">
-    <!--
-    <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons>
-    -->
+<ion-nav-bar class="bar-dark"></ion-nav-bar>
     <ion-nav-buttons side="right">
-        <!-- button with text <a href="#/app/map" class="button button-icon icon icon-map"> <b>Map Mode</b></a> -->
         <a href="#/app/map" class="button button-icon icon icon-map"></a>
     </ion-nav-buttons>
-    <!-- Google fonts -->
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300&amp;subset=latin,cyrillic-ext,greek-ext,greek,vietnamese,latin-ext,cyrillic" rel="stylesheet">
     <ion-content>
         <div class="main" ng-controller="PickerController">
@@ -37,8 +32,8 @@
                                         <div class="icon">
                                             <div class="document">
                                                 <span class="ng-binding">
-											{{ file.name | getExtension }}
-										</span>
+                                            {{ file.name | getExtension }}
+                                        </span>
                                             </div>
                                         </div>
                                         <span>{{ file.name | limitTo:20 }}</span><span ng-if="file.name.length >=20">...</span>

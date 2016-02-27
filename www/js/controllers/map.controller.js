@@ -6,32 +6,9 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($scope, $cordovaGeolocation, ctecoService, $ionicModal, $ionicPopover, popupService, IonicClosePopupService) {
-        var vm = this;
-        vm.title = 'MapController';
-
-        activate();
-
-        ////////////////
-
-        function activate() {}
-
-        //$scope.$on("$stateChangeSuccess", function() {
+    function MapController($scope, ctecoService, $ionicModal, $ionicPopover, popupService, IonicClosePopupService) {
 
         $scope.map = {
-            Layercontrol: {
-                icons: {
-                    uncheck: "fa fa-toggle-off",
-                    check: "fa fa-toggle-on"
-                }
-            },
-            markers: {},
-            events: {
-                map: {
-                    enable: ['context'],
-                    logic: 'emit'
-                }
-            },
             layers: {
                 baselayers: {
                     mapbox_streets: {
@@ -53,46 +30,39 @@
                         }
                     }
                 },
-                overlays: {
-
-                }
+                overlays: {}
+            },
+            markers: {
+                currentPosition: {},
             },
             controls: {
                 scale: true
+            },
+            center: {
+                autoDiscover: true
             }
         };
 
-        $scope.map.center = {
-            autoDiscover: true
-        };
-        //});
-
-        /**
-         * Center map on user's current position
-         */
+        // Center and create a popup on the map at the user's current position
         $scope.locate = function() {
-
-            $cordovaGeolocation
-                .getCurrentPosition()
-                .then(function(position) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
                     $scope.map.center.lat = position.coords.latitude;
                     $scope.map.center.lng = position.coords.longitude;
                     $scope.map.center.zoom = 15;
 
-                    $scope.map.markers.now = {
+                    $scope.map.markers.currentPosition = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
-                        message: "You Are Here",
                         focus: true,
-                        draggable: false
+                        draggable: false,
+                        message: "Hi there!",
                     };
-
-                }, function(err) {
-                    // error
-                    console.log("Location error!");
-                    console.log(err);
+                },
+                function() {
+                    alert('Error getting location');
                 });
-
+            return false;
         };
 
         $scope.addCTLayer = function(layer) {
@@ -140,5 +110,5 @@
         };
     }
 
-    MapController.$inject = ['$scope', '$cordovaGeolocation', 'ctecoService', '$ionicModal', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$scope', 'ctecoService', '$ionicModal', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();

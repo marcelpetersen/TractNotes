@@ -12,6 +12,9 @@
         },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
         }
     },
     "dependent_plugins": {}

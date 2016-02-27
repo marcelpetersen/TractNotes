@@ -5,7 +5,7 @@
 	</ion-nav-buttons>
 	<ion-nav-buttons side="right">
 		<button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
-		<a href="#/app/form" class="button button-icon icon icon-file-text2"></a>
+		<button class="button button-icon icon ion-document-text" ui-sref="form"></button>
 	</ion-nav-buttons>
 	<ion-content data-tap-disabled="true">
 		<leaflet defaults="map.defaults" center="map.center" controls="map.controls" markers="map.markers" layers="map.layers" ng-if="map"></leaflet>
