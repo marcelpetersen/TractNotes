@@ -19,8 +19,8 @@
 
         function getImportPopup(scope) {
             return $ionicPopup.show({
-                title: 'Import File',
-                subTitle: '(GPX, KML or WMS layer)',
+                title: 'Add GIS data',
+                subTitle: '(Add your data here!)',
                 scope: scope,
                 cssClass: 'popup-import',
                 buttons: [{
@@ -28,7 +28,7 @@
                     type: 'button-positive',
                     //@TODO : picker screen file -> variable, download file/open or whatever
                 }, {
-                    text: '<b>WMS Endpoint</b>',
+                    text: '<b>Link WMS data</b>',
                     type: 'button-positive',
                     onTap: function(e) {
                         scope.wmsPopup();
@@ -39,7 +39,7 @@
 
         function getWMSPopup(scope) {
             return $ionicPopup.show({
-                title: 'WMS endpoint',
+                title: 'WMS endpoint URL',
                 template: '<input type="url" ng-model="data.url">', // @TODO: if not valid url, output error message, @TODO make field more visible
                 scope: scope,
                 cssClass: 'popup-import',

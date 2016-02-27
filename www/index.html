@@ -7,12 +7,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Leaflet Demo</title>
-    
+
     <!-- Stylesheets -->
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/style.css" />
 
+    <!-- Ionic -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- Leaflet core -->
@@ -20,13 +21,14 @@
     <script src="lib/leaflet/angular-leaflet-directive.min.js"></script>
 
     <!-- Leaflet extensions -->
-    <script src="lib/leaflet-extensions/esri-leaflet.js"></script>
-    
+    <script src="lib/leaflet-extensions/esri-leaflet.min.js"></script>
+    <script src="lib/leaflet-extensions/leaflet-omnivore.min.js"></script>
+
     <!-- Google API-->
     <script src="http://apis.google.com/js/client.js"></script>
     <script src="http://apis.google.com/js/api.js"></script>
-    <script src="lib/google-picker.min.js"></script>
-    
+
+    <!-- Cordova -->
     <script src="cordova.js"></script>
 
     <!-- Cordova and Ionic extensions -->
@@ -49,7 +51,19 @@
 </head>
 
 <body ng-app="TractNotes" class="platform-ios platform-cordova platform-webview">
-    <ion-nav-view></ion-nav-view>
+    <ion-tabs class="tabs-dark">
+        <ion-tab icon="ion-map" ui-sref="map">
+            <ion-nav-view name="map"></ion-nav-view>
+        </ion-tab>
+        <ion-tab icon="ion-document-text" ui-sref="form">
+            <ion-nav-view name="form"></ion-nav-view>
+        </ion-tab>
+    </ion-tabs>
 </body>
+
+<script type="text/ng-template" id="template/map.html"></script>
+
+<script type="text/ng-template" id="template/form.html"></script>
+
 
 </html>

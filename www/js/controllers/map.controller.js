@@ -6,7 +6,7 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($scope, $cordovaGeolocation, ctecoService, $stateParams, $ionicModal, $ionicPopover, popupService, IonicClosePopupService) {
+    function MapController($scope, $cordovaGeolocation, ctecoService, $ionicModal, $ionicPopover, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -16,56 +16,56 @@
 
         function activate() {}
 
-        $scope.$on("$stateChangeSuccess", function() {
+        //$scope.$on("$stateChangeSuccess", function() {
 
-            $scope.map = {
-                Layercontrol: {
-                    icons: {
-                        uncheck: "fa fa-toggle-off",
-                        check: "fa fa-toggle-on"
-                    }
-                },
-                markers: {},
-                events: {
-                    map: {
-                        enable: ['context'],
-                        logic: 'emit'
-                    }
-                },
-                layers: {
-                    baselayers: {
-                        mapbox_streets: {
-                            name: 'Mapbox Streets',
-                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                            type: 'xyz',
-                            layerOptions: {
-                                apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
-                                mapid: 'mapbox.streets'
-                            }
-                        },
-                        mapbox_satellite: {
-                            name: 'Mapbox Satellite',
-                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                            type: 'xyz',
-                            layerOptions: {
-                                apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
-                                mapid: 'mapbox.satellite'
-                            }
+        $scope.map = {
+            Layercontrol: {
+                icons: {
+                    uncheck: "fa fa-toggle-off",
+                    check: "fa fa-toggle-on"
+                }
+            },
+            markers: {},
+            events: {
+                map: {
+                    enable: ['context'],
+                    logic: 'emit'
+                }
+            },
+            layers: {
+                baselayers: {
+                    mapbox_streets: {
+                        name: 'Mapbox Streets',
+                        url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                        type: 'xyz',
+                        layerOptions: {
+                            apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
+                            mapid: 'mapbox.streets'
                         }
                     },
-                    overlays: {
-
+                    mapbox_satellite: {
+                        name: 'Mapbox Satellite',
+                        url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                        type: 'xyz',
+                        layerOptions: {
+                            apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
+                            mapid: 'mapbox.satellite'
+                        }
                     }
                 },
-                controls: {
-                    scale: true
-                }
-            };
+                overlays: {
 
-            $scope.map.center = {
-                autoDiscover: true
-            };
-        });
+                }
+            },
+            controls: {
+                scale: true
+            }
+        };
+
+        $scope.map.center = {
+            autoDiscover: true
+        };
+        //});
 
         /**
          * Center map on user's current position
@@ -140,5 +140,5 @@
         };
     }
 
-    MapController.$inject = ['$scope', '$cordovaGeolocation', 'ctecoService', '$stateParams', '$ionicModal', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$scope', '$cordovaGeolocation', 'ctecoService', '$ionicModal', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();

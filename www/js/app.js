@@ -11,21 +11,9 @@
             'ngCordova',
             'ngCordovaOauth'
         ])
+        .config(config);
 
-    .run(function($ionicPlatform) {
-        $ionicPlatform.ready(function() {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                window.cordova.plugins.Keyboard.disableScroll(true);
-            }
-            if (window.StatusBar) {
-                StatusBar.styleDefault();
-            }
-        });
-    })
-
+    /*
     .config(['lkGoogleSettingsProvider',
         function(lkGoogleSettingsProvider) {
 
@@ -42,35 +30,29 @@
             return url.split('.').pop();
         };
     })
+    */
 
-    .config(function($stateProvider, $urlRouterProvider) {
+    function config($stateProvider, $urlRouterProvider) {
         $stateProvider
-
-        .state('app', {
-            url: "/app",
-            abstract: true,
-            templateUrl: "templates/menu.html",
-            controller: 'MapController'
-        })
-
-        .state('app.form', {
-            url: "/form",
-            controller: 'Controller',
-            views: {
-                'menuContent': {
-                    templateUrl: "templates/form.html"
+            .state('map', {
+                url: '/map',
+                views: {
+                    map: {
+                        templateUrl: 'templates/map.html',
+                        controller: 'MapController',
+                    }
                 }
-            }
-        })
-
-        .state('app.map', {
-            url: "/map",
-            views: {
-                'menuContent': {
-                    templateUrl: "templates/map.html"
+            })
+            .state('form', {
+                url: '/form',
+                views: {
+                    form: {
+                        templateUrl: 'templates/form.html',
+                        controller: 'PickerController',
+                    }
                 }
-            }
-        });
-        $urlRouterProvider.otherwise('/app/map');
-    });
+            });
+
+        $urlRouterProvider.otherwise('/map');
+    }
 })();
