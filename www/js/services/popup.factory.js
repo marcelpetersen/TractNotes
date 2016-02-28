@@ -10,28 +10,29 @@
     /* @ngInject */
     function popupService($ionicPopup) {
         var service = {
-            getImportPopup: getImportPopup,
+            getGISPopup: getGISPopup,
             getWMSPopup: getWMSPopup
         };
         return service;
 
         ////////////////
 
-        function getImportPopup(scope, vm) {
+        function getGISPopup(scope, vm) {
             return $ionicPopup.show({
-                title: 'Add GIS data',
-                subTitle: '(Add your data here!)',
+                title: 'Add a GPX or KML layer to the map',
+                template: 'URL<input type="url" ng-model="data.url">', // @TODO: if not valid url, output error message
                 scope: scope,
                 cssClass: 'popup-import',
                 buttons: [{
-                    text: '<b>Google Drive</b>',
+                    text: 'Google Drive',
                     type: 'button-positive',
-                    //@TODO : picker screen file -> variable, download file/open or whatever
+                    //@TODO : picker screen file -> variable
+                    //@TODO : fill screen automatically with url
                 }, {
-                    text: '<b>Link WMS data</b>',
+                    text: 'Submit',
                     type: 'button-positive',
                     onTap: function(e) {
-                        vm.wmsPopup();
+                        return scope.data.url;
                     }
                 }]
             });
@@ -40,14 +41,14 @@
         function getWMSPopup(scope) {
             return $ionicPopup.show({
                 title: 'WMS endpoint URL',
-                template: '<input type="url" ng-model="data.url">', // @TODO: if not valid url, output error message, @TODO make field more visible
+                template: 'MapServer<input type="url" ng-model="data.url"> Layer(s) ID (ex. 0, 1, 2) <input type="text" ng-model="data.text">', // @TODO: if not valid url, output error message
                 scope: scope,
                 cssClass: 'popup-import',
                 buttons: [{
-                    text: '<b>Submit</b>',
+                    text: 'Submit',
                     type: 'button-positive',
                     onTap: function(e) {
-                        return scope.data.url;
+                        return scope.data;
                     }
                 }]
             });

@@ -12,10 +12,11 @@
         vm.title = 'Controller';
         vm.locate = locate;
         vm.cteco = cteco;
+        vm.xmldata = xmldata;
         vm.popover = null;
         vm.openPopover = openPopover;
         vm.closePopover = closePopover;
-        vm.importPopup = importPopup;
+        vm.gisPopup = gisPopup;
         vm.wmsPopup = wmsPopup;
 
         activate();
@@ -47,8 +48,9 @@
                 vm.popover = popover;
             });
 
-            // @TODO: remove
-            //xmldata('placeholder');
+            // @TODO: remove examples once import is finalized
+            //xmldata('LaurelHall.gpx');
+            //xmldata('https://developers.google.com/kml/documentation/KML_Samples.kml');
         }
 
         function autoDiscover() {
@@ -77,9 +79,37 @@
             return false;
         }
 
-        // @TODO: generalize
         function xmldata(layer) {
-            xmldataService.getxmldata("LaurelHall.gpx").addTo($scope.map)
+            var layerResult = xmldataService.getxmldata(layer);
+            layerResult.then(function(val) {
+                $scope.$apply(function() {
+                    var finalLayer = val.on('ready', function() {
+                        $scope.map.fitBounds(val.getBounds());
+                        val.eachLayer(function(layer) {
+                            var content;
+                            var name = layer.feature.properties.name;
+                            var desc = layer.feature.properties.desc;
+
+                            if (name != null) {
+                                content = '<h2>' + name + '</h2>';
+                                if (desc != null) {
+                                    content += '<p>' + desc + '</p';
+                                    layer.bindPopup(content);
+                                } else {
+                                    layer.bindPopup(content);
+                                }
+                            } else if (desc != null) {
+                                content = '<h2>' + desc + '</h2>';
+                                layer.bindPopup(content);
+                            }
+                        });
+                    })
+                    finalLayer.addTo($scope.map);
+                    $scope.layercontrol.addOverlay(finalLayer, layer)
+                })
+
+            });
+
         }
 
         function cteco(layer) {
@@ -89,7 +119,6 @@
 
 
         // Popover functions
-        
         function openPopover($event) {
             vm.popover.show($event);
         }
@@ -103,12 +132,13 @@
         });
 
         // Popup functions
-        function importPopup() {
+        function gisPopup() {
             $scope.data = {};
-            var importPopup = popupService.getImportPopup($scope, vm);
-            IonicClosePopupService.register(importPopup);
+            var gisPopup = popupService.getGISPopup($scope, vm);
+            IonicClosePopupService.register(gisPopup);
 
-            importPopup.then(function(res) {
+            gisPopup.then(function(res) {
+                vm.xmldata(res);
                 console.log('Tapped!', res);
             });
         }
