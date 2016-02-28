@@ -9,6 +9,9 @@
 
     /* @ngInject */
     function xmldataService() {
+        var isKML = false;
+        var isGPX = false;
+
         var service = {
             getxmldata: getxmldata
         };
@@ -17,29 +20,32 @@
         ////////////////
 
         function getxmldata(layer) {
-
-            var kml = omnivore.gpx(layer)
+            var kml = omnivore.gpx('this will fail')
                 .on('ready', function() {
-                    console.log('ready');
+                    isKML = true;
                 })
                 .on('error', function() {
-                    console.log("This is not a KML layer.");
-                });
+                    console.log("This is not a KML layer.")
+                })
 
             var gpx = omnivore.gpx(layer)
                 .on('ready', function() {
-                    console.log('ready');
+                    isGPX = true;
                 })
                 .on('error', function() {
-                    console.log("This is not a GPX layer.");
+                    console.log("This is not a GPX layer.")
                 });
 
-            if (kml != null) {
+            if(isKML){
                 return kml;
-            } else {
+            }
+            else if(isGPX){
+                console.log('this enver happens');
                 return gpx;
             }
-
+            else{
+                return 'invalid file';
+            }
             // @TODO: use desc xml tag as layer name
         }
     }

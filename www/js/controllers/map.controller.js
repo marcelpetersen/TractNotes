@@ -36,6 +36,11 @@
             $scope.overlayMaps = {};
             $scope.layercontrol = L.control.layers($scope.baseMaps, $scope.overlayMaps).addTo($scope.map);
 
+            L.control.scale().addTo($scope.map);
+            L.Control.geocoder({
+                position: 'topleft'
+            }).addTo($scope.map);
+
             $ionicPopover.fromTemplateUrl('templates/map.popover.html', {
                 scope: $scope
             }).then(function(popover) {
@@ -43,7 +48,7 @@
             });
 
             // @TODO: remove
-            xmldata('placeholder');
+            //xmldata('placeholder');
         }
 
         function autoDiscover() {
@@ -75,7 +80,6 @@
         // @TODO: generalize
         function xmldata(layer) {
             xmldataService.getxmldata("LaurelHall.gpx").addTo($scope.map)
-
         }
 
         function cteco(layer) {
@@ -83,6 +87,9 @@
             $scope.layercontrol.addOverlay(cteco.layer, cteco.name);
         }
 
+
+        // Popover functions
+        
         function openPopover($event) {
             vm.popover.show($event);
         }
@@ -95,6 +102,7 @@
             vm.popover.remove();
         });
 
+        // Popup functions
         function importPopup() {
             $scope.data = {};
             var importPopup = popupService.getImportPopup($scope, vm);
