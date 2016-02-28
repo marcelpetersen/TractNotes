@@ -6,7 +6,6 @@
         .module('TractNotes', [
             'ionic',
             'ionic.closePopup',
-            'leaflet-directive',
             'lk-google-picker',
             'ngCordovaOauth'
         ])
@@ -39,6 +38,7 @@
                     map: {
                         templateUrl: 'templates/map.html',
                         controller: 'MapController',
+                        controllerAs: 'vm'
                     }
                 }
             })

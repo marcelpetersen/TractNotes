@@ -1,9 +1,22 @@
 <ion-popover-view class="fit">
-<!--        <a class="item item-icon-left" target="_blank">
+<!--  OLD MENU - use as example     
+<ion-popover-view>
+    <ion-content>
+        <div class="list" ng-click="vm.popover.hide()">
+            <a class="item item-icon-left" popover-close ng-click="vm.importPopup()" target="_blank">
+                <i class="icon ion-android-download"></i>
+                Import File (GPX, KML, WMS)
+            </a>
+            <a class="item item-icon-left" ng-click="export()" target="_blank">
+                <i class="icon ion-android-upload"></i>
+                Export
+            </a>
+            <a class="item item-icon-left" ng-click="vm.cteco('openSpace0')" target="_blank">
                 <i class="icon ion-plus-circled"></i>
                 Add CTEco Layer
             </a>
-        </div> -->
+        </div> 
+    </ion-content> -->
     <ion-content>
         <ion-list ng-click="popover.hide()">
             <ion-item class="item item-divider">
@@ -17,7 +30,7 @@
                 <i class="icon icon-upload"></i>
                 Export Data                   
             </ion-item>
-<!--             <ion-item class="item-icon-left" ng-click="popover.show($event)">
+        <!--<ion-item class="item-icon-left" ng-click="popover.show($event)">
                 <i class="icon ion-plus-circled"></i>
                 Add CTEco Layer
             </ion-item> -->
