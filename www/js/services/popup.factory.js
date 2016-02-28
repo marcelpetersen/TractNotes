@@ -11,7 +11,9 @@
     function popupService($ionicPopup) {
         var service = {
             getGISPopup: getGISPopup,
-            getWMSPopup: getWMSPopup
+            getWMSPopup: getWMSPopup,
+            getArcGISPopup: getArcGISPopup,
+            getMSPopup: getMSPopup
         };
         return service;
 
@@ -38,10 +40,48 @@
             });
         }
 
-        function getWMSPopup(scope) {
+
+        function getWMSPopup(scope, vm) {
             return $ionicPopup.show({
-                title: 'WMS endpoint URL',
-                template: 'MapServer<input type="url" ng-model="data.url"> Layer(s) ID (ex. 0, 1, 2) <input type="text" ng-model="data.text">', // @TODO: if not valid url, output error message
+                title: 'Select WMS source',
+                scope: scope,
+                cssClass: 'popup-import',
+                buttons: [{
+                    text: 'ArcGIS',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        return vm.arcgisPopup();
+                    }
+                }, {
+                    text: 'MapServer',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        return vm.msPopup();
+                    }
+                }]
+            });
+        }
+
+        function getMSPopup(scope) {
+            return $ionicPopup.show({
+                title: 'MapServer and layer details',
+                template: 'MapServer URL<input type="url" ng-model="data.url"> List of layers (ex: "soil,landcover") <input type="text" ng-model="data.text">', // @TODO: if not valid url, output error message
+                scope: scope,
+                cssClass: 'popup-import',
+                buttons: [{
+                    text: 'Submit',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        return scope.data;
+                    }
+                }]
+            });
+        }
+
+        function getArcGISPopup(scope) {
+            return $ionicPopup.show({
+                title: 'ArcGIS REST endpoint details',
+                template: 'ArcGIS server URL<input type="url" ng-model="data.url"> Layer ID List (ex: "0, 1, 2") <input type="text" ng-model="data.text">', // @TODO: if not valid url, output error message
                 scope: scope,
                 cssClass: 'popup-import',
                 buttons: [{

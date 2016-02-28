@@ -18,6 +18,8 @@
         vm.closePopover = closePopover;
         vm.gisPopup = gisPopup;
         vm.wmsPopup = wmsPopup;
+        vm.msPopup = msPopup;
+        vm.arcgisPopup = arcgisPopup;
 
         activate();
 
@@ -49,7 +51,7 @@
             });
 
             // @TODO: remove examples once import is finalized
-            //xmldata('LaurelHall.gpx');
+            xmldata('LaurelHall.gpx');
             //xmldata('https://developers.google.com/kml/documentation/KML_Samples.kml');
         }
 
@@ -145,10 +147,30 @@
 
         function wmsPopup() {
             $scope.data = {};
-            var wmsPopup = popupService.getWMSPopup($scope);
+            var wmsPopup = popupService.getWMSPopup($scope, vm);
             IonicClosePopupService.register(wmsPopup);
 
             wmsPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+        }
+
+        function arcgisPopup() {
+            $scope.data = {};
+            var arcgisPopup = popupService.getArcGISPopup($scope, vm);
+            IonicClosePopupService.register(arcgisPopup);
+
+            arcgisPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+        }
+
+        function msPopup() {
+            $scope.data = {};
+            var msPopup = popupService.getMSPopup($scope, vm);
+            IonicClosePopupService.register(msPopup);
+
+            msPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
         }
