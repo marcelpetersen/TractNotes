@@ -1,18 +1,149 @@
-<ion-popover-view>
-    <ion-content>
-        <div class="list" ng-click="popover.hide()">
-            <a class="item item-icon-left" popover-close ng-click="importPopup()" target="_blank">
-                <i class="icon ion-android-download"></i>
-                Import File (GPX, KML, WMS)
-            </a>
-            <a class="item item-icon-left" ng-click="export()" target="_blank">
-                <i class="icon ion-android-upload"></i>
-                Export
-            </a>
-            <a class="item item-icon-left" ng-click="addCTLayer('openSpace0')" target="_blank">
+<ion-popover-view class="fit">
+<!--        <a class="item item-icon-left" target="_blank">
                 <i class="icon ion-plus-circled"></i>
-                1997 Municipal and Private Open Space
+                Add CTEco Layer
             </a>
-        </div>
+        </div> -->
+    <ion-content>
+        <ion-list ng-click="popover.hide()">
+            <ion-item class="item item-divider">
+                Menu
+            </ion-item>
+            <ion-item class="item-icon-left" ng-click="importPopup()">
+                <i class="icon icon-download"></i>
+                Import GPX or KML file
+            </ion-item>
+            <ion-item class="item-icon-left" ng-click="export()">
+                <i class="icon icon-upload"></i>
+                Export Data                   
+            </ion-item>
+<!--             <ion-item class="item-icon-left" ng-click="popover.show($event)">
+                <i class="icon ion-plus-circled"></i>
+                Add CTEco Layer
+            </ion-item> -->
+            <ion-item class="item-divider">
+                CTEco Layers
+            </ion-item>
+            <!-- Bedrock Geology -->
+            <ion-item class="item item-avatar" ng-click="bedrockPopup()">
+                <img src="../img/bedrock.gif">
+                <div class="item-text-center">Bedrock Geology</div>
+            </ion-item>
+            <!-- Elevation and Bathymetry -->
+            <ion-item class="item item-avatar" ng-click="elevationPopup()">
+                <img src="../img/elevation_bathymetry.gif">
+                <div class="item-text-center">Elevation and Bathymetry</div>
+            </ion-item>
+            <!-- Erosion Susceptibility -->
+            <ion-item class="item item-avatar" ng-click="erosionPopup()">
+                <img src="../img/erosionsusceptibility.gif">
+                <div class="item-text-center">Erosion Susceptibility</div>
+            </ion-item>
+            <!-- Habitat -->
+            <ion-item class="item item-avatar" ng-click="habitatPopup()">
+                <img src="../img/habitat.gif">
+                <div class="item-text-center">Habitat</div>
+            </ion-item>
+            <!-- Hurricane Evacuation Zones 2014 -->
+            <ion-item class="item item-avatar" ng-click="hurricaneEvacPopup()">
+                <img src="../img/hurricane_evacuation_zones_2014.gif">
+                <div class="item-text-center">Hurricane Evacuation Zones 2014</div>
+            </ion-item>
+            <!-- Hurricane Surge Inundation -->
+            <ion-item class="item item-avatar" ng-click="hurricaneSurgePopup()">
+                <img src="../img/hurricane_surge_inundation.gif">
+                <div class="item-text-center">Hurricane Surge Inundation</div>
+            </ion-item>
+            <!-- NWI Wetlands Functions -->
+            <ion-item class="item item-avatar" ng-click="nwiWetlandPopup()">
+                <img src="../img/nwi_wetland_function_2010.gif">
+                <div class="item-text-center">NWI Wetlands Functions 2010</div>
+            </ion-item>
+            <!-- Open Space -->
+            <ion-item class="item item-avatar" ng-click="openSpacePopup()">
+                <img src="../img/open_space.gif">
+                <div class="item-text-center">Open Space</div>
+            </ion-item>
+            <!-- Quaternary Geology -->
+            <ion-item class="item item-avatar" ng-click="quaternaryPopup()">
+                <img src="../img/quaternary.gif">
+                <div class="item-text-center">Quaternary Geology</div>
+            </ion-item>
+            <!-- Soils -->
+            <ion-item class="item item-avatar" ng-click="soilsPopup()">
+                <img src="../img/soils.gif">
+                <div class="item-text-center">Soils</div>
+            </ion-item>
+            <!-- Surficial Materials -->
+            <ion-item class="item item-avatar" ng-click="surficialPopup()">
+                <img src="../img/surficial_materials.gif">
+                <div class="item-text-center">Surficial Materials</div>
+            </ion-item>
+            <!-- Water Resource Management -->
+            <ion-item class="item item-avatar" ng-click="waterResourcePopup()">
+                <img src="../img/water_resource_mgmt.gif">
+                <div class="item-text-center">Water Resource Management</div>
+            </ion-item>
+            <!-- Watershed -->
+            <ion-item class="item item-avatar" ng-click="watershedPopup()">
+                <img src="../img/watershed.gif">
+                <div class="item-text-center">Watershed</div>
+            </ion-item>
+            <!-- Ortho 1990 -->
+            <ion-item class="item item-avatar" ng-click="ortho1990Popup()">
+                <img src="../img/ortho_1990.jpg">
+                <div class="item-text-center">Ortho 1990</div>
+            </ion-item>
+            <!-- Ortho 2004 -->
+            <ion-item class="item item-avatar" ng-click="ortho2004Popup()">
+                <img src="../img/ortho_2004.jpg">
+                <div class="item-text-center">Ortho 2004</div>
+            </ion-item>
+            <!-- Ortho 2004 Coast Color -->
+            <ion-item class="item item-avatar" ng-click="ortho2004CCPopup()">
+                <img src="../img/ortho_2004_cc.jpg">
+                <div class="item-text-center">Ortho 2004 Coast Color</div>
+            </ion-item>
+            <!-- Ortho 2004 Coast Infrared -->
+            <ion-item class="item item-avatar" ng-click="ortho2004CIPopup()">
+                <img src="../img/ortho_2004_ci.jpg">
+                <div class="item-text-center">Ortho 2004 Coast Infrared</div>
+            </ion-item>
+            <!-- Ortho 2005 Coast Infrared -->
+            <ion-item class="item item-avatar" ng-click="ortho2005Popup()">
+                <img src="../img/ortho_2005_ci.jpg">
+                <div class="item-text-center">Ortho 2005 Coast Infrared</div>
+            </ion-item>
+            <!-- Ortho 2006 Color NAIP -->
+            <ion-item class="item item-avatar" ng-click="ortho2006Popup()">
+                <img src="../img/ortho_2006.jpg">
+                <div class="item-text-center">Ortho 2006</div>
+            </ion-item>
+            <!-- Ortho 2008 4Band NAIP -->
+            <ion-item class="item item-avatar" ng-click="ortho2008NAIPPopup()">
+                <img src="../img/ortho_2008_naip.jpg">
+                <div class="item-text-center">Ortho 2008 4Band NAIP</div>
+            </ion-item>
+            <!-- Ortho 2008 Urban Area Color -->
+            <ion-item class="item item-avatar" ng-click="ortho2008UAPopup()">
+                <img src="../img/ortho_2008_ua.jpg">
+                <div class="item-text-center">Ortho 2008 Urban Area Color</div>
+            </ion-item>
+            <!-- Ortho 2009 CRCOG Color -->
+            <ion-item class="item item-avatar" ng-click="ortho2009Popup()">
+                <img src="../img/ortho_2009.jpg">
+                <div class="item-text-center">Ortho 2009 CRCOG Color</div>
+            </ion-item>
+            <!-- Ortho 2010 4Band NAIP -->
+            <ion-item class="item item-avatar" ng-click="ortho2010NAIPPopup()">
+                <img src="../img/ortho_2010_naip.jpg">
+                <div class="item-text-center">Ortho 2010 4Band NAIP</div>
+            </ion-item>
+            <!-- Ortho 2010 Coast 4Band -->
+            <ion-item class="item item-avatar" ng-click="ortho2010CoastPopup()">
+                <img src="../img/ortho_2010_coast.jpg">
+                <div class="item-text-center">Ortho 2010 Coast 4Band</div>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-popover-view>
