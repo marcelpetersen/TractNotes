@@ -9,93 +9,78 @@
 
     /* @ngInject */
     function ctecoService() {
-        // begin open space layer definitions
 
         var openSpace0 = {
-            name: "1997 Municipal and Private Open Space",
-            type: "agsDynamic",
-            url: "http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer",
-            visible: true,
-            layerOptions: {
-                layers: [0],
-                opacity: 1,
-            },
+            name: '1997 Municipal and Private Open Space',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
+                opacity: 0.5,
+                layers: [0]
+            })
         };
 
         var openSpace1 = {
-            name: "DOT Scenic Land Strips",
-            type: "agsDynamic",
-            url: "http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer",
-            visible: true,
-            layerOptions: {
-                layers: [1],
-                opacity: 1,
-            }
+            name: "Protected Open Space Mapping Project",
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
+                opacity: 0.5,
+                layers: [1]
+            })
         };
 
         var openSpace2 = {
-            name: "Protected Open Space Mapping Project",
-            type: "agsDynamic",
-            url: "http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer",
-            visible: true,
-            layerOptions: {
-                layers: [2],
-                opacity: 1,
-            }
+            name: '1997 Municipal and Private Open Space',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
+                opacity: 0.5,
+                layers: [2]
+            })
         };
 
         var openSpace3 = {
             name: "Federal Open Space",
-            type: "agsDynamic",
-            url: "http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer",
-            visible: true,
-            layerOptions: {
-                layers: [3],
-                opacity: 1,
-            }
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
+                opacity: 0.5,
+                layers: [3]
+            })
         };
 
         var openSpace4 = {
             name: "DEP Property",
-            type: "agsDynamic",
-            url: "http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer",
-            visible: true,
-            layerOptions: {
-                layers: [4],
-                opacity: 1,
-            }
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
+                opacity: 0.5,
+                layers: [4]
+            })
         };
 
         var openSpace5 = {
-            name: "Parcels for Protected Open Space Mapping",
-            type: "agsDynamic",
-            url: "http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer",
-            visible: true,
-            layerOptions: {
-                layers: [5],
-                opacity: 1,
-            }
+            name: 'Parcels for Protected Open Space Mapping',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
+                opacity: 0.5,
+                layers: [5]
+            })
         };
 
         var openSpace6 = {
-            name: "Connecticut State Outline ",
-            type: "agsDynamic",
-            url: "http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer",
-            visible: true,
-            layerOptions: {
-                layers: [6],
-                opacity: 1,
-            }
+            name: 'Connecticut State Outline ',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
+                opacity: 0.5,
+                layers: [6]
+            })
         };
 
         var service = {
-            getCTLayer: getCTLayer
+            getcteco: getcteco
         };
         return service;
 
         ////////////////
 
-        function getCTLayer(layer) {
+        function getcteco(layer) {
             switch (layer) {
                 case 'openSpace0':
                     return openSpace0;

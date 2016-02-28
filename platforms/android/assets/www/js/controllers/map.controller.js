@@ -6,109 +6,123 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($scope, ctecoService, $ionicModal, $ionicPopover, popupService, IonicClosePopupService) {
+    function MapController($scope, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
 
-        $scope.map = {
-            layers: {
-                baselayers: {
-                    mapbox_streets: {
-                        name: 'Mapbox Streets',
-                        url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                        type: 'xyz',
-                        layerOptions: {
-                            apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
-                            mapid: 'mapbox.streets'
-                        }
-                    },
-                    mapbox_satellite: {
-                        name: 'Mapbox Satellite',
-                        url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                        type: 'xyz',
-                        layerOptions: {
-                            apikey: 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ',
-                            mapid: 'mapbox.satellite'
-                        }
-                    }
-                },
-                overlays: {}
-            },
-            markers: {
-                currentPosition: {},
-            },
-            controls: {
-                scale: true
-            },
-            center: {
-                autoDiscover: true
-            }
-        };
+        var vm = this;
+        vm.title = 'Controller';
+        vm.locate = locate;
+        vm.cteco = cteco;
+        vm.popover = null;
+        vm.openPopover = openPopover;
+        vm.closePopover = closePopover;
+        vm.importPopup = importPopup;
+        vm.wmsPopup = wmsPopup;
 
-        // Center and create a popup on the map at the user's current position
-        $scope.locate = function() {
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+            L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
+            $scope.map = L.mapbox.map('map');
+
+            autoDiscover();
+
+            $scope.baseMaps = {
+                'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo($scope.map),
+                'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
+            };
+            $scope.overlayMaps = {};
+            $scope.layercontrol = L.control.layers($scope.baseMaps, $scope.overlayMaps).addTo($scope.map);
+
+            L.control.scale().addTo($scope.map);
+            L.Control.geocoder({
+                position: 'topleft'
+            }).addTo($scope.map);
+
+            $ionicPopover.fromTemplateUrl('templates/map.popover.html', {
+                scope: $scope
+            }).then(function(popover) {
+                vm.popover = popover;
+            });
+
+            // @TODO: remove
+            //xmldata('placeholder');
+        }
+
+        function autoDiscover() {
             navigator.geolocation.getCurrentPosition(
                 function(position) {
-                    $scope.map.center.lat = position.coords.latitude;
-                    $scope.map.center.lng = position.coords.longitude;
-                    $scope.map.center.zoom = 15;
+                    var lat = position.coords.latitude;
+                    var long = position.coords.longitude;
+                    var zoom = 15;
+                    $scope.map.setView([lat, long], zoom);
+                })
+        }
 
-                    $scope.map.markers.currentPosition = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                        focus: true,
-                        draggable: false,
-                        message: "Hi there!",
-                    };
+        function locate() {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var lat = position.coords.latitude;
+                    var long = position.coords.longitude;
+                    var zoom = 15;
+                    $scope.map.setView([lat, long], zoom);
+
+                    L.marker([lat, long]).addTo($scope.map).bindPopup('Hi there').openPopup();
                 },
                 function() {
                     alert('Error getting location');
                 });
             return false;
-        };
+        }
 
-        $scope.addCTLayer = function(layer) {
-            $scope.map.layers.overlays[layer] = ctecoService.getCTLayer(layer);
-        };
+        // @TODO: generalize
+        function xmldata(layer) {
+            xmldataService.getxmldata("LaurelHall.gpx").addTo($scope.map)
+        }
 
-        // Create popover instance from template
-        $ionicPopover.fromTemplateUrl('templates/map.popover.html', {
-            scope: $scope
-        }).then(function(popover) {
-            $scope.popover = popover;
-        });
+        function cteco(layer) {
+            var cteco = ctecoService.getcteco(layer);
+            $scope.layercontrol.addOverlay(cteco.layer, cteco.name);
+        }
 
-        $scope.openPopover = function($event) {
-            $scope.popover.show($event);
-        };
-        $scope.closePopover = function() {
-            $scope.popover.hide();
-        };
+
+        // Popover functions
+        
+        function openPopover($event) {
+            vm.popover.show($event);
+        }
+
+        function closePopover($event) {
+            vm.popover.hide();
+        }
+
         $scope.$on('$destroy', function() {
-            $scope.popover.remove();
+            vm.popover.remove();
         });
 
-        // Create importPopup and WMSPopup functions
-        $scope.importPopup = function() {
+        // Popup functions
+        function importPopup() {
             $scope.data = {};
-
-            var importPopup = popupService.getImportPopup($scope);
+            var importPopup = popupService.getImportPopup($scope, vm);
             IonicClosePopupService.register(importPopup);
 
             importPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
-        };
+        }
 
-        $scope.wmsPopup = function() {
+        function wmsPopup() {
             $scope.data = {};
-
             var wmsPopup = popupService.getWMSPopup($scope);
             IonicClosePopupService.register(wmsPopup);
 
             wmsPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
-        };
+        }
     }
 
-    MapController.$inject = ['$scope', 'ctecoService', '$ionicModal', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$scope', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();

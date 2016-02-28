@@ -1,13 +1,13 @@
 <ion-view title="Map">
 <ion-nav-bar class="bar-dark"></ion-nav-bar>
 	<ion-nav-buttons side="left">
-		<button ng-click="popover.show($event)" class="button button-icon icon ion-navicon"></button>
+		<button ng-click="vm.popover.show($event)" class="button button-icon icon ion-navicon"></button>
 	</ion-nav-buttons>
 	<ion-nav-buttons side="right">
-		<button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
+		<button ng-click="vm.locate();" class="button button-icon icon ion-pinpoint"></button>
 		<button class="button button-icon icon ion-document-text" ui-sref="form"></button>
 	</ion-nav-buttons>
-	<ion-content data-tap-disabled="true">
-		<leaflet defaults="map.defaults" center="map.center" controls="map.controls" markers="map.markers" layers="map.layers" ng-if="map"></leaflet>
 	</ion-content>
+	<ion-content data-tap-disabled="true">
+	<div id="map" center="center" markers="markers" style="min-height:100%;min-width:100%;"></div>	
 </ion-view>

@@ -6,7 +6,6 @@
         .module('TractNotes', [
             'ionic',
             'ionic.closePopup',
-            'leaflet-directive',
             'lk-google-picker',
             'ngCordovaOauth'
         ])
@@ -31,7 +30,7 @@
     })
     */
 
-    function config($stateProvider, $urlRouterProvider) {
+    function config($stateProvider, $urlRouterProvider, $compileProvider) {
         $stateProvider
             .state('map', {
                 url: '/map',
@@ -39,6 +38,7 @@
                     map: {
                         templateUrl: 'templates/map.html',
                         controller: 'MapController',
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -53,5 +53,6 @@
             });
 
         $urlRouterProvider.otherwise('/map');
+        $compileProvider.imgSrcSanitizationWhitelist('../img');
     }
 })();

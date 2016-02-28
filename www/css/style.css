@@ -116,19 +116,6 @@ body {
 .popover .item .item-divider {
   background-color: #444444;
 }
-ion-popover-view.fit {
-  height: auto;
-  color: red;
-}
-
-ion-popover-view.fit ion-content {
-  position: relative;
-}
-
-ion-popover-view.fit .item-divider {
-  background-color: #444444;
-  color: white;
-}
 
 .platform-android ion-popover-view.fit {
   margin-top: 10px;
@@ -157,6 +144,10 @@ ion-popover-view.fit .item-divider {
     height: 100%;
 }
 
+.popover {
+  height: 400px;
+  width: 175px;
+}
 .popover-body {
   background-color: black;
 }
