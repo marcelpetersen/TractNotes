@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>WAYPOINT</name>
+  <Placemark>
+	<name>W1</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">1</SimpleData>
+		<SimpleData name="Latitude">41.80731000</SimpleData>
+		<SimpleData name="Longitude">-72.25462000</SimpleData>
+		<SimpleData name="y_proj">855272.33000052</SimpleData>
+		<SimpleData name="x_proj">1135058.18993620</SimpleData>
+		<SimpleData name="altitude">190.60</SimpleData>
+		<SimpleData name="desc">Student Union Mall construction.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.254619999961477,41.80730999985547,56.854025568813086</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W2</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">4</SimpleData>
+		<SimpleData name="Latitude">41.80730400</SimpleData>
+		<SimpleData name="Longitude">-72.25435400</SimpleData>
+		<SimpleData name="y_proj">855270.55950350</SimpleData>
+		<SimpleData name="x_proj">1135130.72259327</SimpleData>
+		<SimpleData name="altitude">188.65</SimpleData>
+		<SimpleData name="desc">Construction zone. </SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.254353999961893,41.80730399985697,56.259826617315412</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W3</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">1</SimpleData>
+		<SimpleData name="Latitude">41.80706500</SimpleData>
+		<SimpleData name="Longitude">-72.25410200</SimpleData>
+		<SimpleData name="y_proj">855183.86385396</SimpleData>
+		<SimpleData name="x_proj">1135199.92566154</SimpleData>
+		<SimpleData name="altitude">192.19</SimpleData>
+		<SimpleData name="desc">Old stormwater infrastructure. note the plea not to dump waste.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.254101999961151,41.807064999854241,57.339065696112812</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W4</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">1</SimpleData>
+		<SimpleData name="Latitude">41.80709500</SimpleData>
+		<SimpleData name="Longitude">-72.25400300</SimpleData>
+		<SimpleData name="y_proj">855194.95054174</SimpleData>
+		<SimpleData name="x_proj">1135226.85358435</SimpleData>
+		<SimpleData name="altitude">191.78</SimpleData>
+		<SimpleData name="desc">Imagine the amount of fertilizer that ends up in here.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.254002999961216,41.807094999854563,57.214887654408813</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W5</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">1</SimpleData>
+		<SimpleData name="Latitude">41.80718100</SimpleData>
+		<SimpleData name="Longitude">-72.25403600</SimpleData>
+		<SimpleData name="y_proj">855226.23666285</SimpleData>
+		<SimpleData name="x_proj">1135217.67683169</SimpleData>
+		<SimpleData name="altitude">191.53</SimpleData>
+		<SimpleData name="desc">New stormwater infrastructure - large bioretention area treats runoff from Laurel Hall.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.254035999961275,41.807180999854737,57.138578491285443</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W6</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">2</SimpleData>
+		<SimpleData name="Latitude">41.80717800</SimpleData>
+		<SimpleData name="Longitude">-72.25392000</SimpleData>
+		<SimpleData name="y_proj">855225.32502363</SimpleData>
+		<SimpleData name="x_proj">1135249.30848348</SimpleData>
+		<SimpleData name="altitude">193.45</SimpleData>
+		<SimpleData name="desc">New stormwater infrastructure - pervious interlocking concrete paver walkway along the edge of Laurel Hall.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253919999960871,41.80717799985328,57.724962101317942</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W7</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">12</SimpleData>
+		<SimpleData name="Latitude">41.80721600</SimpleData>
+		<SimpleData name="Longitude">-72.25374400</SimpleData>
+		<SimpleData name="y_proj">855239.44746022</SimpleData>
+		<SimpleData name="x_proj">1135297.21229152</SimpleData>
+		<SimpleData name="altitude">190.93</SimpleData>
+		<SimpleData name="desc">Inlet from roof into bioretention.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253743999961415,41.80721599985521,56.956114808097482</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W8</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">49</SimpleData>
+		<SimpleData name="Latitude">41.80714500</SimpleData>
+		<SimpleData name="Longitude">-72.25375400</SimpleData>
+		<SimpleData name="y_proj">855213.55993053</SimpleData>
+		<SimpleData name="x_proj">1135294.63454639</SimpleData>
+		<SimpleData name="altitude">191.21</SimpleData>
+		<SimpleData name="desc">Innie drain now flows to bioretention basin.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253753999961333,41.807144999855019,57.04167016595602</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W9</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">12</SimpleData>
+		<SimpleData name="Latitude">41.80760800</SimpleData>
+		<SimpleData name="Longitude">-72.25327000</SimpleData>
+		<SimpleData name="y_proj">855383.03186019</SimpleData>
+		<SimpleData name="x_proj">1135425.61892384</SimpleData>
+		<SimpleData name="altitude">190.89</SimpleData>
+		<SimpleData name="desc">Stormwater overflow drains to stormwater system.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253269999961418,41.80760799985525,56.942879125475883</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W10</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">15</SimpleData>
+		<SimpleData name="Latitude">41.80751000</SimpleData>
+		<SimpleData name="Longitude">-72.25316800</SimpleData>
+		<SimpleData name="y_proj">855347.48125794</SimpleData>
+		<SimpleData name="x_proj">1135453.63258184</SimpleData>
+		<SimpleData name="altitude">190.64</SimpleData>
+		<SimpleData name="desc">Bike racks and more PICPs.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253167999961462,41.807509999855455,56.866656830534339</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W11</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">172</SimpleData>
+		<SimpleData name="Latitude">41.80751400</SimpleData>
+		<SimpleData name="Longitude">-72.25309400</SimpleData>
+		<SimpleData name="y_proj">855349.05483449</SimpleData>
+		<SimpleData name="x_proj">1135473.79890503</SimpleData>
+		<SimpleData name="altitude">191.01</SimpleData>
+		<SimpleData name="desc">Summer campus secret - blueberry bushes!</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253093999961393,41.807513999855161,56.980063770897686</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W12</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">1</SimpleData>
+		<SimpleData name="Latitude">41.80715100</SimpleData>
+		<SimpleData name="Longitude">-72.25284600</SimpleData>
+		<SimpleData name="y_proj">855217.16923724</SimpleData>
+		<SimpleData name="x_proj">1135542.17245039</SimpleData>
+		<SimpleData name="altitude">192.39</SimpleData>
+		<SimpleData name="desc">Low maintenance landscaping.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.252845999961096,41.807150999854073,57.40190533734858</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W13</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">1</SimpleData>
+		<SimpleData name="Latitude">41.80708800</SimpleData>
+		<SimpleData name="Longitude">-72.25331700</SimpleData>
+		<SimpleData name="y_proj">855193.47406474</SimpleData>
+		<SimpleData name="x_proj">1135413.89442064</SimpleData>
+		<SimpleData name="altitude">0.00</SimpleData>
+		<SimpleData name="desc">New Stormwater Infrastructure - Green Roof on Laurel Hall. Cools the building and absorbs stormwater.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253317000001161,41.807088000002921,-1.240090960636735</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W14</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">68</SimpleData>
+		<SimpleData name="Latitude">41.80679100</SimpleData>
+		<SimpleData name="Longitude">-72.25341600</SimpleData>
+		<SimpleData name="y_proj">855085.09435511</SimpleData>
+		<SimpleData name="x_proj">1135387.52570366</SimpleData>
+		<SimpleData name="altitude">193.61</SimpleData>
+		<SimpleData name="desc">Maintenance needed here.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253415999960851,41.806790999853149,57.771846971474588</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W15</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">68</SimpleData>
+		<SimpleData name="Latitude">41.80675500</SimpleData>
+		<SimpleData name="Longitude">-72.25344700</SimpleData>
+		<SimpleData name="y_proj">855071.92765583</SimpleData>
+		<SimpleData name="x_proj">1135379.14942626</SimpleData>
+		<SimpleData name="altitude">191.31</SimpleData>
+		<SimpleData name="desc">Pavers starting to warp. Good spot to try more PICPs?</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253446999961326,41.806754999854931,57.07186864502728</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>W16</name>
+	<ExtendedData><SchemaData schemaUrl="#WAYPOINT">
+		<SimpleData name="type">136</SimpleData>
+		<SimpleData name="Latitude">41.80682800</SimpleData>
+		<SimpleData name="Longitude">-72.25385300</SimpleData>
+		<SimpleData name="y_proj">855097.89250197</SimpleData>
+		<SimpleData name="x_proj">1135268.30714995</SimpleData>
+		<SimpleData name="altitude">191.70</SimpleData>
+		<SimpleData name="desc">Gampel pavilion Home of Champions.</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-72.253852999961239,41.806827999854619,57.191437898203731</coordinates></Point>
+  </Placemark>
+</Folder>
+<Schema name="WAYPOINT" id="WAYPOINT">
+	<SimpleField name="type" type="string"></SimpleField>
+	<SimpleField name="Latitude" type="float"></SimpleField>
+	<SimpleField name="Longitude" type="float"></SimpleField>
+	<SimpleField name="y_proj" type="float"></SimpleField>
+	<SimpleField name="x_proj" type="float"></SimpleField>
+	<SimpleField name="altitude" type="float"></SimpleField>
+	<SimpleField name="desc" type="string"></SimpleField>
+</Schema>
+</Document></kml>

@@ -6,7 +6,6 @@
         .module('TractNotes', [
             'ionic',
             'ionic.closePopup',
-            'leaflet-directive',
             'lk-google-picker',
             'ngCordovaOauth'
         ])
