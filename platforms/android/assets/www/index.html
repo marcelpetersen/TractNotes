@@ -3,7 +3,7 @@
 
 <head>
 
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; media-src *; img-src *; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; media-src *; img-src * 'self' data:; script-src * 'unsafe-inline' 'unsafe-eval'">
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Leaflet Demo</title>
@@ -33,7 +33,6 @@
 
     <!-- Cordova and Ionic extensions -->
     <script src="lib/ionic-close-popup.js"></script>
-    <script src="lib/ng-cordova.min.js"></script>
     <script src="lib/ng-cordova-oauth.min.js"></script>
     <script src="lib/google-picker.min.js"></script>
 
@@ -50,20 +49,11 @@
 
 </head>
 
-<body ng-app="TractNotes" class="platform-ios platform-cordova platform-webview">
-    <ion-tabs class="tabs-dark">
-        <ion-tab icon="ion-map" ui-sref="map">
-            <ion-nav-view name="map"></ion-nav-view>
-        </ion-tab>
-        <ion-tab icon="ion-document-text" ui-sref="form">
-            <ion-nav-view name="form"></ion-nav-view>
-        </ion-tab>
-    </ion-tabs>
+<body ng-app="TractNotes" class="platform-android platform-cordova platform-webview">
+    <ion-nav-view name="map"></ion-nav-view>
 </body>
 
 <script type="text/ng-template" id="template/map.html"></script>
-
 <script type="text/ng-template" id="template/form.html"></script>
-
 
 </html>
