@@ -39,6 +39,7 @@
                     map: {
                         templateUrl: 'templates/map.html',
                         controller: 'MapController',
+                        controllerAs: 'vm'
                     }
                 }
             })

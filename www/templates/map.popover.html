@@ -1,7 +1,7 @@
 <ion-popover-view>
     <ion-content>
-        <div class="list" ng-click="popover.hide()">
-            <a class="item item-icon-left" popover-close ng-click="importPopup()" target="_blank">
+        <div class="list" ng-click="vm.popover.hide()">
+            <a class="item item-icon-left" popover-close ng-click="vm.importPopup()" target="_blank">
                 <i class="icon ion-android-download"></i>
                 Import File (GPX, KML, WMS)
             </a>
@@ -9,7 +9,7 @@
                 <i class="icon ion-android-upload"></i>
                 Export
             </a>
-            <a class="item item-icon-left" ng-click="addCTLayer('openSpace0')" target="_blank">
+            <a class="item item-icon-left" ng-click="vm.cteco('openSpace0')" target="_blank">
                 <i class="icon ion-plus-circled"></i>
                 1997 Municipal and Private Open Space
             </a>

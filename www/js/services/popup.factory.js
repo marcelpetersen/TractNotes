@@ -17,7 +17,7 @@
 
         ////////////////
 
-        function getImportPopup(scope) {
+        function getImportPopup(scope, vm) {
             return $ionicPopup.show({
                 title: 'Add GIS data',
                 subTitle: '(Add your data here!)',
@@ -31,7 +31,7 @@
                     text: '<b>Link WMS data</b>',
                     type: 'button-positive',
                     onTap: function(e) {
-                        scope.wmsPopup();
+                        vm.wmsPopup();
                     }
                 }]
             });
