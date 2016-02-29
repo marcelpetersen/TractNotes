@@ -20,6 +20,9 @@
         };
         vm.overlayMaps = {};
         vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps);
+        vm.recordMode = recordMode;
+        vm.drawnItems = null;
+        vm.drawControl = null;
         vm.locate = locate;
         vm.cteco = cteco;
         vm.xmldata = xmldata;
@@ -62,6 +65,42 @@
                     var zoom = 15;
                     vm.map.setView([lat, long], zoom);
                 })
+        }
+
+        // should any of the below functions be abstracted to services?
+        function recordMode() {
+            if (vm.drawnItems == null) {
+                vm.drawnItems = new L.FeatureGroup();
+                vm.map.addLayer(vm.drawnItems);
+                vm.layercontrol.addOverlay(vm.drawnItems, 'Drawn items');
+            }
+
+            if (vm.drawControl == null) {
+                vm.drawControl = new L.Control.Draw({
+                    draw: {
+                        position: 'topleft'
+                    },
+                    edit: {
+                        featureGroup: vm.drawnItems
+                    }
+                });
+                vm.map.addControl(vm.drawControl);
+            } else {
+                vm.map.removeControl(vm.drawControl);
+                vm.drawControl = null;
+            }
+
+            vm.map.on('draw:created', function(e) {
+                var type = e.layerType,
+                    layer = e.layer;
+
+                if (type === 'marker') {
+                    layer.bindPopup('A popup!');
+                }
+
+                vm.drawnItems.addLayer(layer);
+            });
+
         }
 
         function locate() {
