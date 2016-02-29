@@ -7,9 +7,19 @@
 
     /* @ngInject */
     function MapController($scope, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
+        // Mapbox development access token
+        L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
 
+        // vm definitions
         var vm = this;
         vm.title = 'Controller';
+        vm.map = L.mapbox.map('map');
+        vm.baseMaps = {
+            'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
+            'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
+        };
+        vm.overlayMaps = {};
+        vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps);
         vm.locate = locate;
         vm.cteco = cteco;
         vm.xmldata = xmldata;
@@ -26,32 +36,21 @@
         ////////////////
 
         function activate() {
-
-            L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
-            $scope.map = L.mapbox.map('map');
-
+            vm.layercontrol.addTo(vm.map);
             autoDiscover();
 
-            $scope.baseMaps = {
-                'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo($scope.map),
-                'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
-            };
-            $scope.overlayMaps = {};
-            $scope.layercontrol = L.control.layers($scope.baseMaps, $scope.overlayMaps).addTo($scope.map);
-
-            L.control.scale().addTo($scope.map);
+            L.control.scale().addTo(vm.map);
             L.Control.geocoder({
                 position: 'topleft'
-            }).addTo($scope.map);
+            }).addTo(vm.map);
 
             $ionicPopover.fromTemplateUrl('templates/map.popover.html', {
                 scope: $scope
             }).then(function(popover) {
                 vm.popover = popover;
             });
-
             // @TODO: remove examples once import is finalized
-            xmldata('LaurelHall.gpx');
+            //xmldata('LaurelHall.gpx');
             //xmldata('https://developers.google.com/kml/documentation/KML_Samples.kml');
         }
 
@@ -61,7 +60,7 @@
                     var lat = position.coords.latitude;
                     var long = position.coords.longitude;
                     var zoom = 15;
-                    $scope.map.setView([lat, long], zoom);
+                    vm.map.setView([lat, long], zoom);
                 })
         }
 
@@ -71,9 +70,9 @@
                     var lat = position.coords.latitude;
                     var long = position.coords.longitude;
                     var zoom = 15;
-                    $scope.map.setView([lat, long], zoom);
+                    vm.map.setView([lat, long], zoom);
 
-                    L.marker([lat, long]).addTo($scope.map).bindPopup('Hi there').openPopup();
+                    L.marker([lat, long]).addTo(vm.map).bindPopup('Hi there').openPopup();
                 },
                 function() {
                     alert('Error getting location');
@@ -86,7 +85,7 @@
             layerResult.then(function(val) {
                 $scope.$apply(function() {
                     var finalLayer = val.on('ready', function() {
-                        $scope.map.fitBounds(val.getBounds());
+                        vm.map.fitBounds(val.getBounds());
                         val.eachLayer(function(layer) {
                             var content;
                             var name = layer.feature.properties.name;
@@ -106,8 +105,8 @@
                             }
                         });
                     })
-                    finalLayer.addTo($scope.map);
-                    $scope.layercontrol.addOverlay(finalLayer, layer)
+                    finalLayer.addTo(vm.map);
+                    vm.layercontrol.addOverlay(finalLayer, layer)
                 })
 
             });
@@ -116,7 +115,7 @@
 
         function cteco(layer) {
             var cteco = ctecoService.getcteco(layer);
-            $scope.layercontrol.addOverlay(cteco.layer, cteco.name);
+            vm.layercontrol.addOverlay(cteco.layer, cteco.name);
         }
 
 
