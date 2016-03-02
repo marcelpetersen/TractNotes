@@ -9,9 +9,6 @@
 
     /* @ngInject */
     function xmldataService() {
-        var isKML = false;
-        var isGPX = false;
-
         var service = {
             getxmldata: getxmldata
         };
@@ -20,33 +17,34 @@
         ////////////////
 
         function getxmldata(layer) {
-            var kml = omnivore.gpx('this will fail')
-                .on('ready', function() {
-                    isKML = true;
-                })
-                .on('error', function() {
-                    console.log("This is not a KML layer.")
-                })
+            var xml = layer;
+            console.log(layer);
+            return new Promise(
+                function(resolve, reject) {
+                    $(function() {
+                        $.ajax({
+                        type: "GET",
+                        url: layer,
+                        dataType: "xml",
+                        success: function(xml) {
+                            if ($('kml', xml).text() != '') {console.log(omnivore.kml(layer));
+                                resolve(omnivore.kml(layer));
+                            }
+                            if ($('gpx', xml).text() != '') {console.log(omnivore.gpx(layer));
+                                resolve(omnivore.gpx(layer));
+                            }
+                        },
+                        error: function() {
+                            console.log('error');
+                        }
+                    });
+                    });
+                }
+            );
 
-            var gpx = omnivore.gpx(layer)
-                .on('ready', function() {
-                    isGPX = true;
-                })
-                .on('error', function() {
-                    console.log("This is not a GPX layer.")
-                });
-
-            if(isKML){
-                return kml;
-            }
-            else if(isGPX){
-                console.log('this enver happens');
-                return gpx;
-            }
-            else{
-                return 'invalid file';
-            }
-            // @TODO: use desc xml tag as layer name
+            // @TODO: more robust error handling? we need ot use jquery to get the url, but maybe leaflet-omnivore is better for errors
+            // could use var layer = w.e. -> layer.layers.length not equal to 0
+            // @TODO: use file name as layer name, or end of web url: this will come into play once google drive is working
         }
     }
 })();

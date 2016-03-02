@@ -1,4 +1,3 @@
-// TractNotes
 (function() {
     'use strict';
 
@@ -9,40 +8,54 @@
             'lk-google-picker',
             'ngCordovaOauth'
         ])
-        .config(config);
-
-    /*
-    .config(['lkGoogleSettingsProvider',
-        function(lkGoogleSettingsProvider) {
-
-            // Configure the API credentials here
-            lkGoogleSettingsProvider.configure({
-                apiKey: 'AIzaSyDJ38qrLrTAZMsp0Kaq1ynKP5jKsjNFFy4',
-                clientId: '775512295394-b73trc22sril3j04nhfa7fn2nuekkv0b.apps.googleusercontent.com'
-            });
-        }
-    ])
-
-    .filter('getExtension', function() {
-        return function(url) {
-            return url.split('.').pop();
-        };
-    })
-    */
+        .config(config)
+        .run(run);
 
     function config($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('map', {
-                url: '/map',
-                views: {
-                    map: {
-                        templateUrl: 'templates/map.html',
-                        controller: 'MapController',
-                        controllerAs: 'vm'
-                    }
+
+        .state('app', {
+            url: '/app',
+            abstract: true,
+            templateUrl: 'templates/menu.html' //,
+            //controller: 'MenuController'
+        })
+
+        .state('app.map', {
+            url: '/map',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/map.html',
+                    controller: 'MapController',
+                    controllerAs: 'vm'
                 }
-            })
-            .state('form', {
+            }
+        })
+
+        .state('app.import', {
+            url: '/import',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/import.html',
+                    //controller: 'ImportController',
+                    //controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.control', {
+            url: '/control',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/control.html',
+                    controller: 'ControlController',
+                    controllerAs: 'vm'
+                }
+            }
+        });
+
+        /*
+        .state('app.form', {
                 url: '/form',
                 views: {
                     form: {
@@ -50,8 +63,27 @@
                         controller: 'PickerController',
                     }
                 }
-            });
+        });
+        */
 
-        $urlRouterProvider.otherwise('/map');
+        // if none of the above states are matched, use this as the fallback
+        $urlRouterProvider.otherwise('/app/map');
     }
+
+
+    function run($ionicPlatform) {
+        $ionicPlatform.ready(function() {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                cordova.plugins.Keyboard.disableScroll(true);
+            }
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                StatusBar.styleDefault();
+            }
+        });
+    }
+
 })();

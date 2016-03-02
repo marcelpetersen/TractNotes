@@ -1,0 +1,54 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content drag-content="false">
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-stable">
+      <h1 class="title">TractNotes</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <ion-item class="item-icon-left" menu-close href="#/app/import">
+        <i class="icon icon-download"></i>
+          Import
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close href="#/app/export">
+        <i class="icon icon-upload"></i>
+          Export
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close href="#/app/WMS">
+        <i class="icon ion-earth"></i>
+          WMS
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close href="#/app/WMS">
+        <i class="icon ion-map"></i>
+          CTEco layers
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close href="#/app/control">
+        <i class="icon ion-android-expand"></i>
+          Map Controls
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close href="#/app/form">
+        <i class="icon ion-document-text"></i>
+          Form
+        </ion-item>
+        <ion-item menu-close href="#/app/settings">
+          Settings
+        </ion-item>
+        <ion-item menu-close href="#/app/map">
+          Exit
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

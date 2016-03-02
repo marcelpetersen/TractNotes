@@ -22,9 +22,13 @@
             <ion-item class="item item-divider">
                 Menu
             </ion-item>
-            <ion-item class="item-icon-left" popover-close ng-click="vm.importPopup()">
+            <ion-item class="item-icon-left" popover-close ng-click="vm.gisPopup()">
                 <i class="icon icon-download"></i>
-                Import GPX or KML file
+                Import GIS data
+            </ion-item>
+            <ion-item class="item-icon-left" popover-close ng-click="vm.wmsPopup()">
+                <i class="icon icon-download"></i>
+                Add WMS layer
             </ion-item>
             <ion-item class="item-icon-left" ng-click="export()">
                 <i class="icon icon-upload"></i>

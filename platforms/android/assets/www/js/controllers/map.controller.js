@@ -7,48 +7,54 @@
 
     /* @ngInject */
     function MapController($scope, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
+        // Mapbox development access token
+        L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
 
+        // vm definitions
         var vm = this;
         vm.title = 'Controller';
+        vm.map = L.mapbox.map('map');
+        vm.baseMaps = {
+            'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
+            'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
+        };
+        vm.overlayMaps = {};
+        vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps);
+        vm.recordMode = recordMode;
+        vm.drawnItems = null;
+        vm.drawControl = null;
         vm.locate = locate;
         vm.cteco = cteco;
+        vm.xmldata = xmldata;
         vm.popover = null;
         vm.openPopover = openPopover;
         vm.closePopover = closePopover;
-        vm.importPopup = importPopup;
+        vm.gisPopup = gisPopup;
         vm.wmsPopup = wmsPopup;
+        vm.msPopup = msPopup;
+        vm.arcgisPopup = arcgisPopup;
 
         activate();
 
         ////////////////
 
         function activate() {
-
-            L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
-            $scope.map = L.mapbox.map('map');
-
+            vm.layercontrol.addTo(vm.map);
             autoDiscover();
 
-            $scope.baseMaps = {
-                'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo($scope.map),
-                'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
-            };
-            $scope.overlayMaps = {};
-            $scope.layercontrol = L.control.layers($scope.baseMaps, $scope.overlayMaps).addTo($scope.map);
-
-            L.control.scale().addTo($scope.map);
+            L.control.scale().addTo(vm.map);
             L.Control.geocoder({
                 position: 'topleft'
-            }).addTo($scope.map);
+            }).addTo(vm.map);
 
             $ionicPopover.fromTemplateUrl('templates/map.popover.html', {
                 scope: $scope
             }).then(function(popover) {
                 vm.popover = popover;
             });
-
-            // @TODO: remove
-            //xmldata('placeholder');
+            // @TODO: remove examples once import is finalized
+            //xmldata('LaurelHall.gpx');
+            //xmldata('https://developers.google.com/kml/documentation/KML_Samples.kml');
         }
 
         function autoDiscover() {
@@ -57,8 +63,44 @@
                     var lat = position.coords.latitude;
                     var long = position.coords.longitude;
                     var zoom = 15;
-                    $scope.map.setView([lat, long], zoom);
-                })
+                    vm.map.setView([lat, long], zoom);
+                });
+        }
+
+        // should any of the below functions be abstracted to services?
+        function recordMode() {
+            if (vm.drawnItems === null) {
+                vm.drawnItems = new L.FeatureGroup();
+                vm.map.addLayer(vm.drawnItems);
+                vm.layercontrol.addOverlay(vm.drawnItems, 'Drawn items');
+            }
+
+            if (vm.drawControl === null) {
+                vm.drawControl = new L.Control.Draw({
+                    draw: {
+                        position: 'topleft'
+                    },
+                    edit: {
+                        featureGroup: vm.drawnItems
+                    }
+                });
+                vm.map.addControl(vm.drawControl);
+            } else {
+                vm.map.removeControl(vm.drawControl);
+                vm.drawControl = null;
+            }
+
+            vm.map.on('draw:created', function(e) {
+                var type = e.layerType,
+                    layer = e.layer;
+
+                if (type === 'marker') {
+                    layer.bindPopup('A popup!');
+                }
+
+                vm.drawnItems.addLayer(layer);
+            });
+
         }
 
         function locate() {
@@ -67,9 +109,9 @@
                     var lat = position.coords.latitude;
                     var long = position.coords.longitude;
                     var zoom = 15;
-                    $scope.map.setView([lat, long], zoom);
+                    vm.map.setView([lat, long], zoom);
 
-                    L.marker([lat, long]).addTo($scope.map).bindPopup('Hi there').openPopup();
+                    L.marker([lat, long]).addTo(vm.map).bindPopup('Hi there').openPopup();
                 },
                 function() {
                     alert('Error getting location');
@@ -77,19 +119,46 @@
             return false;
         }
 
-        // @TODO: generalize
         function xmldata(layer) {
-            xmldataService.getxmldata("LaurelHall.gpx").addTo($scope.map)
+            var layerResult = xmldataService.getxmldata(layer);
+            layerResult.then(function(val) {
+                $scope.$apply(function() {
+                    var finalLayer = val.on('ready', function() {
+                        vm.map.fitBounds(val.getBounds());
+                        val.eachLayer(function(layer) {
+                            var content;
+                            var name = layer.feature.properties.name;
+                            var desc = layer.feature.properties.desc;
+
+                            if (name !== null) {
+                                content = '<h2>' + name + '</h2>';
+                                if (desc !== null) {
+                                    content += '<p>' + desc + '</p';
+                                    layer.bindPopup(content);
+                                } else {
+                                    layer.bindPopup(content);
+                                }
+                            } else if (desc !== null) {
+                                content = '<h2>' + desc + '</h2>';
+                                layer.bindPopup(content);
+                            }
+                        });
+                    });
+                    finalLayer.addTo(vm.map);
+                    vm.layercontrol.addOverlay(finalLayer, layer);
+                });
+
+            });
+
         }
 
         function cteco(layer) {
             var cteco = ctecoService.getcteco(layer);
-            $scope.layercontrol.addOverlay(cteco.layer, cteco.name);
+            vm.layercontrol.addOverlay(cteco.layer, cteco.name);
         }
 
 
         // Popover functions
-        
         function openPopover($event) {
             vm.popover.show($event);
         }
@@ -103,22 +172,43 @@
         });
 
         // Popup functions
-        function importPopup() {
+        function gisPopup() {
             $scope.data = {};
-            var importPopup = popupService.getImportPopup($scope, vm);
-            IonicClosePopupService.register(importPopup);
+            var gisPopup = popupService.getGISPopup($scope, vm);
+            IonicClosePopupService.register(gisPopup);
 
-            importPopup.then(function(res) {
+            gisPopup.then(function(res) {
+                vm.xmldata(res);
                 console.log('Tapped!', res);
             });
         }
 
         function wmsPopup() {
             $scope.data = {};
-            var wmsPopup = popupService.getWMSPopup($scope);
+            var wmsPopup = popupService.getWMSPopup($scope, vm);
             IonicClosePopupService.register(wmsPopup);
 
             wmsPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+        }
+
+        function arcgisPopup() {
+            $scope.data = {};
+            var arcgisPopup = popupService.getArcGISPopup($scope, vm);
+            IonicClosePopupService.register(arcgisPopup);
+
+            arcgisPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+        }
+
+        function msPopup() {
+            $scope.data = {};
+            var msPopup = popupService.getMSPopup($scope, vm);
+            IonicClosePopupService.register(msPopup);
+
+            msPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
         }
