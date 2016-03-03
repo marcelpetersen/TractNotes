@@ -5,8 +5,6 @@
         .module('TractNotes', [
             'ionic',
             'ionic.closePopup',
-            'lk-google-picker',
-            'ngCordovaOauth',
             'ngCordova'
         ])
         .config(config)
