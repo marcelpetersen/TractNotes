@@ -24,7 +24,7 @@
                     function(error) {
                         console.log("" + error);
                     });
-        }
+        };
 
         var vm = this;
         vm.title = 'Controller';
@@ -36,5 +36,5 @@
         function activate() {}
     }
 
-        GAuthController.$inject = ['$scope', 'Drive', '$state'];
+    GAuthController.$inject = ['$scope', 'Drive', '$state'];
 })();

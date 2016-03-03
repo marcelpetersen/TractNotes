@@ -6,7 +6,7 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($scope, $stateParams, locationService, controlService, drawnItems, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
+    function MapController($scope, $stateParams, locationService, controlService, drawnItemsService, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -25,8 +25,6 @@
 
         $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
             if (toState.name == 'app.map') {
-
-
                 vm.draw();
                 vm.scale();
                 vm.search();
@@ -63,9 +61,6 @@
                 position: '',
                 control: null
             };
-            // @TODO: remove examples once import is finalized
-            //xmldata('LaurelHall.gpx');
-            //xmldata('https://developers.google.com/kml/documentation/KML_Samples.kml');
         }
 
         function autoDiscover() {
@@ -85,9 +80,9 @@
 
         // add and remove draw control
         function draw() {
-            var drawn = drawnItems.getDrawnItems();
+            var drawn = drawnItemsService.getDrawnItems();
             // if the control is not on the map, but the control was set to active by ControlController, display the control
-            if (controlService.getDraw().active === true) {
+            if (vm.drawControl.control === null && controlService.getDraw().active === true) {
                 vm.map.addLayer(drawn);
                 vm.layercontrol.addOverlay(drawn, 'Drawn items');
 
@@ -104,8 +99,9 @@
                 vm.map.addControl(vm.drawControl.control);
             }
             // if the control is on the map, but the control was set to inactive, remove the control from the map
-            else if (controlService.getDraw().active === false) {
+            else if (vm.drawControl.control !== null &&controlService.getDraw().active === false) {
                 vm.map.removeControl(vm.drawControl.control);
+                vm.drawControl.control = null;
                 if (!$.isEmptyObject(drawn._layers)) {vm.layercontrol.addOverlay(drawn, 'Drawn items');}
             }
 
@@ -115,19 +111,21 @@
 
         // add and remove scale control
         function scale() {
-            if (controlService.getScale().active !== false) {
+            if (vm.scaleControl.control === null && controlService.getScale().active !== false) {
                 vm.scaleControl.control = L.control.scale().addTo(vm.map);
-            } else if (controlService.getScale().active !== true) {
+            } else if (vm.scaleControl.control !== null && controlService.getScale().active !== true) {
                 vm.scaleControl.control.removeFrom(vm.map);
+                vm.scaleControl.control = null; 
             }
         }
 
         // add and remove search control
         function search() {
-            if (controlService.getSearch().active !== false) {
+            if (vm.searchControl.control === null && controlService.getSearch().active !== false) {
                 vm.searchControl.control = L.Control.geocoder().addTo(vm.map);
-            } else if (controlService.getSearch().active !== true) {
+            } else if (vm.searchControl.control !== null && controlService.getSearch().active !== true) {
                 vm.searchControl.control.removeFrom(vm.map);
+                vm.searchControl.control = null; 
             }
         }
 
@@ -144,7 +142,7 @@
             var type = e.layerType;
             var layer = e.layer;
             if (type === 'polyline') {
-                drawnItems.addToDrawnItems(layer);
+                drawnItemsService.addToDrawnItems(layer);
                 var tempLatLng = null;
                 var totalDistance = 0.00000;
                 $.each(e.layer._latlngs, function(i, latlng) {
@@ -158,18 +156,18 @@
                 e.layer.bindPopup((totalDistance).toFixed(2) + ' meters');
                 e.layer.openPopup();
             } else if (type === 'circle') {
-                drawnItems.addToDrawnItems(layer);
+                drawnItemsService.addToDrawnItems(layer);
                 var area = 0;
                 var radius = e.layer.getRadius();
                 area = (Math.PI) * (radius * radius);
                 e.layer.bindPopup((area / 1000000).toFixed(2) + ' km<sup>2</sup>');
                 e.layer.openPopup();
             } else if (type === 'polygon' || type === 'rectangle') {
-                drawnItems.addToDrawnItems(layer);
+                drawnItemsService.addToDrawnItems(layer);
                 e.layer.bindPopup(((LGeo.area(e.layer) / 1000000) * 0.62137).toFixed(2) + ' mi<sup>2</sup>');
                 e.layer.openPopup();
             } else {
-                drawnItems.addToDrawnItems(layer);
+                drawnItemsService.addToDrawnItems(layer);
                 var newLoc = layer.getLatLng();
                 console.log(newLoc);
                 var currentPosition = locationService.current();
@@ -261,5 +259,5 @@
         }
     }
 
-    MapController.$inject = ['$scope', '$stateParams', 'locationService', 'controlService', 'drawnItems', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$scope', '$stateParams', 'locationService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();
