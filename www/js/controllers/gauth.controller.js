@@ -18,7 +18,7 @@
                         if (response) {
                             var token = response.access_token;
                             gapi.auth.setToken(response);
-                            $state.go('drive');
+                            $state.go('app.drive');
                         }
                     },
                     function(error) {

@@ -104,7 +104,7 @@
                 vm.map.addControl(vm.drawControl.control);
             }
             // if the control is on the map, but the control was set to inactive, remove the control from the map
-            else if (controlService.getDraw().active === false && vm.drawControl.control !== null) {
+            else if (controlService.getDraw().active === false) {
                 vm.map.removeControl(vm.drawControl.control);
                 if (!$.isEmptyObject(drawn._layers)) {vm.layercontrol.addOverlay(drawn, 'Drawn items');}
             }
@@ -117,7 +117,7 @@
         function scale() {
             if (controlService.getScale().active !== false) {
                 vm.scaleControl.control = L.control.scale().addTo(vm.map);
-            } else if (vm.scaleControl.control !== null && controlService.getScale().active !== true) {
+            } else if (controlService.getScale().active !== true) {
                 vm.scaleControl.control.removeFrom(vm.map);
             }
         }
@@ -126,7 +126,7 @@
         function search() {
             if (controlService.getSearch().active !== false) {
                 vm.searchControl.control = L.Control.geocoder().addTo(vm.map);
-            } else if (vm.searchControl.control !== null && controlService.getSearch().active !== true) {
+            } else if (controlService.getSearch().active !== true) {
                 vm.searchControl.control.removeFrom(vm.map);
             }
         }
