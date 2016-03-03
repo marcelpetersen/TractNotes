@@ -33,6 +33,10 @@
                         {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"com.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -47,6 +51,9 @@
             "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
+        },
+        "com.ionic.keyboard": {
             "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
         }
     },
@@ -70,6 +77,13 @@
             "clobbers": [
                 "cordova.InAppBrowser.open",
                 "window.open"
+            ]
+        },
+        {
+            "file": "plugins/com.ionic.keyboard/www/keyboard.js",
+            "id": "com.ionic.keyboard.keyboard",
+            "clobbers": [
+                "cordova.plugins.Keyboard"
             ]
         }
     ]

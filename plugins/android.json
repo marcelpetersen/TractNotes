@@ -15,6 +15,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
+        },
+        "com.ionic.keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
         }
     },
     "dependent_plugins": {}

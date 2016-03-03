@@ -19,6 +19,13 @@ module.exports = [
             "cordova.InAppBrowser.open",
             "window.open"
         ]
+    },
+    {
+        "file": "plugins/com.ionic.keyboard/www/keyboard.js",
+        "id": "com.ionic.keyboard.keyboard",
+        "clobbers": [
+            "cordova.plugins.Keyboard"
+        ]
     }
 ];
 module.exports.metadata = 

@@ -6,117 +6,177 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($scope, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
-        // Mapbox development access token
-        L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
-
-        // vm definitions
+    function MapController($scope, $stateParams, locationService, controlService, drawnItems, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
         var vm = this;
-        vm.title = 'Controller';
-        vm.map = L.mapbox.map('map');
-        vm.baseMaps = {
-            'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
-            'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
-        };
-        vm.overlayMaps = {};
-        vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps);
-        vm.recordMode = recordMode;
-        vm.drawnItems = null;
-        vm.drawControl = null;
+        vm.title = 'MapController';
+
+        vm.draw = draw;
+        vm.scale = scale;
+        vm.search = search;
+        vm.showPolygonArea = showPolygonArea;
+        vm.showPolygonAreaEdited = showPolygonAreaEdited;
         vm.locate = locate;
         vm.cteco = cteco;
         vm.xmldata = xmldata;
-        vm.popover = null;
-        vm.openPopover = openPopover;
-        vm.closePopover = closePopover;
         vm.gisPopup = gisPopup;
         vm.wmsPopup = wmsPopup;
         vm.msPopup = msPopup;
         vm.arcgisPopup = arcgisPopup;
+
+        $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+            if (toState.name == 'app.map') {
+
+
+                vm.draw();
+                vm.scale();
+                vm.search();
+            }
+        });
 
         activate();
 
         ////////////////
 
         function activate() {
-            vm.layercontrol.addTo(vm.map);
+            L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
+
+            vm.map = L.mapbox.map('map');
+
+            vm.baseMaps = {
+                'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
+                'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
+            };
+            vm.overlayMaps = {};
+            vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
+
             autoDiscover();
 
-            L.control.scale().addTo(vm.map);
-            L.Control.geocoder({
-                position: 'topleft'
-            }).addTo(vm.map);
-
-            $ionicPopover.fromTemplateUrl('templates/map.popover.html', {
-                scope: $scope
-            }).then(function(popover) {
-                vm.popover = popover;
-            });
+            vm.drawControl = {
+                position: '',
+                control: null
+            };
+            vm.scaleControl = {
+                position: '',
+                control: null
+            };
+            vm.searchControl = {
+                position: '',
+                control: null
+            };
             // @TODO: remove examples once import is finalized
             //xmldata('LaurelHall.gpx');
             //xmldata('https://developers.google.com/kml/documentation/KML_Samples.kml');
         }
 
         function autoDiscover() {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    var lat = position.coords.latitude;
-                    var long = position.coords.longitude;
-                    var zoom = 15;
-                    vm.map.setView([lat, long], zoom);
-                });
+            var currentPosition = locationService.current();
+            currentPosition.then(function(val) {
+                vm.map.setView(val.gps, val.zoom);
+            });
         }
 
-        // should any of the below functions be abstracted to services?
-        function recordMode() {
-            if (vm.drawnItems === null) {
-                vm.drawnItems = new L.FeatureGroup();
-                vm.map.addLayer(vm.drawnItems);
-                vm.layercontrol.addOverlay(vm.drawnItems, 'Drawn items');
-            }
+        function locate() {
+            var currentPosition = locationService.current();
+            currentPosition.then(function(val) {
+                vm.map.setView(val.gps, val.zoom);
+                L.marker([lat, long]).addTo(vm.map).bindPopup('Hi there').openPopup();
+            });
+        }
 
-            if (vm.drawControl === null) {
-                vm.drawControl = new L.Control.Draw({
+        // add and remove draw control
+        function draw() {
+            var drawn = drawnItems.getDrawnItems();
+            // if the control is not on the map, but the control was set to active by ControlController, display the control
+            if (controlService.getDraw().active === true) {
+                vm.map.addLayer(drawn);
+                vm.layercontrol.addOverlay(drawn, 'Drawn items');
+
+                // initialize the control and add to map
+                vm.drawControl.control = new L.Control.Draw({
                     draw: {
                         position: 'topleft'
                     },
                     edit: {
-                        featureGroup: vm.drawnItems
+                        featureGroup: drawn
                     }
                 });
-                vm.map.addControl(vm.drawControl);
-            } else {
-                vm.map.removeControl(vm.drawControl);
-                vm.drawControl = null;
+
+                vm.map.addControl(vm.drawControl.control);
+            }
+            // if the control is on the map, but the control was set to inactive, remove the control from the map
+            else if (controlService.getDraw().active === false) {
+                vm.map.removeControl(vm.drawControl.control);
+                if (!$.isEmptyObject(drawn._layers)) {vm.layercontrol.addOverlay(drawn, 'Drawn items');}
             }
 
-            vm.map.on('draw:created', function(e) {
-                var type = e.layerType,
-                    layer = e.layer;
-
-                if (type === 'marker') {
-                    layer.bindPopup('A popup!');
-                }
-
-                vm.drawnItems.addLayer(layer);
-            });
-
+            vm.map.on('draw:created', showPolygonArea);
+            //vm.map.on('draw:edited', showPolygonAreaEdited);
         }
 
-        function locate() {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    var lat = position.coords.latitude;
-                    var long = position.coords.longitude;
-                    var zoom = 15;
-                    vm.map.setView([lat, long], zoom);
+        // add and remove scale control
+        function scale() {
+            if (controlService.getScale().active !== false) {
+                vm.scaleControl.control = L.control.scale().addTo(vm.map);
+            } else if (vm.scaleControl.control !== null && controlService.getScale().active !== true) {
+                vm.scaleControl.control.removeFrom(vm.map);
+            }
+        }
 
-                    L.marker([lat, long]).addTo(vm.map).bindPopup('Hi there').openPopup();
-                },
-                function() {
-                    alert('Error getting location');
+        // add and remove search control
+        function search() {
+            if (controlService.getSearch().active !== false) {
+                vm.searchControl.control = L.Control.geocoder().addTo(vm.map);
+            } else if (vm.searchControl.control !== null && controlService.getSearch().active !== true) {
+                vm.searchControl.control.removeFrom(vm.map);
+            }
+        }
+
+        function showPolygonAreaEdited(e) {
+            e.layers.eachLayer(function(layer) {
+                showPolygonArea({
+                    layer: layer
                 });
-            return false;
+            });
+        }
+
+        function showPolygonArea(e) {
+            var type = e.layerType;
+            var layer = e.layer;
+            if (type === 'polyline') {
+                drawnItems.addToDrawnItems(layer);
+                var tempLatLng = null;
+                var totalDistance = 0.00000;
+                $.each(e.layer._latlngs, function(i, latlng) {
+                    if (tempLatLng === null) {
+                        tempLatLng = latlng;
+                        return;
+                    }
+                    totalDistance += tempLatLng.distanceTo(latlng);
+                    tempLatLng = latlng;
+                });
+                e.layer.bindPopup((totalDistance).toFixed(2) + ' meters');
+                e.layer.openPopup();
+            } else if (type === 'circle') {
+                drawnItems.addToDrawnItems(layer);
+                var area = 0;
+                var radius = e.layer.getRadius();
+                area = (Math.PI) * (radius * radius);
+                e.layer.bindPopup((area / 1000000).toFixed(2) + ' km<sup>2</sup>');
+                e.layer.openPopup();
+            } else if (type === 'polygon' || type === 'rectangle') {
+                drawnItems.addToDrawnItems(layer);
+                e.layer.bindPopup(((LGeo.area(e.layer) / 1000000) * 0.62137).toFixed(2) + ' mi<sup>2</sup>');
+                e.layer.openPopup();
+            } else {
+                drawnItems.addToDrawnItems(layer);
+                var newLoc = layer.getLatLng();
+                console.log(newLoc);
+                var currentPosition = locationService.current();
+                currentPosition.then(function(val) {
+                    e.layer.bindPopup((newLoc.distanceTo(val.gps)).toFixed(0) + 'm from current position.');
+                });
+            }
+
         }
 
         function xmldata(layer) {
@@ -156,20 +216,6 @@
             var cteco = ctecoService.getcteco(layer);
             vm.layercontrol.addOverlay(cteco.layer, cteco.name);
         }
-
-
-        // Popover functions
-        function openPopover($event) {
-            vm.popover.show($event);
-        }
-
-        function closePopover($event) {
-            vm.popover.hide();
-        }
-
-        $scope.$on('$destroy', function() {
-            vm.popover.remove();
-        });
 
         // Popup functions
         function gisPopup() {
@@ -214,5 +260,5 @@
         }
     }
 
-    MapController.$inject = ['$scope', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$scope', '$stateParams', 'locationService', 'controlService', 'drawnItems', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();

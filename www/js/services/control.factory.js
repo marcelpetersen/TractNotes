@@ -17,13 +17,6 @@
             position: 'topleft'
         };
 
-        var measureControl = {
-            text: 'Measure Control',
-            checked: false,
-            active: false,
-            position: 'topleft',
-        };
-
         var scaleControl = {
             text: 'Scale Control',
             checked: false,
@@ -40,11 +33,9 @@
 
         var service = {
             getDraw: getDraw,
-            getMeasure: getMeasure,
             getScale: getScale,
             getSearch: getSearch,
             setDraw: setDraw,
-            setMeasure: setMeasure,
             setScale: setScale,
             setSearch: setSearch,
         };
@@ -54,10 +45,6 @@
 
         function getDraw() {
             return drawControl;
-        }
-
-        function getMeasure() {
-            return measureControl;
         }
 
         function getScale() {
@@ -71,12 +58,6 @@
         function setDraw(state, checked) {
             drawControl.active = state;
             drawControl.checked = checked;
-        }
-
-
-        function setMeasure(state, checked) {
-            measureControl.active = state;
-            measureControl.checked = checked;
         }
 
         function setScale(state, checked) {

@@ -3,12 +3,12 @@
 
     angular
         .module('TractNotes')
-        .controller('Controller', Controller);
+        .controller('MenuController', MenuController);
 
-    Controller.$inject = [];
+    MenuController.$inject = [];
 
     /* @ngInject */
-    function Controller() {
+    function MenuController() {
         var vm = this;
         vm.title = 'Controller';
 

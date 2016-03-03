@@ -1,5 +1,5 @@
 <ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content>
+  <ion-side-menu-content drag-content="false">
     <ion-nav-bar class="bar-stable">
       <ion-nav-back-button>
       </ion-nav-back-button>
@@ -14,26 +14,39 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">TractNotes</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Import
+        <ion-item class="item-icon-left" menu-close href="#/app/import">
+        <i class="icon icon-download"></i>
+          Import GPX/KML
         </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Export
+        <ion-item class="item-icon-left" menu-close href="#/app/export">
+        <i class="icon icon-upload"></i>
+          Export GPX/KML
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          WMS
+        <ion-item class="item-icon-left" menu-close href="#/app/WMS">
+        <i class="icon ion-earth"></i>
+          Add Map Service
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Controls
+        <ion-item class="item-icon-left" menu-close href="#/app/WMS">
+        <i class="icon ion-map"></i>
+          Add CTECO data
         </ion-item>
-                <ion-item menu-close href="#/app/playlists">
+        <ion-item class="item-icon-left" menu-close href="#/app/control">
+        <i class="icon ion-android-expand"></i>
+          Map Tools
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close href="#/app/form">
+        <i class="icon ion-document-text"></i>
           Form
         </ion-item>
-        <ion-item bar bar-footer bar-balanced>
+        <ion-item menu-close href="#/app/settings">
+          Settings
+        </ion-item>
+        <ion-item menu-close href="#/app/map">
+          Exit
         </ion-item>
       </ion-list>
     </ion-content>
