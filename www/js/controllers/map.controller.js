@@ -6,13 +6,16 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($scope, $stateParams, locationService, controlService, drawnItemsService, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
+    function MapController($rootScope, $scope, $stateParams, locationService, controlService, drawnItemsService, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
         vm.draw = draw;
         vm.scale = scale;
         vm.search = search;
+        vm.drawControl = null;
+        vm.scaleControl = null;
+        vm.searchControl = null;
         vm.showPolygonArea = showPolygonArea;
         vm.showPolygonAreaEdited = showPolygonAreaEdited;
         vm.locate = locate;
@@ -23,13 +26,18 @@
         vm.msPopup = msPopup;
         vm.arcgisPopup = arcgisPopup;
 
-        $scope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-            if (toState.name == 'app.map') {
-                vm.draw();
-                vm.scale();
-                vm.search();
-            }
+        // actions on $rootScope events - controller to controller interaction
+        $rootScope.$on('Draw', function(event, data) {
+            vm.draw(data);
         });
+        $rootScope.$on('Scale', function(event, data) {
+            vm.scale(data);
+        });
+
+        $rootScope.$on('Search', function(event, data) {
+            vm.search(data);
+        });
+
 
         activate();
 
@@ -46,21 +54,12 @@
             };
             vm.overlayMaps = {};
             vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
-
+            
             autoDiscover();
 
-            vm.drawControl = {
-                position: '',
-                control: null
-            };
-            vm.scaleControl = {
-                position: '',
-                control: null
-            };
-            vm.searchControl = {
-                position: '',
-                control: null
-            };
+            // @TODO
+            // remove tests
+            // locate();
         }
 
         function autoDiscover() {
@@ -73,21 +72,28 @@
         function locate() {
             var currentPosition = locationService.current();
             currentPosition.then(function(val) {
+                var message = 'Hi there!';
                 vm.map.setView(val.gps, val.zoom);
-                L.marker([lat, long]).addTo(vm.map).bindPopup('Hi there').openPopup();
+                if(val.error !== null){
+                    message = 'Geolocation error'
+                }
+
+                L.marker(val.gps).addTo(vm.map).bindPopup(message).openPopup();
             });
         }
 
-        // add and remove draw control
-        function draw() {
+        // add or remove draw control
+        function draw(data) {
             var drawn = drawnItemsService.getDrawnItems();
-            // if the control is not on the map, but the control was set to active by ControlController, display the control
-            if (vm.drawControl.control === null && controlService.getDraw().active === true) {
+
+            if (vm.drawControl === null) {
                 vm.map.addLayer(drawn);
                 vm.layercontrol.addOverlay(drawn, 'Drawn items');
+            }
 
-                // initialize the control and add to map
-                vm.drawControl.control = new L.Control.Draw({
+            if (data === true) {
+                vm.map.addLayer(drawn);
+                vm.drawControl = new L.Control.Draw({
                     draw: {
                         position: 'topleft'
                     },
@@ -96,13 +102,13 @@
                     }
                 });
 
-                vm.map.addControl(vm.drawControl.control);
-            }
-            // if the control is on the map, but the control was set to inactive, remove the control from the map
-            else if (vm.drawControl.control !== null &&controlService.getDraw().active === false) {
-                vm.map.removeControl(vm.drawControl.control);
-                vm.drawControl.control = null;
-                if (!$.isEmptyObject(drawn._layers)) {vm.layercontrol.addOverlay(drawn, 'Drawn items');}
+                vm.map.addControl(vm.drawControl);
+            } else if (data === false) {
+                vm.map.removeControl(vm.drawControl);
+
+                if (!$.isEmptyObject(drawn._layers)) {
+                    vm.layercontrol.addOverlay(drawn, 'Drawn items');
+                }
             }
 
             vm.map.on('draw:created', showPolygonArea);
@@ -110,22 +116,20 @@
         }
 
         // add and remove scale control
-        function scale() {
-            if (vm.scaleControl.control === null && controlService.getScale().active !== false) {
-                vm.scaleControl.control = L.control.scale().addTo(vm.map);
-            } else if (vm.scaleControl.control !== null && controlService.getScale().active !== true) {
-                vm.scaleControl.control.removeFrom(vm.map);
-                vm.scaleControl.control = null; 
+        function scale(data) {
+            if (data === true) {
+                vm.scaleControl = L.control.scale().addTo(vm.map);
+            } else if (data === false) {
+                vm.scaleControl.removeFrom(vm.map);
             }
         }
 
         // add and remove search control
-        function search() {
-            if (vm.searchControl.control === null && controlService.getSearch().active !== false) {
-                vm.searchControl.control = L.Control.geocoder().addTo(vm.map);
-            } else if (vm.searchControl.control !== null && controlService.getSearch().active !== true) {
-                vm.searchControl.control.removeFrom(vm.map);
-                vm.searchControl.control = null; 
+        function search(data) {
+            if (data === true) {
+                vm.searchControl = L.Control.geocoder().addTo(vm.map);
+            } else if (data === false) {
+                vm.searchControl.removeFrom(vm.map);
             }
         }
 
@@ -137,7 +141,8 @@
             });
         }
 
-
+        // @TODO
+        // abstract to drawnItems factory
         function showPolygonArea(e) {
             var type = e.layerType;
             var layer = e.layer;
@@ -166,7 +171,7 @@
                 drawnItemsService.addToDrawnItems(layer);
                 e.layer.bindPopup(((LGeo.area(e.layer) / 1000000) * 0.62137).toFixed(2) + ' mi<sup>2</sup>');
                 e.layer.openPopup();
-            } else {
+            } else if (type === 'marker') {
                 drawnItemsService.addToDrawnItems(layer);
                 var newLoc = layer.getLatLng();
                 console.log(newLoc);
@@ -174,6 +179,8 @@
                 currentPosition.then(function(val) {
                     e.layer.bindPopup((newLoc.distanceTo(val.gps)).toFixed(0) + 'm from current position.');
                 });
+            } else {
+                drawnItemsService.addToDrawnItems(layer);
             }
 
         }
@@ -259,5 +266,5 @@
         }
     }
 
-    MapController.$inject = ['$scope', '$stateParams', 'locationService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'locationService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();

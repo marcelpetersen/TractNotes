@@ -13,22 +13,19 @@
         var drawControl = {
             text: 'Draw Control',
             checked: false,
-            active: false,
             position: 'topleft'
         };
 
         var scaleControl = {
             text: 'Scale Control',
             checked: false,
-            active: false,
-            position: 'bottomleft',
+            position: 'bottomleft'
         };
 
         var searchControl = {
             text: 'Search Control',
             checked: false,
-            active: false,
-            position: 'topright',
+            position: 'topright'
         };
 
         var service = {
@@ -55,18 +52,15 @@
             return searchControl;
         }
 
-        function setDraw(state, checked) {
-            drawControl.active = state;
+        function setDraw(checked) {
             drawControl.checked = checked;
         }
 
-        function setScale(state, checked) {
-            scaleControl.active = state;
+        function setScale(checked) {
             scaleControl.checked = checked;
         }
 
-        function setSearch(state, checked) {
-            searchControl.active = state;
+        function setSearch(checked) {
             searchControl.checked = checked;
         }
     }

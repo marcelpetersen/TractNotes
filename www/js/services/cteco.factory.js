@@ -20,7 +20,7 @@
         };
 
         var openSpace1 = {
-            name: "Protected Open Space Mapping Project",
+            name: 'Protected Open Space Mapping Project',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -38,7 +38,7 @@
         };
 
         var openSpace3 = {
-            name: "Federal Open Space",
+            name: 'Federal Open Space',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -47,7 +47,7 @@
         };
 
         var openSpace4 = {
-            name: "DEP Property",
+            name: 'DEP Property',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
