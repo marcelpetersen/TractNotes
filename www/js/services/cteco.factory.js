@@ -9,7 +9,7 @@
 
     /* @ngInject */
     function ctecoService() {
-        console.log('asdf')
+        console.log('asdf');
         var openSpace0 = {
             name: '1997 Municipal and Private Open Space',
             layer: L.esri.dynamicMapLayer({
@@ -73,15 +73,94 @@
             })
         };
 
+        // Bedrock Geology Layers //
+        
+        var bedrockGeology0 = {
+            name: 'Bedrock Terrane',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Bedrock_Geology/MapServer',
+                opacity: 0.5,
+                layers: [0]
+            })
+        };
+
+        var bedrockGeology1 = {
+            name: 'Bedrock Geology',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Bedrock_Geology/MapServer',
+                opacity: 0.5,
+                layers: [3]
+            })
+        };
+
+        var bedrockGeology2 = {
+            name: 'Connecticut State Outline',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Bedrock_Geology/MapServer',
+                opacity: 0.5,
+                layers: [6]
+            })
+        };
+
         var bedrockGeology = {
             name: 'Bedrock Geology',
             image: 'img/bedrock.gif',
-            layers: {}
+            view: '#/app/cteco/bedrockgeology',
+            layers: {
+                bedrockGeology0: bedrockGeology0,
+                bedrockGeology1: bedrockGeology1,
+                bedrockGeology2: bedrockGeology2
+            }
+        };
+
+        // Elevation and Bathymetry Layers //
+
+        var elevationB0 = {
+            name: 'Bathymetry',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Elevation_Bathymetry/MapServer',
+                opacity: 0.5,
+                layers: [0]
+            })
+        };
+
+        var elevationB1 = {
+            name: 'Elevation Contours',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Elevation_Bathymetry/MapServer',
+                opacity: 0.5,
+                layers: [4]
+            })
+        };
+
+        var elevationB2 = {
+            name: 'Imagery and Topo',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Elevation_Bathymetry/MapServer',
+                opacity: 0.5,
+                layers: [12]
+            })
+        };
+
+        var elevationB3 = {
+            name: 'Connecticut State Outline',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Elevation_Bathymetry/MapServer',
+                opacity: 0.5,
+                layers: [17]
+            })
         };
 
         var elevationB = {
             name: 'Elevation and Bathymetry',
-            image: 'img/elevation_bathymetry.gif'
+            image: 'img/elevation_bathymetry.gif',
+            view: '#/app/cteco/elevationbathymetry',
+            layers: {
+                elevationB0: elevationB0,
+                elevationB1: elevationB1,
+                elevationB2: elevationB2,
+                elevationB3: elevationB3
+            }
         };
 
         var erosion = {
@@ -207,7 +286,10 @@
             soils: soils,
             surficialMats: surficialMats,
             waterResource: waterResource,
-            watershed: watershed,
+            watershed: watershed
+        };
+
+        var orthoList = {
             ortho1990: ortho1990,
             ortho2004: ortho2004,
             ortho2004cc: ortho2004cc,
@@ -222,7 +304,8 @@
         };
 
         var service = {
-            getCtecoCategories: getCtecoCategories
+            getCtecoCategories: getCtecoCategories,
+            getOrthoList: getOrthoList
         };
         return service;
 
@@ -230,6 +313,10 @@
 
         function getCtecoCategories() {
             return categories;
+        }
+
+        function getOrthoList() {
+            return orthoList;
         }
     }
 })();

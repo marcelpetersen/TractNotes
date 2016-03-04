@@ -18,13 +18,13 @@
                         if (response) {
                             var token = response.access_token;
                             gapi.auth.setToken(response);
-                            $state.go('drive');
+                            $state.go('app.drive');
                         }
                     },
                     function(error) {
                         console.log("" + error);
                     });
-        }
+        };
 
         var vm = this;
         vm.title = 'Controller';
@@ -36,5 +36,5 @@
         function activate() {}
     }
 
-        GAuthController.$inject = ['$scope', 'Drive', '$state'];
+    GAuthController.$inject = ['$scope', 'Drive', '$state'];
 })();

@@ -83,6 +83,28 @@
                         controllerAs: 'vm'
                     }
                 }
+        })
+
+        .state('app.cteco/bedrockgeology', {
+                url: '/cteco/bedrockgeology',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/ctecoTemplates/bedrockGeology.html',
+                        controller: 'ctecoController',
+                        controllerAs: 'vm'
+                    }
+                }
+        })
+
+        .state('app.cteco/elevationbathymetry', {
+                url: '/cteco/elevationbathymetry',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/ctecoTemplates/elevationBathymetry.html',
+                        controller: 'ctecoController',
+                        controllerAs: 'vm'
+                    }
+                }
         });
 
         // if none of the above states are matched, use this as the fallback

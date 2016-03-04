@@ -3,13 +3,13 @@
 
     angular
         .module('TractNotes')
-        .factory('drawnItems', drawnItems);
+        .factory('drawnItemsService', drawnItemsService);
 
-    drawnItems.$inject = [];
+    drawnItemsService.$inject = [];
 
     /* @ngInject */
-    function drawnItems() {
-    	var drawnItems = new L.FeatureGroup();
+    function drawnItemsService() {
+        var drawnItems = new L.FeatureGroup();
 
         var service = {
             getDrawnItems: getDrawnItems,
@@ -20,10 +20,11 @@
         ////////////////
 
         function getDrawnItems() {
-        	return drawnItems;
+            return drawnItems;
         }
-        function addToDrawnItems(e){
-        	drawnItems.addLayer(e);
+
+        function addToDrawnItems(e) {
+            drawnItems.addLayer(e);
         }
     }
 })();

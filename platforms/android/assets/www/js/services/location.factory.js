@@ -26,7 +26,15 @@
                             var zoom = 15;
                             resolve({
                                 gps: [lat, long],
-                                zoom: zoom
+                                zoom: zoom,
+                                error: null
+                            });
+                        }, function(error) {
+                            // location error, resolve at default gps
+                            resolve({
+                                gps: [41.8193203, -72.2511833],
+                                zoom: 15,
+                                error: error.code
                             });
                         });
                 })

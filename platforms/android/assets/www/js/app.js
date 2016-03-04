@@ -5,8 +5,6 @@
         .module('TractNotes', [
             'ionic',
             'ionic.closePopup',
-            'lk-google-picker',
-            'ngCordovaOauth',
             'ngCordova'
         ])
         .config(config)
@@ -72,6 +70,39 @@
                     'menuContent': {
                         templateUrl: 'templates/drive.html',
                         controller: 'DriveController'
+                    }
+                }
+        })
+
+        .state('app.cteco', {
+                url: '/cteco',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/cteco.html',
+                        controller: 'ctecoController',
+                        controllerAs: 'vm'
+                    }
+                }
+        })
+
+        .state('app.cteco/bedrockgeology', {
+                url: '/cteco/bedrockgeology',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/ctecoTemplates/bedrockGeology.html',
+                        controller: 'ctecoController',
+                        controllerAs: 'vm'
+                    }
+                }
+        })
+
+        .state('app.cteco/elevationbathymetry', {
+                url: '/cteco/elevationbathymetry',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/ctecoTemplates/elevationBathymetry.html',
+                        controller: 'ctecoController',
+                        controllerAs: 'vm'
                     }
                 }
         });
