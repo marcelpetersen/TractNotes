@@ -1,0 +1,10 @@
+<ion-view title="CTEco Layers">
+	<ion-content>
+		<ion-list>
+			<ion-item ng-repeat="category in vm.categories" class="item item-thumbnail-left"> 
+				<img ng-src="{{category.image}}">
+				<div class="item-text-center">{{category.name}}</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>

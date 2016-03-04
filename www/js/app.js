@@ -72,6 +72,17 @@
                         controller: 'DriveController'
                     }
                 }
+        })
+
+        .state('app.cteco', {
+                url: '/cteco',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/cteco.html',
+                        controller: 'ctecoController',
+                        controllerAs: 'vm'
+                    }
+                }
         });
 
         // if none of the above states are matched, use this as the fallback
