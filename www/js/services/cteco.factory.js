@@ -9,7 +9,7 @@
 
     /* @ngInject */
     function ctecoService() {
-
+        console.log('asdf')
         var openSpace0 = {
             name: '1997 Municipal and Private Open Space',
             layer: L.esri.dynamicMapLayer({
@@ -203,6 +203,11 @@
             hurricaneSurge: hurricaneSurge,
             nwiWetlands: nwiWetlands,
             openSpace: openSpace,
+            quaternary: quaternary,
+            soils: soils,
+            surficialMats: surficialMats,
+            waterResource: waterResource,
+            watershed: watershed,
             ortho1990: ortho1990,
             ortho2004: ortho2004,
             ortho2004cc: ortho2004cc,
@@ -213,12 +218,7 @@
             ortho2008ua: ortho2008ua,
             ortho2009: ortho2009,
             ortho2010coast: ortho2010coast,
-            ortho2010naip: ortho2010naip,
-            quaternary: quaternary,
-            soils: soils,
-            surficialMats: surficialMats,
-            waterResource: waterResource,
-            watershed: watershed
+            ortho2010naip: ortho2010naip
         };
 
         var service = {
