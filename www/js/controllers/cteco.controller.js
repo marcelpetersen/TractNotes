@@ -14,7 +14,7 @@
 
         function activate() {
             vm.ctecoCategories = ctecoService.getCtecoCategories();
-            vm.orthoList = ctecoService.getOrthoList();
+            vm.orthoLayers = ctecoService.getOrthoLayers();
         }
 
         activate();

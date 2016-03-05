@@ -1,0 +1,14 @@
+<ion-view title="Water Resource Management Layers">
+	<ion-content>
+		<div class="list card">
+		  <div class="item item-body">
+		    <center><img src="img/water_resource_mgmt_full.gif" style="border:1px solid black"></center>
+		  	<ion-list>
+		  		<ion-checkbox ng-repeat="layer in vm.ctecoCategories.waterResource.layers">
+		  			{{layer.name}}
+		  		</ion-checkbox>
+		  	</ion-list>
+			</div> 
+		</div>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,14 @@
+<ion-view title="NWI Wetlands Functions 2010">
+	<ion-content>
+		<div class="list card">
+		  <div class="item item-body">
+		    <center><img src="img/nwi_wetland_function_2010_full.gif" style="border:1px solid black"></center>
+		  	<ion-list>
+		  		<ion-checkbox ng-repeat="layer in vm.ctecoCategories.nwiWetlands.layers">
+		  			{{layer.name}}
+		  		</ion-checkbox>
+		  	</ion-list>
+			</div> 
+		</div>
+	</ion-content>
+</ion-view>

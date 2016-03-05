@@ -52,9 +52,28 @@
                 'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
                 'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
             };
+
+            var hurricaneEvac0 = {
+            name: 'Hurricane Evacuation Zone A',
+            layer: L.esri.dynamicMapLayer({
+                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Hurricane_Surge_Inundation/MapServer',
+                opacity: 0.5,
+                layers: [0]
+            })
+        };
             vm.overlayMaps = {};
+
             vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
-            
+
+            hurricaneEvac0.layer.addTo(vm.map);
+
+            /*L.esri.dynamicMapLayer({
+                            url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
+                            opacity: 0.5,
+                            layers: [0],
+                            f: 'image'
+                        }).addTo(vm.map);*/
+                      
             autoDiscover();
 
             // @TODO
