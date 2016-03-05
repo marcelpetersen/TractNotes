@@ -10,34 +10,39 @@
         var vm = this;
         vm.title = 'MapController';
 
-        vm.draw = draw;
-        vm.scale = scale;
-        vm.search = search;
+        vm.map = null;
+        vm.baseMaps = null;
+        vm.overlayMaps = null;
+        vm.layercontrol = null;
+        vm.recording = false;
         vm.drawControl = null;
         vm.scaleControl = null;
         vm.searchControl = null;
+
+        vm.autoDiscover = autoDiscover;
+        vm.createMarker = createMarker;
+        vm.record = record;
+        vm.draw = draw;
+        vm.scale = scale;
+        vm.search = search;
         vm.showPolygonArea = showPolygonArea;
         vm.showPolygonAreaEdited = showPolygonAreaEdited;
-        vm.locate = locate;
-        vm.cteco = cteco;
-        vm.xmldata = xmldata;
-        vm.gisPopup = gisPopup;
-        vm.wmsPopup = wmsPopup;
-        vm.msPopup = msPopup;
-        vm.arcgisPopup = arcgisPopup;
+        vm.trackPopup = trackPopup;
 
-        // actions on $rootScope events - controller to controller interaction
+        /** @listens $rootScope.Draw */
         $rootScope.$on('Draw', function(event, data) {
             vm.draw(data);
         });
+
+        /** @listens $rootScope.Scale */
         $rootScope.$on('Scale', function(event, data) {
             vm.scale(data);
         });
 
+        /** @listens $rootScope.Search */
         $rootScope.$on('Search', function(event, data) {
             vm.search(data);
         });
-
 
         activate();
 
@@ -52,62 +57,99 @@
                 'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
                 'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
             };
+            vm.overlayMaps = {
+                'Imported': {},
+                'CTECO': {},
+                'Tracks': {},
+                'Other': {}
+            };
+            vm.layercontrol = L.control.groupedLayers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
 
-            var hurricaneEvac0 = {
-            name: 'Hurricane Evacuation Zone A',
-            layer: L.esri.dynamicMapLayer({
-                url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Hurricane_Surge_Inundation/MapServer',
-                opacity: 0.5,
-                layers: [0]
-            })
-        };
-            vm.overlayMaps = {};
-
-            vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
-
-            hurricaneEvac0.layer.addTo(vm.map);
-
-            /*L.esri.dynamicMapLayer({
-                            url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
-                            opacity: 0.5,
-                            layers: [0],
-                            f: 'image'
-                        }).addTo(vm.map);*/
-                      
             autoDiscover();
-
-            // @TODO
-            // remove tests
-            // locate();
         }
 
+        /**
+         * Set map view to the user's current location.
+         * @function
+         */
         function autoDiscover() {
-            var currentPosition = locationService.current();
+            var currentPosition = locationService.locate();
             currentPosition.then(function(val) {
-                vm.map.setView(val.gps, val.zoom);
-            });
-        }
-
-        function locate() {
-            var currentPosition = locationService.current();
-            currentPosition.then(function(val) {
-                var message = 'Hi there!';
-                vm.map.setView(val.gps, val.zoom);
-                if(val.error !== null){
-                    message = 'Geolocation error'
+                if (typeof(val.error) === 'undefined') {
+                    var lat = val.position.coords.latitude;
+                    var long = val.position.coords.longitude;
+                    var zoom = val.zoom;
+                    vm.map.setView([lat, long], zoom);
+                } else {
+                    console.log(val.error.message);
+                    vm.map.setView([41.6, -72.7], 10);
                 }
-
-                L.marker(val.gps).addTo(vm.map).bindPopup(message).openPopup();
             });
         }
 
-        // add or remove draw control
+        /**
+         * Create a marker at the user's current location.
+         * @function
+         */
+        function createMarker() {
+            var currentPosition = locationService.locate();
+            currentPosition.then(function(val) {
+                if (typeof(val.error) === 'undefined') {
+                    var lat = val.position.coords.latitude;
+                    var long = val.position.coords.longitude;
+                    var zoom = val.zoom;
+                    var marker = L.marker([lat, long], zoom);
+                    marker.addTo(vm.map);
+                    if (vm.recording) {
+                        locationService.addtocurrentTrack(marker);
+                    }
+                } else {
+                    console.log(val.error.message);
+                }
+            });
+        }
+
+        /**
+         * Start or stop recording a track based on vm.recording state.
+         * @function
+         * @todo Abstract into two functions, startRecording() and stopRecording()
+         */
+        function record() {
+            if (vm.recording === false) {
+                vm.recording = true;
+                var track = locationService.createTrack();
+                var polyline = locationService.createPolyline();
+
+                track.track.addLayer(polyline);
+                polyline.addTo(vm.map);
+
+                track.track.addTo(vm.map);
+                vm.layercontrol.addOverlay(track.track, track.name, 'Tracks');
+
+                locationService.start();
+            } else {
+                vm.recording = !vm.recording;
+                if (vm.recording) {
+                    locationService.start();
+                } else {
+                    locationService.stop();
+                    vm.recording = false;
+                    vm.trackPopup();
+                }
+            }
+        }
+
+        /**
+         * Add or remove draw control.
+         * @function
+         * @param {boolean} data
+         */
         function draw(data) {
             var drawn = drawnItemsService.getDrawnItems();
 
             if (vm.drawControl === null) {
                 vm.map.addLayer(drawn);
-                vm.layercontrol.addOverlay(drawn, 'Drawn items');
+                vm.layercontrol.addOverlay(drawn, 'Drawn items', 'Other');
             }
 
             if (data === true) {
@@ -134,7 +176,11 @@
             vm.map.on('draw:edited', showPolygonAreaEdited);
         }
 
-        // add and remove scale control
+        /**
+         * Add or remove scale control.
+         * @function
+         * @param {boolean} data
+         */
         function scale(data) {
             if (data === true) {
                 vm.scaleControl = L.control.scale().addTo(vm.map);
@@ -143,7 +189,11 @@
             }
         }
 
-        // add and remove search control
+        /**
+         * Add or remove search control.
+         * @function
+         * @param {boolean} data
+         */
         function search(data) {
             if (data === true) {
                 vm.searchControl = L.Control.geocoder().addTo(vm.map);
@@ -152,6 +202,11 @@
             }
         }
 
+        /**
+         * Recalculate area/length of each layer on edit.
+         * @function
+         * @param {object} layer
+         */
         function showPolygonAreaEdited(e) {
             e.layers.eachLayer(function(layer) {
                 showPolygonArea({
@@ -160,8 +215,13 @@
             });
         }
 
-        // @TODO
-        // abstract to drawnItems factory
+        /**
+         * Show area/length of each layer on created.
+         * @function
+         * @author https://stackoverflow.com/questions/31221088/how-to-calculate-the-distance-of-a-polyline-in-leaflet-like-geojson-io
+         * @param {object} layer
+         * @todo Abstract into drawnItems.factory.js
+         */
         function showPolygonArea(e) {
             var type = e.layerType;
             var layer = e.layer;
@@ -204,83 +264,14 @@
 
         }
 
-        function xmldata(layer) {
-            var layerResult = xmldataService.getxmldata(layer);
-            layerResult.then(function(val) {
-                $scope.$apply(function() {
-                    var finalLayer = val.on('ready', function() {
-                        vm.map.fitBounds(val.getBounds());
-                        val.eachLayer(function(layer) {
-                            var content;
-                            var name = layer.feature.properties.name;
-                            var desc = layer.feature.properties.desc;
-
-                            if (name !== null) {
-                                content = '<h2>' + name + '</h2>';
-                                if (desc !== null) {
-                                    content += '<p>' + desc + '</p';
-                                    layer.bindPopup(content);
-                                } else {
-                                    layer.bindPopup(content);
-                                }
-                            } else if (desc !== null) {
-                                content = '<h2>' + desc + '</h2>';
-                                layer.bindPopup(content);
-                            }
-                        });
-                    });
-                    finalLayer.addTo(vm.map);
-                    vm.layercontrol.addOverlay(finalLayer, layer);
-                });
-
-            });
-
-        }
-
-        function cteco(layer) {
-            var cteco = ctecoService.getcteco(layer);
-            vm.layercontrol.addOverlay(cteco.layer, cteco.name);
-        }
-
-        // Popup functions
-        function gisPopup() {
+        function trackPopup() {
             $scope.data = {};
-            var gisPopup = popupService.getGISPopup($scope, vm);
-            IonicClosePopupService.register(gisPopup);
 
-            gisPopup.then(function(res) {
-                vm.xmldata(res);
-                console.log('Tapped!', res);
-            });
-        }
+            var trackPopup = popupService.getTrackPopup($scope, vm);
+            //IonicClosePopupService.register(trackPopup);
 
-        function wmsPopup() {
-            $scope.data = {};
-            var wmsPopup = popupService.getWMSPopup($scope, vm);
-            IonicClosePopupService.register(wmsPopup);
-
-            wmsPopup.then(function(res) {
-                console.log('Tapped!', res);
-            });
-        }
-
-        function arcgisPopup() {
-            $scope.data = {};
-            var arcgisPopup = popupService.getArcGISPopup($scope, vm);
-            IonicClosePopupService.register(arcgisPopup);
-
-            arcgisPopup.then(function(res) {
-                console.log('Tapped!', res);
-            });
-        }
-
-        function msPopup() {
-            $scope.data = {};
-            var msPopup = popupService.getMSPopup($scope, vm);
-            IonicClosePopupService.register(msPopup);
-
-            msPopup.then(function(res) {
-                console.log('Tapped!', res);
+            trackPopup.then(function(res) {
+                locationService.setTrackMetadata(res);
             });
         }
     }
