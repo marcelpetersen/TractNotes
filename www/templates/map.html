@@ -1,9 +1,9 @@
 <ion-view title="Map">
-      <ion-nav-buttons side="right">
-        <button name="record" class="button button-icon button-clear ion-ios-circle-filled" ng-click="vm.record()">
-</button>
-      </ion-nav-buttons>
-  <ion-content data-tap-disabled="true">
-    <div id="map" center="center" markers="markers" style="min-height:100%;min-width:100%;"></div>	
-  </ion-content>
+    <ion-nav-buttons side="right">
+        <button name="record" ng-class="{'button button-icon button-clear ion-record': !vm.recording, 'button button-icon button-clear ion-stop': vm.recording}" ng-click="vm.record()"></button>
+        <button name="marker" class="button button-icon button-clear ion-android-locate" ng-click="vm.createMarker()"></button>
+    </ion-nav-buttons>
+    <ion-content data-tap-disabled="true">
+        <div id="map" center="center" markers="markers" style="min-height:100%;min-width:100%;"></div>
+    </ion-content>
 </ion-view>

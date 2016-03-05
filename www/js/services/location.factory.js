@@ -10,49 +10,48 @@
     /* @ngInject */
     function locationService() {
         var watchID = null;
-        var zoom = 15;
+        var zoom = 15; // @todo allow the user to set zoom
 
         var lastPos = {
             lat: null,
             long: null
         };
-        var positions = [];
 
-        var tracks = [];
+        var tracks = []; // @todo allow the user to delete tracks
         var currentTrack = null;
         var currentPolyline = null;
 
         var service = {
-            current: current,
+            setZoom: setZoom,
+            locate: locate,
             start: start,
             stop: stop,
             createPolyline: createPolyline,
             createTrack: createTrack,
+            addtocurrentTrack: addtocurrentTrack,
+            setTrackMetadata: setTrackMetadata,
             getTracks: getTracks
         };
         return service;
 
         ////////////////
 
-        function current() {
+        function setZoom(zoom) {
+            zoom = zoom;
+        }
+
+        function locate() {
             return new Promise(
                 function(resolve, reject) {
                     navigator.geolocation.getCurrentPosition(
                         function(position) {
                             resolve({
-                                gps: [position.coords.latitude, position.coords.longitude],
-                                zoom: zoom,
-                                error: null
+                                position: position,
+                                zoom: zoom
                             });
                         }, function(error) {
-                            // location error, resolve at UConn coordinates and popup error
                             resolve({
-                                gps: [41.8193203, -72.2511833],
-                                zoom: zoom,
-                                error: {
-                                    code: error.code,
-                                    message: error.message
-                                }
+                                error: error.message
                             });
                         });
                 })
@@ -65,7 +64,7 @@
         }
 
         function stop() {
-            if (watchID != null) {
+            if (watchID !== null) {
                 navigator.geolocation.clearWatch(watchID);
                 watchID = null;
             }
@@ -73,23 +72,17 @@
         }
 
         function onSuccess(position) {
-
             var lat = position.coords.latitude;
             var long = position.coords.longitude;
-            if (lastPos.lat === null || lastPos.long === null) {
+            if (lastPos.lat === null) { // || lastPos.long === null) {
                 lastPos.lat = lat;
                 lastPos.long = long;
-                positions.push(lastPos);
                 currentPolyline.addLatLng(L.latLng(lastPos.lat, lastPos.long));
-                console.log(currentPolyline)
             } else if (lastPos.lat != lat || lastPos.long != long) { //if distance is 0, same point then add to line
                 lastPos.lat = lat;
                 lastPos.long = long;
                 currentPolyline.addLatLng(L.latLng(lastPos.lat, lastPos.long));
-                                console.log(currentPolyline)
-
             }
-            console.log(lat)
         }
 
         function onError(error) {
@@ -107,10 +100,33 @@
             var name = 'Track ' + tracks.length;
             tracks.push({
                 track: new L.FeatureGroup(),
-                name: name
+                name: name,
+                metadata: {
+                    name: '',
+                    desc: '',
+                    author: '',
+                    date: new Date().toLocaleString()
+                }
             });
-            console.log(tracks[tracks.length - 1])
-            return tracks[tracks.length - 1];
+            currentTrack = tracks[tracks.length - 1];
+            return currentTrack;
+        }
+
+        function addtocurrentTrack(layer) {
+            currentTrack.track.addLayer(layer);
+        }
+
+        function setTrackMetadata(metadata) {
+            if (typeof(metadata.name) !== 'undefined') {
+                currentTrack.name = metadata.name;
+                currentTrack.metadata.name = metadata.name;
+            }
+            if (typeof(metadata.desc) !== 'undefined') {
+                currentTrack.metadata.desc = metadata.desc;
+            }
+            if (typeof(metadata.author) !== 'undefined') {
+                currentTrack.metadata.author = metadata.author;
+            }
         }
 
         function getTracks() {
