@@ -10,6 +10,15 @@
         var vm = this;
         vm.title = 'MapController';
 
+        vm.map;
+        vm.baseMaps;
+        vm.overlayMaps;
+        vm.layercontrol;
+
+        vm.autoDiscover = autoDiscover;
+        vm.locate = locate;
+        vm.record = record;
+        vm.recording = null;
         vm.draw = draw;
         vm.scale = scale;
         vm.search = search;
@@ -18,7 +27,6 @@
         vm.searchControl = null;
         vm.showPolygonArea = showPolygonArea;
         vm.showPolygonAreaEdited = showPolygonAreaEdited;
-        vm.locate = locate;
         vm.cteco = cteco;
         vm.xmldata = xmldata;
         vm.gisPopup = gisPopup;
@@ -33,11 +41,9 @@
         $rootScope.$on('Scale', function(event, data) {
             vm.scale(data);
         });
-
         $rootScope.$on('Search', function(event, data) {
             vm.search(data);
         });
-
 
         activate();
 
@@ -52,10 +58,11 @@
                 'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
                 'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
             };
-            vm.overlayMaps = {};
-            vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
-            
+            vm.overlayMaps = {'Imported':{}, 'CTECO':{}, 'Tracks':{}, 'Other':{}};
+            //vm.layercontrol = L.control.layers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
             autoDiscover();
+
+            vm.layercontrol = L.control.groupedLayers(vm.baseMaps, vm.overlayMaps).addTo(vm.map);
 
             // @TODO
             // remove tests
@@ -74,21 +81,49 @@
             currentPosition.then(function(val) {
                 var message = 'Hi there!';
                 vm.map.setView(val.gps, val.zoom);
-                if(val.error !== null){
-                    message = 'Geolocation error'
+                if (val.error.code !== null) {
+                    message = val.error.message;
                 }
 
                 L.marker(val.gps).addTo(vm.map).bindPopup(message).openPopup();
             });
         }
 
+        // @ TODO
+        // on click -> show pause and stop buttons
+        // on stop -> show record button
+        function record(event) {
+            if (vm.recording === null) {
+                vm.recording = true;
+                var track = locationService.createTrack();
+                var polyline = locationService.createPolyline();
+
+                track.track.addLayer(polyline);
+                polyline.addTo(vm.map);
+
+                track.track.addTo(vm.map);
+                vm.layercontrol.addOverlay(track.track, track.name, 'Tracks');
+
+                locationService.start();
+            } else {
+                vm.recording = !vm.recording;
+                console.log(vm.recording)
+                if (vm.recording) {
+                    locationService.start();
+                } else {
+                    locationService.stop();
+                    vm.recording = null;
+                }
+            }
+        }
+        
         // add or remove draw control
         function draw(data) {
             var drawn = drawnItemsService.getDrawnItems();
 
             if (vm.drawControl === null) {
                 vm.map.addLayer(drawn);
-                vm.layercontrol.addOverlay(drawn, 'Drawn items');
+                vm.layercontrol.addOverlay(drawn, 'Drawn items', 'Other');
             }
 
             if (data === true) {
@@ -141,6 +176,7 @@
             });
         }
 
+        // https://stackoverflow.com/questions/31221088/how-to-calculate-the-distance-of-a-polyline-in-leaflet-like-geojson-io
         // @TODO
         // abstract to drawnItems factory
         function showPolygonArea(e) {
