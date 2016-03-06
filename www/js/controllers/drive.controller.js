@@ -10,27 +10,26 @@
     /* @ngInject */
     function DriveController($scope, Drive, $state) {
 
-        $scope.loginByGoogle = function() {
+        var vm = this;
+        vm.title = 'DriveController';
+        vm.files = [];
 
-            $scope.files = [];
+        function getFiles() {
 
-            $scope.readFiles = function() {
                 Drive.readFiles().then(function(files) {
-                    $scope.files = files;
+                    vm.files = files;
                     console.log("FileRead: success.");
                 }, function() {
                     console.log("FileRead: error.");
                 });
-            };
-            $scope.readFiles();
         }
-        var vm = this;
-        vm.title = 'Controller';
 
         activate();
 
         ////////////////
 
-        function activate() {}
+        function activate() {
+            getFiles();
+        }
     }
 })();

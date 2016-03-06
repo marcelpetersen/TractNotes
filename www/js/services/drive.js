@@ -147,7 +147,7 @@ angular.module('TractNotes')
         };
 
 
-        this.readFiles = function listFiles() {
+        this.readFiles = function() {
           /*
            * Print files.
            **/

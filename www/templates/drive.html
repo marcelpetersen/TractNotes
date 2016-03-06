@@ -1,19 +1,18 @@
 <ion-view view-title="Drive">
 
-  <ion-content class="has-header">
+  <ion-content class="has-header" ng-controller="DriveController as vm">
 
 
     <ion-list>
-      <div class="item item-positive item-icon-left item-icon-right" class="item" href="javascript:void(0)">
+
+      <ion-item class="item item-positive item-icon-left item-icon-right" class="item" href="javascript:void(0)">
         <a  class="icon ion-ios-arrow-back" ui-sref="welcome"></a>
         Google Drive
-      </div>
+      </ion-item>
 
-      <div ng-repeat="file in files">
-        <ion-item class="item item-icon-right" >
+      <ion-item ng-repeat="file in vm.files" class="item item-icon-right" >
           {{file.name}}
-        </ion-item>
-      </div>
+      </ion-item>
 
     </ion-list>
 
