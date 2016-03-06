@@ -13,7 +13,7 @@
 
         var service = {
             setTrackView: setTrackView,
-            getTrack: getTrack,
+            getTrackView: getTrackView,
             displayedTrack: displayedTrack
         };
         return service;
