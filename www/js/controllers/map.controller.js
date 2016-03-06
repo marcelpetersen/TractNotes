@@ -45,6 +45,22 @@
             vm.search(data);
         });
 
+        /** @listens $rootScope.CheckedCteco */
+        $rootScope.$on('AddCteco', function(event, data) {
+            data.layer.addTo(vm.map);
+            console.log(data);
+            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
+        });
+
+        /** 
+         * @listens $rootScope.UncheckedCteco 
+         * @todo remove layer from layer control
+         */
+        $rootScope.$on('RemoveCteco', function(event, data) {
+            data.layer.removeFrom(vm.map);
+            //vm.layercontrol.removeLayer(CTECO.data.name);
+        });
+
         activate();
 
         ////////////////

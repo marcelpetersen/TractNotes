@@ -108,6 +108,7 @@
         })
 
         /** @todo refactor in dynamic state creation */
+
         .state('app.cteco/bedrockgeology', {
             url: '/cteco/bedrockgeology',
             views: {
