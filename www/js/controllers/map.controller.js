@@ -53,7 +53,7 @@
         });
 
         /** 
-         * @listens $rootScope.RemoveCTECO 
+         * @listens $rootScope.RemoveCTECO
          * @todo remove layer from layer control
          */
         $rootScope.$on('RemoveCTECO', function(event, data) {
@@ -122,8 +122,7 @@
                         if (vm.hiThere === null) {
                             vm.hiThere = L.marker([lat, long], zoom);
                             vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
-                        }
-                        else{
+                        } else {
                             vm.hiThere.setLatLng([lat, long], zoom);
                             vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
                         }
@@ -149,7 +148,8 @@
                 polyline.addTo(vm.map);
 
                 track.track.addTo(vm.map);
-                vm.layercontrol.addOverlay(track.track, track.name, 'Tracks');
+
+                vm.layercontrol.addOverlay(track, track.name, 'Tracks');
 
                 locationService.start();
             } else {

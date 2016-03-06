@@ -1,3 +1,51 @@
+
+var geoJsonData = [{
+  "type": "FeatureCollection",
+  "features": [{
+    "type": "Feature",
+    "properties": {
+      "fillColor": "#eeffee",
+      "fillOpacity": 0.8
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [119.2895599, 21.718679],
+          [119.2895599, 25.373809],
+          [122.61840, 25.37380917],
+          [122.61840, 21.71867980],
+          [119.2895599, 21.718679]
+        ]
+      ]
+    }
+  }, {
+    "type": "Feature",
+    "properties": {
+      "marker-color": "#00ff00"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [120.89355, 23.68477]
+    }
+  }]
+}];
+
+// Here we use the `L.geoJson` layer type from Leaflet, that lets us use
+// Polygons, Points, and all other GeoJSON types - but we specify that it
+// should also pull styles for polygons with the `style` option
+// and use the custom `L.mapbox.marker.style` function
+// to make fancy markers with the `pointToLayer` option.
+var geoJson = L.geoJson(geoJsonData, {
+    pointToLayer: L.mapbox.marker.style,
+    style: function(feature) { return feature.properties; }
+}).addTo(vm.map);
+
+vm.map.removeLayer(geoJson);
+
+
+var lol = togpx(geoJsonData)
+
 //@ controller:
         function xmldata(layer) {
             var layerResult = xmldataService.getxmldata(layer);
