@@ -4,15 +4,16 @@
     angular
         .module('TractNotes')
         .controller('TrackEditController', TrackEditController);
-    
-    TrackEditController.$inject = ['$rootScope', '$scope', '$ionicHistory', 'locationService', 'trackViewService',];
+
+    TrackEditController.$inject = ['$ionicHistory', 'locationService', 'trackViewService', ];
 
     /* @ngInject */
-    function TrackEditController($rootScope, $scope, $ionicHistory, locationService, trackViewService) {
+    function TrackEditController($ionicHistory, locationService, trackViewService) {
         var vm = this;
         vm.title = 'TrackEditController';
         vm.currentTrack = null;
-        vm.goBack = goBack;
+        vm.back = back;
+        vm.update = update;
 
         activate();
 
@@ -22,26 +23,16 @@
             vm.currentTrack = trackViewService.getTrackView();
         }
 
-        function goBack() {
+        function back() {
             $ionicHistory.goBack();
         }
 
-        function editTrackInfo() {
-            var trackName = document.getElementById('trackName').value;
-            var trackDesc = document.getElementById('trackDesc').value;
-            var trackAuthor = document.getElementById('trackAuthor').value;
+        function update(input) {
             locationService.setCurrentTrack(vm.currentTrack);
-            locationService.setTrackName(trackName);
-            locationService.setTrackDesc(trackDesc);
-            locationService.setTrackAuthor(trackAuthor);
+            locationService.setTrackMetadata(input)
             vm.currentTrack = locationService.getCurrentTrack();
-            vm.goBack();
+            vm.back();
         }
-
-        var saveButton = document.getElementById('saveButton');
-        saveButton.addEventListener('click', editTrackInfo);
-
-        console.log(vm.currentTrack.metadata.name);
     }
 
 })();
