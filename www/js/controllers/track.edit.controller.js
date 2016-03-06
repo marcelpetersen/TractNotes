@@ -8,7 +8,7 @@
     TrackEditController.$inject = ['$ionicHistory', 'locationService', 'trackViewService', ];
 
     /* @ngInject */
-    function TrackEditController($rootScope, $scope, $ionicHistory, locationService, trackViewService) {
+    function TrackEditController($ionicHistory, locationService, trackViewService) {
         var vm = this;
         vm.title = 'TrackEditController';
         vm.currentTrack = null;
