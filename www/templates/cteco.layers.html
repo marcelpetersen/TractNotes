@@ -1,0 +1,14 @@
+<ion-view title="{{vm.currentCategory.name}}">
+    <ion-content>
+        <div class="list card">
+            <div class="item item-body">
+                <center><img data-ng-src="{{vm.currentCategory.image_full}}" style="border:1px solid black"></center>
+                <ion-list id="checkboxes">
+                    <ion-checkbox ng-repeat="layer in vm.currentCategory.layers" ng-model="layer.checked" ng-checked="layer.checked" ng-change="vm.ctecoToggle(layer)">
+                        {{layer.name}}
+                    </ion-checkbox>
+                </ion-list>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

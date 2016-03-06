@@ -43,23 +43,23 @@
             }
         })
 
-        .state('app.tracks', {
-            url: '/tracks',
+        .state('app.manage_tracks', {
+            url: '/manage_tracks',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/tracks.html',
+                    templateUrl: 'templates/track.list.html',
                     controller: 'TracksController',
                     controllerAs: 'vm'
                 }
             }
         })
 
-        .state('app.track', {
-            url: '/track',
+        .state('app.single_track', {
+            url: '/single_track',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/track.html',
-                                        controller: 'TrackController',
+                    templateUrl: 'templates/track.single.html',
+                    controller: 'TrackController',
                     controllerAs: 'vm'
                 }
             }
@@ -96,157 +96,23 @@
             }
         })
 
-        .state('app.cteco', {
-            url: '/cteco',
+        .state('app.cteco_list', {
+            url: '/cteco_list',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/cteco.html',
-                    controller: 'ctecoController',
+                    templateUrl: 'templates/cteco.list.html',
+                    controller: 'ctecoListController',
                     controllerAs: 'vm'
                 }
             }
         })
 
-        /** @todo refactor in dynamic state creation */
-
-        .state('app.cteco/bedrockgeology', {
-            url: '/cteco/bedrockgeology',
+        .state('app.single_cteco', {
+            url: '/single_cteco',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/bedrockGeology.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/elevationbathymetry', {
-            url: '/cteco/elevationbathymetry',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/elevationBathymetry.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/erosion', {
-            url: '/cteco/erosionsusceptibility',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/erosion.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/habitat', {
-            url: '/cteco/habitat',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/habitat.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/hurricaneevacuation', {
-            url: '/cteco/hurricaneevacuation',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/hurricaneEvac.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/hurricanesurge', {
-            url: '/cteco/hurricanesurge',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/hurricaneSurge.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/nwiwetlands', {
-            url: '/cteco/nwiwetlands',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/nwiWetlands.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/openspace', {
-            url: '/cteco/openspace',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/openSpace.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/quaternarygeology', {
-            url: '/cteco/quaternarygeology',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/quaternaryGeology.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/soils', {
-            url: '/cteco/soils',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/soils.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/surficialmaterials', {
-            url: '/cteco/surficialmaterials',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/surficialMaterials.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/waterresourcemgmt', {
-            url: '/cteco/waterresourcemgmt',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/waterResourceMgmt.html',
-                    controller: 'ctecoController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.cteco/watershed', {
-            url: '/cteco/watershed',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ctecoTemplates/watershed.html',
-                    controller: 'ctecoController',
+                    templateUrl: 'templates/cteco.layers.html',
+                    controller: 'ctecoLayersController',
                     controllerAs: 'vm'
                 }
             }

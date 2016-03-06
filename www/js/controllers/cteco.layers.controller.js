@@ -5,28 +5,35 @@
         .module('TractNotes')
         .controller('ctecoLayersController', ctecoLayersController);
 
-    /* @ngInject */
-    function ctecoLayersController($rootScope, ctecoService) {
-        var vm = this;
+    ctecoLayersController.$inject = ['$rootScope', 'ctecoViewService'];
 
-        vm.title;
-        vm.categories = [];
-        
+    /* @ngInject */
+    function ctecoLayersController($rootScope, ctecoViewService) {
+        var vm = this;
+        vm.title = 'ctecoLayersController';
+        vm.currentCategory = null;
+        vm.ctecoToggle = ctecoToggle;
+
         activate();
 
         ////////////////
 
         function activate() {
-        	vm.categories = ctecoService.getCtecoCategories();
-            vm.title = "test";
+            vm.currentCategory = ctecoViewService.getCategory();
+            console.log(vm.currentCategory);
         }
 
-        /** @fires $rootScope.TrackChange */
-        // function setTrack(track){
-        // 	vm.currentTrack = track;
-        //    $rootScope.$emit('TrackChange', track);
-        // }
-    }
+        /** 
+         * @fires $rootScope.AddCteco and $rootScope.RemoveCteco
+		 * @todo Refactor to use $watch
+         */
+        function ctecoToggle(ctecoLayer) {
+            if (ctecoLayer.checked !== false) {
+                $rootScope.$emit('AddCteco', ctecoLayer);
+            } else {
+                $rootScope.$emit('RemoveCteco', ctecoLayer);
+            }
+        }
 
-    ctecoLayersController.$inject = ['$rootScope', 'ctecoService'];
+    }
 })();

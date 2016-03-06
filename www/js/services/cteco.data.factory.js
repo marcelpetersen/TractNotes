@@ -3,14 +3,16 @@
 
     angular
         .module('TractNotes')
-        .factory('ctecoService', ctecoService);
+        .factory('ctecoDataService', ctecoDataService);
 
-    ctecoService.$inject = [];
+    ctecoDataService.$inject = [];
 
     /* @ngInject */
-    function ctecoService() {
-        // Bedrock Geology Layers //
+    function ctecoDataService() {
 
+        ////////////////////////////////////////
+        // Bedrock Geology Layers
+        ////////////////////////////////////////
         var bedrockGeology0 = {
             name: 'Bedrock Terrane',
             checked: false,
@@ -41,8 +43,9 @@
             }
         };
 
-        // Elevation and Bathymetry Layers //
-
+        ////////////////////////////////////////
+        // Elevation and Bathymetry Layers
+        ////////////////////////////////////////
         var elevationB0 = {
             name: 'Bathymetry',
             checked: false,
@@ -84,8 +87,9 @@
             }
         };
 
-        // Erosion Layers //
-
+        ////////////////////////////////////////
+        // Erosion Layers
+        ////////////////////////////////////////
         var erosion0 = {
             name: 'Erosion Susceptibility',
             checked: false,
@@ -105,8 +109,9 @@
             }
         };
 
-        // Habitat Layers //
-
+        ////////////////////////////////////////
+        // Habitat Layers
+        ////////////////////////////////////////
         var habitat0 = {
             name: 'Critical Habitats',
             checked: false,
@@ -137,8 +142,10 @@
             }
         };
 
-        // Hurricane Evacuation Zones 2014 Layers - don't work yet //
-
+        ////////////////////////////////////////
+        // Hurricane Evacuation Zones 2014 Layers
+        // @todo Make these work
+        ////////////////////////////////////////
         var hurricaneEvac0 = {
             name: 'Hurricane Evacuation Zone A',
             checked: false,
@@ -169,8 +176,9 @@
             }
         };
 
-        // Hurrican Surge Inundation Layers //
-
+        ////////////////////////////////////////
+        // Hurrican Surge Inundation Layers
+        ////////////////////////////////////////
         var hurricaneSurge0 = {
             name: 'Category 1',
             checked: false,
@@ -223,8 +231,9 @@
             }
         };
 
-        // NWI Wetlands Functions 2010 Layers //
-
+        ////////////////////////////////////////
+        // NWI Wetlands Functions 2010 Layers
+        ////////////////////////////////////////
         var nwiWetlands0 = {
             name: 'Freshwater Emergent Wetland',
             checked: false,
@@ -321,8 +330,9 @@
             }
         };
 
-        // Open Space Layers //
-
+        ////////////////////////////////////////
+        // Open Space Layers
+        ////////////////////////////////////////
         var openSpace0 = {
             name: '1997 Municipal and Private Open Space',
             checked: false,
@@ -381,7 +391,7 @@
                 opacity: 0.5,
                 layers: [5]
             })
-        };      
+        };
 
         var openSpace = {
             name: 'Open Space',
@@ -463,8 +473,10 @@
             checked: false
         };
 
-        // Quaternary Geology Layers //
 
+        ////////////////////////////////////////
+        // Quaternary Geology Layers
+        ////////////////////////////////////////
         var quaternary0 = {
             name: 'Quaternary Geology',
             checked: false,
@@ -484,8 +496,9 @@
             }
         };
 
-        // Soils Layers //
-
+        ////////////////////////////////////////
+        // Soil Layers
+        ////////////////////////////////////////
         var soils0 = {
             name: 'Soils',
             checked: false,
@@ -582,8 +595,9 @@
             }
         };
 
-        // Surficial Materials Layers //
-
+        ////////////////////////////////////////
+        // Surficial Materials Layers
+        ////////////////////////////////////////
         var surficialMats0 = {
             name: 'Surficial Materials',
             checked: false,
@@ -636,8 +650,9 @@
             }
         };
 
-        // Water Resource Management Layers //
-
+        ////////////////////////////////////////
+        // Water Resource Management Layers
+        ////////////////////////////////////////
         var waterResource0 = {
             name: 'Aquifer Protection Area',
             checked: false,
@@ -789,8 +804,9 @@
             }
         };
 
-        // Watershed Layers //
-
+        ////////////////////////////////////////
+        // Watershed Layers
+        ////////////////////////////////////////
         var watershed0 = {
             name: 'Major Drainage Basins',
             checked: false,
@@ -854,6 +870,9 @@
             }
         };
 
+        ////////////////////////////////////////
+        // WMS Categories
+        ////////////////////////////////////////
         var categories = {
             bedrockGeology: bedrockGeology,
             elevationB: elevationB,

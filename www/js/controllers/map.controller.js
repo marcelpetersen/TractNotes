@@ -6,7 +6,7 @@
         .controller('MapController', MapController);
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, locationService, controlService, drawnItemsService, xmldataService, ctecoService, $ionicPopover, popupService, IonicClosePopupService) {
+    function MapController($rootScope, $scope, $stateParams, locationService, controlService, drawnItemsService, xmldataService, ctecoDataService, $ionicPopover, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -301,5 +301,5 @@
         }
     }
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'locationService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'locationService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 })();
