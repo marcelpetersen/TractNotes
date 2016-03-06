@@ -31,6 +31,7 @@
             addtocurrentTrack: addtocurrentTrack,
             setTrackMetadata: setTrackMetadata,
             setCurrentTrack: setCurrentTrack,
+            getCurrentTrack: getCurrentTrack,
             getTracks: getTracks
         };
         return service;
@@ -131,8 +132,14 @@
         }
 
         function setCurrentTrack(track){
+            //error here
             currentTrack = track;
         }
+
+                function getCurrentTrack(track){
+            return currentTrack;
+        }
+
 
         function getTracks() {
             return tracks;

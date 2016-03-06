@@ -33,8 +33,10 @@
 
             trackPopup.then(function(res) {
                 //set current track
-                locationService.setCurrentTrack(vm.currentTrack);
+                // error here
+                locationService.setCurrentTrack(vm.currentTrack.name);
                 locationService.setTrackMetadata(res);
+                vm.currentTrack = locationService.getCurrentTrack();
             });
         }
     }
