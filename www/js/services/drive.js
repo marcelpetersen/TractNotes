@@ -101,7 +101,11 @@ angular.module('TractNotes')
             var deferred = $q.defer();
             if (window.cordova) {
               var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
-              if ($cordovaOauthUtility.isInAppBrowserInstalled(cordovaMetadata) === true) {
+              /*
+               *following if statement does not permit drive authentication. isInAppBrowerInstalled from ngCordova
+               *returns false despite plugin being installed (known bug with cordova 6.0).
+               */
+              // if ($cordovaOauthUtility.isInAppBrowserInstalled(cordovaMetadata) === true) {
                 var redirect_uri = "http://localhost/callback";
                 if (options !== undefined) {
                   if (options.hasOwnProperty("redirect_uri")) {
@@ -132,9 +136,9 @@ angular.module('TractNotes')
                 browserRef.addEventListener('exit', function (event) {
                   deferred.reject("The sign in flow was canceled");
                 });
-              } else {
-                deferred.reject("Could not find InAppBrowser plugin");
-              }
+              // } else {
+              //   deferred.reject("Could not find InAppBrowser plugin");
+              // }
             } else {
               deferred.reject("Cannot authenticate via a web browser");
             }
