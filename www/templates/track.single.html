@@ -1,30 +1,33 @@
 <ion-view title="Track Information">
     <ion-content>
+<div class="card">
+  <div class="item item-divider">
+    Name
+  </div>
+  <div class="item item-text-wrap">
+    {{vm.currentTrack.name}}
+  </div>
+  <div class="item item-divider">
+    Description
+  </div>
+    <div class="item item-text-wrap">
+    {{vm.currentTrack.metadata.desc}}
+  </div>
+    <div class="item item-divider">
+    Author
+  </div>
+    <div class="item item-text-wrap">
+    {{vm.currentTrack.metadata.author}}
+  </div>
+      <div class="item item-divider">
+    Creation Date
+  </div>
+    <div class="item item-text-wrap">
+ {{vm.currentTrack.metadata.date}}  </div>
+
+</div>
         <ion-list>
-            <ion-item class="item item-divider">
-                Name
-            </ion-item>
-            <ion-item>
-                {{vm.currentTrack.name}}
-            </ion-item>
-            <ion-item class="item item-divider">
-                Description
-            </ion-item>
-            <ion-item>
-                {{vm.currentTrack.metadata.desc}}
-            </ion-item>
-            <ion-item class="item item-divider">
-                Author
-            </ion-item>
-            <ion-item>
-                {{vm.currentTrack.metadata.author}}
-            </ion-item>
-            <ion-item class="item item-divider">
-                Creation Date
-            </ion-item>
-            <ion-item>
-                {{vm.currentTrack.metadata.date}}
-            </ion-item>
+
         </ion-list>
     <div class = "row"> 
         <div class="col">

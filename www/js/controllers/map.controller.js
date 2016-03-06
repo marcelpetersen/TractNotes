@@ -48,7 +48,6 @@
         /** @listens $rootScope.AddCTECO */
         $rootScope.$on('AddCTECO', function(event, data) {
             data.layer.addTo(vm.map);
-            console.log(data);
             vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
         });
 
@@ -278,10 +277,11 @@
             } else if (type === 'marker') {
                 drawnItemsService.addToDrawnItems(layer);
                 var newLoc = layer.getLatLng();
-                console.log(newLoc);
-                var currentPosition = locationService.current();
+                var currentPosition = locationService.locate();
                 currentPosition.then(function(val) {
-                    e.layer.bindPopup((newLoc.distanceTo(val.gps)).toFixed(0) + 'm from current position.');
+                    var lat = val.position.coords.latitude;
+                    var long = val.position.coords.longitude;
+                    e.layer.bindPopup((newLoc.distanceTo([lat, long])).toFixed(2) + 'm from current position.');
                 });
             } else {
                 drawnItemsService.addToDrawnItems(layer);

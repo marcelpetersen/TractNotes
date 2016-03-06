@@ -29,7 +29,7 @@
 
         function update(input) {
             locationService.setCurrentTrack(vm.currentTrack);
-            locationService.setTrackMetadata(input)
+            locationService.setTrackMetadata(input);
             vm.currentTrack = locationService.getCurrentTrack();
             vm.back();
         }
