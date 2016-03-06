@@ -273,7 +273,7 @@
                 e.layer.openPopup();
             } else if (type === 'polygon' || type === 'rectangle') {
                 drawnItemsService.addToDrawnItems(layer);
-                e.layer.bindPopup(((LGeo.area(e.layer) / 1000000) * 0.62137).toFixed(2) + ' mi<sup>2</sup>');
+                e.layer.bindPopup((LGeo.area(e.layer) / 1000000).toFixed(2) + ' km<sup>2</sup>');
                 e.layer.openPopup();
             } else if (type === 'marker') {
                 drawnItemsService.addToDrawnItems(layer);
