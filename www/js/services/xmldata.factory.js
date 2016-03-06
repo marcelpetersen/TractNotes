@@ -9,12 +9,22 @@
 
     /* @ngInject */
     function xmldataService() {
+        var toImport = '';
         var service = {
+            setImportURL: setImportURL,
             getxmldata: getxmldata
         };
         return service;
 
         ////////////////
+        function setImportURL(url){
+            toImport = url;
+        }
+
+                function getImportURL(url){
+            return toImport;
+        }
+
 
         function getxmldata(layer) {
             var xml = layer;

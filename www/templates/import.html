@@ -27,8 +27,14 @@
 	    <ion-radio name="source">
 	      URL
 	    </ion-radio>
+
+	                <form novalidate>
+                <label class="item item-input item-stacked-label">
+                <span class="input-label">URL</span>
+                <input type="url" placeholder="URL here" ng-model="url">
+            </label>
 	    
-	    <button class="button button-block button-positive">
+	    <button class="button button-block button-positive" ng-click="vm.sendImportURL(url)">
 	      Add
 	    </button>
 	  </div>
