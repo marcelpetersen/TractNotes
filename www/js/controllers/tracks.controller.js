@@ -6,27 +6,24 @@
         .controller('TracksController', TracksController);
 
     /* @ngInject */
-    function TracksController($rootScope, locationService) {
+    function TracksController(locationService, trackService) {
         var vm = this;
         vm.title = 'TrackController';
-
         vm.tracks = [];
-        vm.currentTrack = {};
-        vm.setTrack = setTrack;
+        vm.sendTrack = sendTrack;
+
         activate();
 
         ////////////////
 
         function activate() {
-        	vm.tracks = locationService.getTracks();
+            vm.tracks = locationService.getTracks();
         }
 
-        /** @fires $rootScope.TrackChange */
-        function setTrack(track){
-        	vm.currentTrack = track;
-           $rootScope.$emit('TrackChange', track);
+        function sendTrack(track) {
+            trackService.setTrack(track);
         }
     }
 
-    TracksController.$inject = ['$rootScope', 'locationService'];
+    TracksController.$inject = ['locationService', 'trackService'];
 })();
