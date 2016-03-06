@@ -3,14 +3,14 @@
 
     angular
         .module('TractNotes')
-        .controller('ctecoListController', ctecoListController);
+        .controller('CTECOListController', CTECOListController);
 
-    ctecoListController.$inject = ['$scope', '$rootScope', 'ctecoDataService', 'ctecoViewService'];
+    CTECOListController.$inject = ['$scope', '$rootScope', 'ctecoDataService', 'ctecoViewService'];
 
     /* @ngInject */
-    function ctecoListController($scope, $rootScope, ctecoDataService, ctecoViewService) {
+    function CTECOListController($scope, $rootScope, ctecoDataService, ctecoViewService) {
         var vm = this;
-        vm.title = 'ctecoListController';
+        vm.title = 'CTECOListController';
         vm.sendCategory = sendCategory;
 
         activate();

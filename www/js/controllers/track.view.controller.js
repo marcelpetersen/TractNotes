@@ -3,13 +3,13 @@
 
     angular
         .module('TractNotes')
-        .controller('TrackController', TrackController);
-    TrackController.$inject = ['$rootScope', '$scope', 'locationService', 'trackService', 'popupService'];
+        .controller('TrackViewController', TrackViewController);
+    TrackViewController.$inject = ['$rootScope', '$scope', 'locationService', 'trackViewService', 'popupService'];
 
     /* @ngInject */
-    function TrackController($rootScope, $scope, locationService, trackService, popupService) {
+    function TrackViewController($rootScope, $scope, locationService, trackViewService, popupService) {
         var vm = this;
-        vm.title = 'TrackController';
+        vm.title = 'TrackViewController';
         vm.currentTrack = null;
         vm.trackPopup = trackPopup;
 
@@ -18,7 +18,7 @@
         ////////////////
 
         function activate() {
-            vm.currentTrack = trackService.getTrack();
+            vm.currentTrack = trackViewService.getTrackView();
         }
 
         function trackPopup() {

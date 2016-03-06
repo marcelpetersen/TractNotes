@@ -3,14 +3,14 @@
 
     angular
         .module('TractNotes')
-        .controller('ctecoLayersController', ctecoLayersController);
+        .controller('CTECOLayersController', CTECOLayersController);
 
-    ctecoLayersController.$inject = ['$rootScope', 'ctecoViewService'];
+    CTECOLayersController.$inject = ['$rootScope', 'ctecoViewService'];
 
     /* @ngInject */
-    function ctecoLayersController($rootScope, ctecoViewService) {
+    function CTECOLayersController($rootScope, ctecoViewService) {
         var vm = this;
-        vm.title = 'ctecoLayersController';
+        vm.title = 'CTECOLayersController';
         vm.currentCategory = null;
         vm.ctecoToggle = ctecoToggle;
 

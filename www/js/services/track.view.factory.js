@@ -3,14 +3,16 @@
 
     angular
         .module('TractNotes')
-        .factory('trackService', trackService);
+        .factory('trackViewService', trackViewService);
+
+    trackViewService.$inject = [];
 
     /* @ngInject */
-    function trackService() {
+    function trackViewService() {
         var displayedTrack = '';
 
         var service = {
-            setTrack: setTrack,
+            setTrackView: setTrackView,
             getTrack: getTrack,
             displayedTrack: displayedTrack
         };
@@ -18,14 +20,12 @@
 
         ////////////////
 
-        function setTrack(track) {
+        function setTrackView(track) {
             displayedTrack = track;
         }
 
-        function getTrack() {
+        function getTrackView() {
             return displayedTrack;
         }
     }
-
-    trackService.$inject = [];
 })();

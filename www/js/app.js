@@ -48,7 +48,7 @@
             views: {
                 'menuContent': {
                     templateUrl: 'templates/track.list.html',
-                    controller: 'TracksController',
+                    controller: 'TrackListController',
                     controllerAs: 'vm'
                 }
             }
@@ -59,7 +59,7 @@
             views: {
                 'menuContent': {
                     templateUrl: 'templates/track.single.html',
-                    controller: 'TrackController',
+                    controller: 'TrackViewController',
                     controllerAs: 'vm'
                 }
             }
@@ -101,7 +101,7 @@
             views: {
                 'menuContent': {
                     templateUrl: 'templates/cteco.list.html',
-                    controller: 'ctecoListController',
+                    controller: 'CTECOListController',
                     controllerAs: 'vm'
                 }
             }
@@ -112,7 +112,7 @@
             views: {
                 'menuContent': {
                     templateUrl: 'templates/cteco.layers.html',
-                    controller: 'ctecoLayersController',
+                    controller: 'CTECOLayersController',
                     controllerAs: 'vm'
                 }
             }
