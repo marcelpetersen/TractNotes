@@ -14,6 +14,7 @@
         vm.baseMaps = null;
         vm.overlayMaps = null;
         vm.layercontrol = null;
+        vm.hiThere = null;
         vm.recording = false;
         vm.drawControl = null;
         vm.scaleControl = null;
@@ -98,10 +99,18 @@
                     var lat = val.position.coords.latitude;
                     var long = val.position.coords.longitude;
                     var zoom = val.zoom;
-                    var marker = L.marker([lat, long], zoom);
-                    marker.addTo(vm.map);
                     if (vm.recording) {
+                        var marker = L.marker([lat, long], zoom).addTo(vm.map);
                         locationService.addtocurrentTrack(marker);
+                    } else {
+                        if (vm.hiThere === null) {
+                            vm.hiThere = L.marker([lat, long], zoom);
+                            vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
+                        }
+                        else{
+                            vm.hiThere.setLatLng([lat, long], zoom);
+                            vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
+                        }
                     }
                 } else {
                     console.log(val.error.message);

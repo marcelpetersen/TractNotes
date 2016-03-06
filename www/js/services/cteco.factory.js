@@ -9,8 +9,6 @@
 
     /* @ngInject */
     function ctecoService() {
-        console.log('asdf');
-
         // Bedrock Geology Layers //
 
         var bedrockGeology0 = {

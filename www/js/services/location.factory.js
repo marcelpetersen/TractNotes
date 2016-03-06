@@ -30,6 +30,7 @@
             createTrack: createTrack,
             addtocurrentTrack: addtocurrentTrack,
             setTrackMetadata: setTrackMetadata,
+            setCurrentTrack: setCurrentTrack,
             getTracks: getTracks
         };
         return service;
@@ -127,6 +128,10 @@
             if (typeof(metadata.author) !== 'undefined') {
                 currentTrack.metadata.author = metadata.author;
             }
+        }
+
+        function setCurrentTrack(track){
+            currentTrack = track;
         }
 
         function getTracks() {
