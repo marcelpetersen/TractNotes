@@ -102,7 +102,8 @@
             views: {
                 'menuContent': {
                     templateUrl: 'templates/drive.html',
-                    controller: 'DriveController'
+                    controller: 'DriveController',
+                    controllerAs: 'vm'
                 }
             }
         })
