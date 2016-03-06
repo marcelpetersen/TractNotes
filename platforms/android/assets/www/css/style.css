@@ -23,34 +23,6 @@ body {
   border-top: 1px solid #ddd !important;
 }
 
-.card-positive .item{
-	background: #387ef5;
-}
-
-.card-calm .item{
-	background: #11c1f3;
-}
-
-.card-balanced .item{
-	background: #33cd5f;
-}
-
-.card-energized .item{
-	background: #ffc900;
-}
-
-.card-assertive .item{
-	background: #ef473a;
-}
-
-.card-royal .item{
-	background: #886aea;
-}
-
-.card-dark .item{
-	background: #444444;
-}
-
 @font-face {
     font-family: 'icomoon';
     src:    url('../lib/ionic/fonts/icomoon.eot?7aoxt');
@@ -93,39 +65,6 @@ body {
     content: "\e904";
 }
 
-/*style for import popup boxes*/
-.popup-import .popup
-{
-  /*border and bg color for import popup box*/
-  border: 1px solid black;
-  background-color: #b7b7b7;
-}
-.popup-import .popup-head
-{
-  background-color: #444444;
-}
-.popup-import .popup-title
-{
-  color: white;
-}
-.popup-import .popup-sub-title
-{
-  color: white;
-}
-
-.popover .item .item-divider {
-  background-color: #444444;
-}
-
-.platform-android ion-popover-view.fit {
-  margin-top: 10px;
-}
-
-.platform-ios ion-popover-view.fit {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 .item-text-center
 {
     display: -webkit-box;
@@ -142,27 +81,4 @@ body {
     position: absolute;
     top: 0;
     height: 100%;
-}
-
-.popover {
-  height: 400px;
-}
-.popover-body {
-  background-color: black;
-}
-
-.popover .list .item-icon-left {
-  background-color: #b7b7b7;
-  color: black;
-}
-.popover .list .icon {
-  color: white;
-}
-.popover .list .item-divider {
-  color: white;
-  background-color: #444444;
-}
-.popover .list .item-avatar {
-  color: #000000;
-  background-color: #b7b7b7;
 }

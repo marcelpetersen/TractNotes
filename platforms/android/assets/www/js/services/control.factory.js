@@ -29,38 +29,38 @@
         };
 
         var service = {
-            getDraw: getDraw,
-            getScale: getScale,
-            getSearch: getSearch,
-            setDraw: setDraw,
-            setScale: setScale,
-            setSearch: setSearch,
+            getDrawControl: getDrawControl,
+            getScaleControl: getScaleControl,
+            getSearchControl: getSearchControl,
+            setDrawControl: setDrawControl,
+            setScaleControl: setScaleControl,
+            setSearchControl: setSearchControl,
         };
         return service;
 
         ////////////////
 
-        function getDraw() {
+        function getDrawControl() {
             return drawControl;
         }
 
-        function getScale() {
+        function getScaleControl() {
             return scaleControl;
         }
 
-        function getSearch() {
+        function getSearchControl() {
             return searchControl;
         }
 
-        function setDraw(checked) {
+        function setDrawControl(checked) {
             drawControl.checked = checked;
         }
 
-        function setScale(checked) {
+        function setScaleControl(checked) {
             scaleControl.checked = checked;
         }
 
-        function setSearch(checked) {
+        function setSearchControl(checked) {
             searchControl.checked = checked;
         }
     }

@@ -1,0 +1,36 @@
+<ion-view title="Edit Track Information">
+    <ion-content>
+        <ion-list>
+            <ion-item class="item item-divider">
+                Name
+            </ion-item>
+            <ion-item class="item item-input">
+                <input type="text" value={{vm.currentTrack.name}} id="trackName">
+            </ion-item>
+            <ion-item class="item item-divider">
+                Description
+            </ion-item>
+            <ion-item class="item item-input">
+                <input type="text" value={{vm.currentTrack.metadata.desc}} id="trackDesc">
+            </ion-item>
+            <ion-item class="item item-divider">
+                Author
+            </ion-item>
+            <ion-item class="item item-input">
+                <input type="text" value={{vm.currentTrack.metadata.author}} id="trackAuthor">
+            </ion-item>
+        </ion-list>
+        <div class="row">
+            <div class="col">
+                <button class="button button-block button-positive" id="saveButton">
+                    Save
+                </button>
+            </div>
+            <div class="col">
+                <button class="button button-block button-assertive" ui-sref="app.manage_tracks">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

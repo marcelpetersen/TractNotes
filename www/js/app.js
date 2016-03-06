@@ -65,6 +65,17 @@
             }
         })
 
+        .state('app.edit_track', {
+            url: '/edit_track',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/track.edit.html',
+                    controller: 'TrackEditController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
         .state('app.control', {
             url: '/control',
             views: {

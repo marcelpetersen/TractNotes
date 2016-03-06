@@ -43,6 +43,28 @@
             }
         })
 
+        .state('app.manage_tracks', {
+            url: '/manage_tracks',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/track.list.html',
+                    controller: 'TrackListController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.single_track', {
+            url: '/single_track',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/track.single.html',
+                    controller: 'TrackViewController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
         .state('app.control', {
             url: '/control',
             views: {
@@ -55,56 +77,45 @@
         })
 
         .state('app.form', {
-                url: '/form',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/form.html',
-                        controller: 'GAuthController'
-                    }
+            url: '/form',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/form.html',
+                    controller: 'GAuthController'
                 }
+            }
         })
 
         .state('app.drive', {
-                url: '/drive',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/drive.html',
-                        controller: 'DriveController'
-                    }
+            url: '/drive',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/drive.html',
+                    controller: 'DriveController'
                 }
+            }
         })
 
-        .state('app.cteco', {
-                url: '/cteco',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/cteco.html',
-                        controller: 'ctecoController',
-                        controllerAs: 'vm'
-                    }
+        .state('app.cteco_list', {
+            url: '/cteco_list',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/cteco.list.html',
+                    controller: 'CTECOListController',
+                    controllerAs: 'vm'
                 }
+            }
         })
 
-        .state('app.cteco/bedrockgeology', {
-                url: '/cteco/bedrockgeology',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/ctecoTemplates/bedrockGeology.html',
-                        controller: 'ctecoController',
-                        controllerAs: 'vm'
-                    }
+        .state('app.single_cteco', {
+            url: '/single_cteco',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/cteco.layers.html',
+                    controller: 'CTECOLayersController',
+                    controllerAs: 'vm'
                 }
-        })
-
-        .state('app.cteco/elevationbathymetry', {
-                url: '/cteco/elevationbathymetry',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/ctecoTemplates/elevationBathymetry.html',
-                        controller: 'ctecoController',
-                        controllerAs: 'vm'
-                    }
-                }
+            }
         });
 
         // if none of the above states are matched, use this as the fallback

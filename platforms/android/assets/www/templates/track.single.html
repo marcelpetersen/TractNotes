@@ -1,0 +1,19 @@
+<ion-view title="Track">
+    <ion-content>
+        {{vm.currentTrack.name}}
+        {{vm.currentTrack.metadata.desc}}
+        {{vm.currentTrack.metadata.author}}
+        {{vm.currentTrack.metadata.date}}
+<div class = "row"> <div class="col">
+        <button class="button button-block button-positive" ng-click = "vm.trackPopup()">
+          Edit
+        </button></div>
+        <div class="col">
+        <button class="button button-block button-positive" ng-click = "vm.deleteTrack()">
+          Delete
+        </button></div></div>
+        <button class="button button-block button-positive" ng-click = "vm.export()">
+          Export to Google Drive
+        </button>
+    </ion-content>
+</ion-view>

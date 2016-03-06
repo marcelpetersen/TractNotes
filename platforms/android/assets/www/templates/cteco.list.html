@@ -4,14 +4,14 @@
 			<ion-item class="item item-divider">
 				Map Services
 			</ion-item>
-			<ion-item ng-repeat="category in vm.ctecoCategories" class="item item-thumbnail-left" href="{{category.view}}"> 
+			<ion-item ng-repeat="category in vm.ctecoCategories" class="item item-thumbnail-left" ng-click="vm.sendCategory(category)" href="#/app/single_cteco"> 
 				<img ng-src="{{category.image}}" style="border:1px solid black">
 				<div class="item-text-center">{{category.name}}</div>
 			</ion-item>
 			<ion-item class="item item-divider">
 				Orthophoto Layers
 			</ion-item>
-			<ion-item ng-repeat="ortho in vm.orthoList" class="item item-thumbnail-left"> 
+			<ion-item ng-repeat="ortho in vm.orthoLayers" class="item item-thumbnail-left" ng-click="vm.sendCategory(ortho)" href="#/app/single_cteco"> 
 				<img ng-src="{{ortho.image}}" style="border:1px solid black">
 				<div class="item-text-center">{{ortho.name}}</div>
 			</ion-item>

@@ -1,19 +1,48 @@
-<ion-view title="Track">
+<ion-view title="Track Information">
     <ion-content>
-        {{vm.currentTrack.name}}
-        {{vm.currentTrack.metadata.desc}}
-        {{vm.currentTrack.metadata.author}}
-        {{vm.currentTrack.metadata.date}}
-<div class = "row"> <div class="col">
-        <button class="button button-block button-positive" ng-click = "vm.trackPopup()">
-          Edit
-        </button></div>
+        <ion-list>
+            <ion-item class="item item-divider">
+                Name
+            </ion-item>
+            <ion-item>
+                {{vm.currentTrack.name}}
+            </ion-item>
+            <ion-item class="item item-divider">
+                Description
+            </ion-item>
+            <ion-item>
+                {{vm.currentTrack.metadata.desc}}
+            </ion-item>
+            <ion-item class="item item-divider">
+                Author
+            </ion-item>
+            <ion-item>
+                {{vm.currentTrack.metadata.author}}
+            </ion-item>
+            <ion-item class="item item-divider">
+                Creation Date
+            </ion-item>
+            <ion-item>
+                {{vm.currentTrack.metadata.date}}
+            </ion-item>
+        </ion-list>
+    <div class = "row"> 
         <div class="col">
-        <button class="button button-block button-positive" ng-click = "vm.deleteTrack()">
-          Delete
-        </button></div></div>
-        <button class="button button-block button-positive" ng-click = "vm.export()">
-          Export to Google Drive
+            <!-- <button class="button button-block button-positive" ng-click = "vm.trackPopup()">
+                Edit
+            </button> -->
+            <button class="button button-block button-positive" ui-sref="app.edit_track">
+                Edit
+            </button>
+        </div>
+        <div class="col">
+            <button class="button button-block button-positive" ng-click = "vm.deleteTrack()">
+                Delete
+            </button>
+        </div>
+    </div>
+    <button class="button button-block button-positive" ng-click = "vm.export()">
+        Export to Google Drive
         </button>
     </ion-content>
 </ion-view>

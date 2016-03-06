@@ -18,10 +18,9 @@
 
         function getTrackPopup(scope) {
             return $ionicPopup.show({
-                title: 'Edit track',
-                template: 'Name<input type="text" ng-model="data.name"> Description <input type="text" ng-model="data.desc"> Author<input type="text" ng-model="data.author">', // @TODO: if not valid url, output error message
+                title: 'Edit Track Information',
+                template: 'Name<input type="text" ng-model="data.name"> Description <input type="text" ng-model="data.desc"> Author<input type="text" ng-model="data.author">', // @TODO: if not valid url, output error message    
                 scope: scope,
-                cssClass: 'popup-import',
                 buttons: [{
                     text: 'Save',
                     type: 'button-positive',
