@@ -28,7 +28,15 @@
         vm.search = search;
         vm.showPolygonArea = showPolygonArea;
         vm.showPolygonAreaEdited = showPolygonAreaEdited;
+        vm.xmldata = xmldata;
         vm.trackPopup = trackPopup;
+
+
+        //@todo change events to factory listeners
+        /** @listens $rootScope.Import */
+        $rootScope.$on('Import', function(event, data) {
+            vm.xmldata(data);
+        });
 
         /** @listens $rootScope.Draw */
         $rootScope.$on('Draw', function(event, data) {
@@ -48,7 +56,6 @@
         /** @listens $rootScope.AddCTECO */
         $rootScope.$on('AddCTECO', function(event, data) {
             data.layer.addTo(vm.map);
-            console.log(data);
             vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
         });
 
@@ -278,14 +285,48 @@
             } else if (type === 'marker') {
                 drawnItemsService.addToDrawnItems(layer);
                 var newLoc = layer.getLatLng();
-                console.log(newLoc);
-                var currentPosition = locationService.current();
+                var currentPosition = locationService.locate();
                 currentPosition.then(function(val) {
-                    e.layer.bindPopup((newLoc.distanceTo(val.gps)).toFixed(0) + 'm from current position.');
+                    var lat = val.position.coords.latitude;
+                    var long = val.position.coords.longitude;
+                    e.layer.bindPopup((newLoc.distanceTo([lat, long])).toFixed(2) + 'm from current position.');
                 });
             } else {
                 drawnItemsService.addToDrawnItems(layer);
             }
+
+        }
+
+        function xmldata(layer) {
+            var layerResult = xmldataService.getxmldata(layer);
+            layerResult.then(function(val) {
+                $scope.$apply(function() {
+                    var finalLayer = val.on('ready', function() {
+                        vm.map.fitBounds(val.getBounds());
+                        val.eachLayer(function(layer) {
+                            var content;
+                            var name = layer.feature.properties.name;
+                            var desc = layer.feature.properties.desc;
+
+                            if (name !== undefined) {
+                                content = '<h2>' + name + '</h2>';
+                                if (desc !== undefined) {
+                                    content += '<p>' + desc + '</p';
+                                    layer.bindPopup(content);
+                                } else {
+                                    layer.bindPopup(content);
+                                }
+                            } else if (desc !== undefined) {
+                                content = '<h2>' + desc + '</h2>';
+                                layer.bindPopup(content);
+                            }
+                        });
+                    });
+                    finalLayer.addTo(vm.map);
+                    vm.layercontrol.addOverlay(finalLayer, layer);
+                });
+
+            });
 
         }
 

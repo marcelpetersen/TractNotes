@@ -37,8 +37,8 @@
             views: {
                 'menuContent': {
                     templateUrl: 'templates/import.html',
-                    //controller: 'ImportController',
-                    //controllerAs: 'vm'
+                    controller: 'ImportController',
+                    controllerAs: 'vm'
                 }
             }
         })
