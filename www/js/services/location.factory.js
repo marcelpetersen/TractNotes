@@ -30,9 +30,6 @@
             createTrack: createTrack,
             addtocurrentTrack: addtocurrentTrack,
             setTrackMetadata: setTrackMetadata,
-            setTrackName: setTrackName,
-            setTrackDesc: setTrackDesc,
-            setTrackAuthor: setTrackAuthor,
             setCurrentTrack: setCurrentTrack,
             getCurrentTrack: getCurrentTrack,
             getTracks: getTracks
@@ -122,43 +119,23 @@
         }
 
         function setTrackMetadata(metadata) {
-            if (typeof(metadata.name) !== 'undefined') {
+            if (metadata.name && metadata.name != '') {
                 currentTrack.name = metadata.name;
                 currentTrack.metadata.name = metadata.name;
             }
-            if (typeof(metadata.desc) !== 'undefined') {
+            if (metadata.desc && metadata.desc != '') {
                 currentTrack.metadata.desc = metadata.desc;
             }
-            if (typeof(metadata.author) !== 'undefined') {
+            if (metadata.author && metadata.author != '') {
                 currentTrack.metadata.author = metadata.author;
             }
         }
-        
-        function setTrackName(trackName) {
-            if (typeof(trackName) !== 'undefined') {
-                currentTrack.name = trackName;
-                currentTrack.metadata.name = trackName;
-            }
-        }
 
-        function setTrackDesc(trackDesc) {
-            if (typeof(trackDesc) !== 'undefined') {
-                currentTrack.metadata.desc = trackDesc;
-            }
-        }
-
-        function setTrackAuthor(trackAuthor) {
-            if (typeof(trackAuthor) !== 'undefined') {
-                currentTrack.metadata.author = trackAuthor;
-            }
-        }
-
-        function setCurrentTrack(track){
-            //error here
+        function setCurrentTrack(track) {
             currentTrack = track;
         }
 
-        function getCurrentTrack(track){
+        function getCurrentTrack(track) {
             return currentTrack;
         }
 
