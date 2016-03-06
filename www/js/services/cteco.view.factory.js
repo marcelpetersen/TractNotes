@@ -13,8 +13,7 @@
 
         var service = {
             setCategory: setCategory,
-            getCategory: getCategory,
-            displayedCategory: displayedCategory
+            getCategory: getCategory
         };
         return service;
 

@@ -12,19 +12,19 @@
         var drawnItems = new L.FeatureGroup();
 
         var service = {
-            getDrawnItems: getDrawnItems,
-            addToDrawnItems: addToDrawnItems
+            addToDrawnItems: addToDrawnItems,
+            getDrawnItems: getDrawnItems
         };
         return service;
 
         ////////////////
 
-        function getDrawnItems() {
-            return drawnItems;
-        }
-
         function addToDrawnItems(e) {
             drawnItems.addLayer(e);
+        }
+
+        function getDrawnItems() {
+            return drawnItems;
         }
     }
 })();

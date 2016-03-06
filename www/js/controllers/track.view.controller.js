@@ -4,6 +4,7 @@
     angular
         .module('TractNotes')
         .controller('TrackViewController', TrackViewController);
+    
     TrackViewController.$inject = ['$rootScope', '$scope', 'locationService', 'trackViewService', 'popupService'];
 
     /* @ngInject */

@@ -45,18 +45,18 @@
             vm.search(data);
         });
 
-        /** @listens $rootScope.CheckedCteco */
-        $rootScope.$on('AddCteco', function(event, data) {
+        /** @listens $rootScope.AddCTECO */
+        $rootScope.$on('AddCTECO', function(event, data) {
             data.layer.addTo(vm.map);
             console.log(data);
             vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
         });
 
         /** 
-         * @listens $rootScope.UncheckedCteco 
+         * @listens $rootScope.RemoveCTECO 
          * @todo remove layer from layer control
          */
-        $rootScope.$on('RemoveCteco', function(event, data) {
+        $rootScope.$on('RemoveCTECO', function(event, data) {
             data.layer.removeFrom(vm.map);
             //vm.layercontrol.removeLayer(CTECO.data.name);
         });

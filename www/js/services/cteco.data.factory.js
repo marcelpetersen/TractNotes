@@ -9,7 +9,6 @@
 
     /* @ngInject */
     function ctecoDataService() {
-
         ////////////////////////////////////////
         // Bedrock Geology Layers
         ////////////////////////////////////////

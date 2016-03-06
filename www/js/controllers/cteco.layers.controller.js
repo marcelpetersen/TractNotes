@@ -29,9 +29,9 @@
          */
         function ctecoToggle(ctecoLayer) {
             if (ctecoLayer.checked !== false) {
-                $rootScope.$emit('AddCteco', ctecoLayer);
+                $rootScope.$emit('AddCTECO', ctecoLayer);
             } else {
-                $rootScope.$emit('RemoveCteco', ctecoLayer);
+                $rootScope.$emit('RemoveCTECO', ctecoLayer);
             }
         }
 
