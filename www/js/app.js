@@ -102,7 +102,8 @@
             views: {
                 'menuContent': {
                     templateUrl: 'templates/drive.html',
-                    controller: 'DriveController'
+                    controller: 'DriveController',
+                    controllerAs: 'vm'
                 }
             }
         })
@@ -134,7 +135,7 @@
     }
 
 
-    function run($state, $rootScope, $ionicPlatform) {
+    function run($state, $rootScope, $ionicPlatform, $ionicPopup, $ionicHistory) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -147,6 +148,30 @@
                 StatusBar.styleDefault();
             }
         });
+
+        // hardware back button opens previous view.
+        // if no history then prompts to exit the app.
+        $ionicPlatform.registerBackButtonAction(function (e) {
+          if ($ionicHistory.backView()) {
+            $ionicHistory.goBack();
+          } else {
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Confirm Exit',
+              template: "Are you sure you want to exit?"
+            });
+            confirmPopup.then(function (close) {
+              if (close) {
+                // there is no back view, so close the app instead
+                ionic.Platform.exitApp();
+              } // otherwise do nothing
+              console.log("User canceled exit.");
+            });
+          }
+
+          e.preventDefault();
+          return false;
+        }, 101);
+
     }
 
 })();
