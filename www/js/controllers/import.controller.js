@@ -17,14 +17,11 @@
 
         ////////////////
 
-        function activate() {
-        }
+        function activate() {}
 
         // @todo error handling
-        // kml or gpx
-        function sendImportURL(url){
-        	xmldataService.setImportURL(url);
-        	$rootScope.$emit('Import', url);
+        function sendImportURL(url) {
+            xmldataService.setImportURL(url);
         }
     }
 })();

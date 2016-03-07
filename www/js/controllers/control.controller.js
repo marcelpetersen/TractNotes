@@ -5,6 +5,9 @@
         .module('TractNotes')
         .controller('ControlController', ControlController);
 
+
+    ControlController.$inject = ['$rootScope', '$scope', 'controlService'];
+
     /* @ngInject */
     function ControlController($rootScope, $scope, controlService) {
         var vm = this;
@@ -25,33 +28,22 @@
             vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl];
         }
 
-        /** @fires $rootScope.Draw */
         $scope.$watch('vm.drawControl.checked', function(newValue, oldValue) {
             if (newValue !== oldValue) {
                 controlService.setDrawControl(newValue);
-                var checked = controlService.getDrawControl().checked;
-                $rootScope.$emit('Draw', checked);
             }
         });
 
-        /** @fires $rootScope.Scale */
         $scope.$watch('vm.scaleControl.checked', function(newValue, oldValue) {
             if (newValue !== oldValue) {
                 controlService.setScaleControl(newValue);
-                var checked = controlService.getScaleControl().checked;
-                $rootScope.$emit('Scale', checked);
             }
         });
 
-        /** @fires $rootScope.Search */
         $scope.$watch('vm.searchControl.checked', function(newValue, oldValue) {
             if (newValue !== oldValue) {
                 controlService.setSearchControl(newValue);
-                var checked = controlService.getSearchControl().checked;
-                $rootScope.$emit('Search', checked);
             }
         });
     }
-
-    ControlController.$inject = ['$rootScope', '$scope', 'controlService'];
 })();

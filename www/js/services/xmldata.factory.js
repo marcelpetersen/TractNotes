@@ -12,16 +12,17 @@
         var toImport = '';
         var service = {
             setImportURL: setImportURL,
+            getImportURL: getImportURL,
             getxmldata: getxmldata
         };
         return service;
 
         ////////////////
-        function setImportURL(url){
+        function setImportURL(url) {
             toImport = url;
         }
 
-                function getImportURL(url){
+        function getImportURL() {
             return toImport;
         }
 
@@ -33,27 +34,27 @@
                 function(resolve, reject) {
                     $(function() {
                         $.ajax({
-                        type: "GET",
-                        url: layer,
-                        dataType: "xml",
-                        success: function(xml) {
-                            if ($('kml', xml).text() != '') {console.log(omnivore.kml(layer));
-                                resolve(omnivore.kml(layer));
+                            type: "GET",
+                            url: layer,
+                            dataType: "xml",
+                            success: function(xml) {
+                                if ($('kml', xml).text() != '') {
+                                    console.log(omnivore.kml(layer));
+                                    resolve(omnivore.kml(layer));
+                                }
+                                if ($('gpx', xml).text() != '') {
+                                    console.log(omnivore.gpx(layer));
+                                    resolve(omnivore.gpx(layer));
+                                }
+                            },
+                            error: function() {
+                                console.log('error');
                             }
-                            if ($('gpx', xml).text() != '') {console.log(omnivore.gpx(layer));
-                                resolve(omnivore.gpx(layer));
-                            }
-                        },
-                        error: function() {
-                            console.log('error');
-                        }
-                    });
+                        });
                     });
                 }
             );
 
-            // @TODO: more robust error handling? we need ot use jquery to get the url, but maybe leaflet-omnivore is better for errors
-            // could use var layer = w.e. -> layer.layers.length not equal to 0
             // @TODO: use file name as layer name, or end of web url: this will come into play once google drive is working
         }
     }

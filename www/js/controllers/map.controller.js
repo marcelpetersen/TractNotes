@@ -31,43 +31,6 @@
         vm.xmldata = xmldata;
         vm.trackPopup = trackPopup;
 
-
-        //@todo change events to factory listeners
-        /** @listens $rootScope.Import */
-        $rootScope.$on('Import', function(event, data) {
-            vm.xmldata(data);
-        });
-
-        /** @listens $rootScope.Draw */
-        $rootScope.$on('Draw', function(event, data) {
-            vm.draw(data);
-        });
-
-        /** @listens $rootScope.Scale */
-        $rootScope.$on('Scale', function(event, data) {
-            vm.scale(data);
-        });
-
-        /** @listens $rootScope.Search */
-        $rootScope.$on('Search', function(event, data) {
-            vm.search(data);
-        });
-
-        /** @listens $rootScope.AddCTECO */
-        $rootScope.$on('AddCTECO', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-        });
-
-        /** 
-         * @listens $rootScope.RemoveCTECO
-         * @todo remove layer from layer control
-         */
-        $rootScope.$on('RemoveCTECO', function(event, data) {
-            data.layer.removeFrom(vm.map);
-            //vm.layercontrol.removeLayer(CTECO.data.name);
-        });
-
         activate();
 
         ////////////////
@@ -91,6 +54,57 @@
 
             autoDiscover();
         }
+
+        $scope.$watch((function() {
+            return controlService.getDrawControl().checked;
+        }), function(newVal, oldVal) {
+            if (typeof newVal !== 'undefined') {
+                vm.draw(newVal);
+
+            }
+        });
+
+        $scope.$watch((function() {
+            return controlService.getScaleControl().checked;
+        }), function(newVal, oldVal) {
+            if (typeof newVal !== 'undefined') {
+                vm.scale(newVal);
+
+            }
+        });
+
+        $scope.$watch((function() {
+            return controlService.getSearchControl().checked;
+        }), function(newVal, oldVal) {
+            if (typeof newVal !== 'undefined') {
+                vm.search(newVal);
+
+            }
+        });
+
+        $scope.$watch((function() {
+            return xmldataService.getImportURL();
+        }), function(newVal, oldVal) {
+            if (typeof newVal !== 'undefined' && newVal !== null) {
+                vm.xmldata(newVal);
+
+            }
+        });
+
+        /** @listens $rootScope.AddCTECO */
+        $rootScope.$on('AddCTECO', function(event, data) {
+            data.layer.addTo(vm.map);
+            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
+        });
+
+        /** 
+         * @listens $rootScope.RemoveCTECO
+         * @todo remove layer from layer control
+         */
+        $rootScope.$on('RemoveCTECO', function(event, data) {
+            data.layer.removeFrom(vm.map);
+            //vm.layercontrol.removeLayer(CTECO.data.name);
+        });
 
         /**
          * Set map view to the user's current location.
@@ -155,8 +169,7 @@
                 polyline.addTo(vm.map);
 
                 track.track.addTo(vm.map);
-
-                vm.layercontrol.addOverlay(track, track.name, 'Tracks');
+                vm.layercontrol.addOverlay(track.track, track.name, 'Tracks');
 
                 locationService.start();
             } else {
@@ -179,9 +192,11 @@
         function draw(data) {
             var drawn = drawnItemsService.getDrawnItems();
 
-            if (vm.drawControl === null) {
+            if (vm.drawControl === null && data === true) {
                 vm.map.addLayer(drawn);
                 vm.layercontrol.addOverlay(drawn, 'Drawn items', 'Other');
+                vm.map.on('draw:created', showPolygonArea);
+                vm.map.on('draw:edited', showPolygonAreaEdited);
             }
 
             if (data === true) {
@@ -196,16 +211,13 @@
                 });
 
                 vm.map.addControl(vm.drawControl);
-            } else if (data === false) {
+            } else if (data === false && vm.drawControl !== null) {
                 vm.map.removeControl(vm.drawControl);
 
                 if (!$.isEmptyObject(drawn._layers)) {
                     vm.layercontrol.addOverlay(drawn, 'Drawn items');
                 }
             }
-
-            vm.map.on('draw:created', showPolygonArea);
-            vm.map.on('draw:edited', showPolygonAreaEdited);
         }
 
         /**
@@ -216,7 +228,7 @@
         function scale(data) {
             if (data === true) {
                 vm.scaleControl = L.control.scale().addTo(vm.map);
-            } else if (data === false) {
+            } else if (data === false && vm.scaleControl !== null) {
                 vm.scaleControl.removeFrom(vm.map);
             }
         }
@@ -229,7 +241,7 @@
         function search(data) {
             if (data === true) {
                 vm.searchControl = L.Control.geocoder().addTo(vm.map);
-            } else if (data === false) {
+            } else if (data === false && vm.searchControl !== null) {
                 vm.searchControl.removeFrom(vm.map);
             }
         }
