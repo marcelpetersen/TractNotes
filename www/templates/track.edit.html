@@ -8,9 +8,11 @@
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Description</span>
+                    <input type="text" placeholder={{vm.currentTrack.metadata.desc}} ng-model="vm.input.desc">
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Author</span>
+                    <input type="text" placeholder={{vm.currentTrack.metadata.author}} ng-model="vm.input.author">
                 </label>
                 <div class="item item-input-inset">
                     <div class="col">
