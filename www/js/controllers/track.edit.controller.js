@@ -14,16 +14,19 @@
         vm.currentTrack = null;
         vm.back = back;
         vm.update = update;
+        vm.input = {};
 
-        activate();
+        activate();      
 
         ////////////////
 
         function activate() {
             vm.currentTrack = trackViewService.getTrackView();
+            vm.input = angular.copy(vm.currentTrack.metadata);
         }
 
         function back() {
+            vm.input = angular.copy(trackViewService.getTrackView().metadata)
             $ionicHistory.goBack();
         }
 
