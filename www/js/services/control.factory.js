@@ -41,9 +41,9 @@
             getDrawControl: getDrawControl,
             getScaleControl: getScaleControl,
             getSearchControl: getSearchControl,
-            setDrawControl: setDrawControl,
-            setScaleControl: setScaleControl,
-            setSearchControl: setSearchControl,
+            sendDrawControl: sendDrawControl,
+            sendScaleControl: sendScaleControl,
+            sendSearchControl: sendSearchControl,
         };
         return service;
 
@@ -61,7 +61,7 @@
             return searchControl;
         }
 
-        function setDrawControl(checked) {
+        function sendDrawControl(checked) {
             drawControl.checked = checked;
             if (checked) {
                 $rootScope.$emit('AddDraw', drawControl);
@@ -70,7 +70,7 @@
             }
         }
 
-        function setScaleControl(checked) {
+        function sendScaleControl(checked) {
             scaleControl.checked = checked;
             if (checked) {
                 $rootScope.$emit('AddScale', scaleControl);
@@ -79,7 +79,7 @@
             }
         }
 
-        function setSearchControl(checked) {
+        function sendSearchControl(checked) {
             searchControl.checked = checked;
             if (checked) {
                 $rootScope.$emit('AddSearch', searchControl);

@@ -32,11 +32,11 @@
 
         function setControl(control) {
             if (control.text === 'Draw Control') {
-                controlService.setDrawControl(control.checked);
+                controlService.sendDrawControl(control.checked);
             } else if (control.text === 'Scale Control') {
-                controlService.setScaleControl(control.checked);
+                controlService.sendScaleControl(control.checked);
             } else if (control.text === 'Search Control') {
-                controlService.setSearchControl(control.checked);
+                controlService.sendSearchControl(control.checked);
             } else {
                 console.log('Something went terribly wrong.');
             }

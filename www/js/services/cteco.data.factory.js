@@ -891,7 +891,7 @@
         var service = {
             getCtecoCategories: getCtecoCategories,
             getOrthoLayers: getOrthoLayers,
-            setCategoryLayer: setCategoryLayer
+            sendCTECOLayer: sendCTECOLayer
         };
         return service;
 
@@ -905,16 +905,13 @@
             return orthoLayers;
         }
 
-        function setCategoryLayer(cat) {
+        function sendCTECOLayer(cat) {
             var name = cat.name;
             categories.name = cat;
             if (categories.name.checked) {
                 $rootScope.$emit('AddCTECO', categories.name);
-                console.log('add')
             } else {
                 $rootScope.$emit('RemoveCTECO', categories.name);
-                console.log('remove')
-
             }
         }
     }

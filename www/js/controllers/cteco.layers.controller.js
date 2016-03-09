@@ -13,7 +13,7 @@
         vm.title = 'CTECOLayersController';
 
         vm.currentCategory = null;
-        vm.ctecoToggle = ctecoToggle;
+        vm.setCTECOLayer = setCTECOLayer;
 
         activate();
 
@@ -23,8 +23,8 @@
             vm.currentCategory = ctecoViewService.getCategory();
         }
 
-        function setCTECO(ctecoLayer) {
-            ctecoDataService.setCategoryLayer(ctecoLayer);
+        function setCTECOLayer(ctecoLayer) {
+            ctecoDataService.sendCTECOLayer(ctecoLayer);
         }
     }
 })();
