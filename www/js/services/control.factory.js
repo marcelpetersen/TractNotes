@@ -18,7 +18,7 @@
                     position: 'topleft'
                 },
                 edit: {
-                    featureGroup: drawnItemsService.getDrawnItems()
+                    featureGroup: drawnItemsService.getDrawnItems() // better way of doing this?
                 }
             })
         };
