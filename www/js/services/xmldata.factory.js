@@ -12,7 +12,6 @@
         var toImport = '';
         var service = {
             setImportURL: setImportURL,
-            getImportURL: getImportURL,
             getxmldata: getxmldata
         };
         return service;
@@ -22,7 +21,7 @@
             toImport = url;
         }
 
-        function getImportURL() {
+        function getImportURL(url) {
             return toImport;
         }
 
@@ -55,6 +54,8 @@
                 }
             );
 
+            // @TODO: more robust error handling? we need ot use jquery to get the url, but maybe leaflet-omnivore is better for errors
+            // could use var layer = w.e. -> layer.layers.length not equal to 0
             // @TODO: use file name as layer name, or end of web url: this will come into play once google drive is working
         }
     }

@@ -21,12 +21,15 @@
         ////////////////
 
         function activate() {
+            // set the 'Dynamic Map Layer' radio button to be checked by default
             vm.data.layerType = 'dynamic';
         }
 
         // @todo error handling
-        function sendImportURL(url) {
-            xmldataService.setImportURL(url);
+        // kml or gpx
+        function sendImportURL(url){
+        	xmldataService.setImportURL(url);
+        	$rootScope.$emit('Import', url);
         }
 
         function urlPopup() {

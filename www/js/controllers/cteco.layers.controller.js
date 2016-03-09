@@ -5,14 +5,15 @@
         .module('TractNotes')
         .controller('CTECOLayersController', CTECOLayersController);
 
-    CTECOLayersController.$inject = ['$rootScope', 'ctecoViewService'];
+    CTECOLayersController.$inject = ['ctecoDataService', 'ctecoViewService'];
 
     /* @ngInject */
-    function CTECOLayersController($rootScope, ctecoViewService) {
+    function CTECOLayersController(ctecoDataService, ctecoViewService) {
         var vm = this;
         vm.title = 'CTECOLayersController';
+
         vm.currentCategory = null;
-        vm.ctecoToggle = ctecoToggle;
+        vm.setCTECOLayer = setCTECOLayer;
 
         activate();
 
@@ -22,15 +23,8 @@
             vm.currentCategory = ctecoViewService.getCategory();
         }
 
-        /** 
-         * @fires $rootScope.AddCteco and $rootScope.RemoveCteco
-         */
-        function ctecoToggle(ctecoLayer) {
-            if (ctecoLayer.checked !== false) {
-                $rootScope.$emit('AddCTECO', ctecoLayer);
-            } else {
-                $rootScope.$emit('RemoveCTECO', ctecoLayer);
-            }
+        function setCTECOLayer(ctecoLayer) {
+            ctecoDataService.sendCTECOLayer(ctecoLayer);
         }
     }
 })();

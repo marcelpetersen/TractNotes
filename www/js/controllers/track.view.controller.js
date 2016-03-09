@@ -43,12 +43,15 @@
 
         /** @todo Upload files to drive */
         function exportTrack() {
-            console.log(vm.currentTrack)
-            // create one list
-            // iterate through features and populate options with featureTitle
-            // create a list of image urls [audio, video]
-            var gpx = togpx(vm.currentTrack.track._layers, {metadata: vm.currentTrack.metadata});
-            console.log (gpx)
+            var toExport = {"type": "FeatureCollection", "features":[]}
+            // iterate through markers
+            toExport.features.push(vm.currentTrack.polyline.toGeoJSON());
+            for (var i = 0; i < vm.currentTrack.markers.length; i++){
+               toExport.features.push(vm.currentTrack.markers[i].toGeoJSON());
+            }
+            console.log(toExport)
+            var gpx = togpx(toExport, {metadata: vm.currentTrack.metadata});
+           console.log (gpx)
             // create file
             // upload to drive
             // upload images to drive [audio, video]
