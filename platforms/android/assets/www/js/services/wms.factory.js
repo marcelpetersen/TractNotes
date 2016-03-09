@@ -2,21 +2,25 @@
     'use strict';
 
     angular
-        .module('module')
-        .factory('factory', factory);
+        .module('TractNotes')
+        .factory('wmsUrlService', wmsUrlService);
 
-    factory.$inject = ['dependencies'];
+    wmsUrlService.$inject = [];
 
     /* @ngInject */
-    function factory(dependencies) {
+    function wmsUrlService() {
+        var layerInfo = {};
+
         var service = {
-            func: func
+            setLayerData: setLayerData
         };
         return service;
 
         ////////////////
 
-        function func() {
+        function setLayerData(metadata) {
+            layerInfo = metadata;
+            console.log(metadata);
         }
     }
 })();

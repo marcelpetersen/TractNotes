@@ -119,24 +119,23 @@
         }
 
         function setTrackMetadata(metadata) {
-            if (typeof(metadata.name) !== 'undefined') {
+            if (metadata.name && metadata.name != '') {
                 currentTrack.name = metadata.name;
                 currentTrack.metadata.name = metadata.name;
             }
-            if (typeof(metadata.desc) !== 'undefined') {
+            if (metadata.desc && metadata.desc != '') {
                 currentTrack.metadata.desc = metadata.desc;
             }
-            if (typeof(metadata.author) !== 'undefined') {
+            if (metadata.author && metadata.author != '') {
                 currentTrack.metadata.author = metadata.author;
             }
         }
 
-        function setCurrentTrack(track){
-            //error here
+        function setCurrentTrack(track) {
             currentTrack = track;
         }
 
-                function getCurrentTrack(track){
+        function getCurrentTrack(track) {
             return currentTrack;
         }
 

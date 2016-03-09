@@ -106,6 +106,16 @@
             //vm.layercontrol.removeLayer(CTECO.data.name);
         });
 
+        /** 
+         * @listens $rootScope.WMSFromURL
+         */
+        $rootScope.$on('WMSFromURL', function(event, data) {
+            console.log('test');
+            console.log(data.layer);
+            data.layer.addTo(vm.map);
+            vm.layercontrol.addOverlay(data.layer, data.name, 'Imported');
+        });
+
         /**
          * Set map view to the user's current location.
          * @function

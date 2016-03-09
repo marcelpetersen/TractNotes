@@ -4,16 +4,15 @@
 
 
     <ion-list>
-      <div class="item item-positive item-icon-left item-icon-right" class="item" href="javascript:void(0)">
-        <a  class="icon ion-ios-arrow-back" ui-sref="welcome"></a>
-        Google Drive
-      </div>
 
-      <div ng-repeat="file in files">
-        <ion-item class="item item-icon-right" >
+      <ion-item class="item item-positive item-icon-left item-icon-right" class="item" href="javascript:void(0)">
+        <!-- <a  class="icon ion-ios-arrow-back" ui-sref="welcome"></a>  WHAT IS THIS FOR? MESSES UP THE O IN GOOGLE-->
+        Google Drive
+      </ion-item>
+
+      <ion-item ng-repeat="file in vm.files" class="item item-icon-right" >
           {{file.name}}
-        </ion-item>
-      </div>
+      </ion-item>
 
     </ion-list>
 
