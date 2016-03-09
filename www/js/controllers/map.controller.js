@@ -151,9 +151,8 @@
         /**
          * Initialize the drawnItems layer.
          * @function
-         * @param {boolean} data
          */
-        function drawInit(data) {
+        function drawInit() {
             vm.drawnItems = drawnItemsService.getDrawnItems();
             vm.map.addLayer(vm.drawnItems);
             vm.layercontrol.addOverlay(vm.drawnItems, 'Drawn items', 'Other');

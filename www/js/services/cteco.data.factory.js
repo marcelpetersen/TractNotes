@@ -145,7 +145,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
                 opacity: 0.5,
-                layers: [0]
+                layers: [0],
+                f: 'image'
             })
         };
 
@@ -155,7 +156,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
                 opacity: 0.5,
-                layers: [1]
+                layers: [1],
+                f: 'image'
             })
         };
 
@@ -231,7 +233,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [0]
+                layers: [0],
+                f: 'image'
             })
         };
 
@@ -241,7 +244,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [1]
+                layers: [1],
+                f: 'image'
             })
         };
 
@@ -251,7 +255,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [2]
+                layers: [2],
+                f: 'image'
             })
         };
 
@@ -261,7 +266,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [3]
+                layers: [3],
+                f: 'image'
             })
         };
 
@@ -271,7 +277,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [4]
+                layers: [4],
+                f: 'image'
             })
         };
 
@@ -281,7 +288,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [5]
+                layers: [5],
+                f: 'image'
             })
         };
 
@@ -291,7 +299,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [6]
+                layers: [6],
+                f: 'image'
             })
         };
 
@@ -301,7 +310,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [7]
+                layers: [7],
+                f: 'image'
             })
         };
 
