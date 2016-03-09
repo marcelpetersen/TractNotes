@@ -84,15 +84,29 @@
          * @function
          */
         function createMarker() {
+            console.log('test')
+            if(vm.recording){
+                var pos = locationService.getLastPos();
+                console.log(pos)
+                var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
+                        locationService.addtocurrentTrack(marker);
+                        locationService.addMarker(marker);
+            }
+            else{console.log('create marker')}
+/*            console.log('creating')
             var currentPosition = locationService.locate();
             currentPosition.then(function(val) {
+                console.log(val)
                 if (typeof(val.error) === 'undefined') {
+                    console.log('entered here')
                     var lat = val.position.coords.latitude;
                     var long = val.position.coords.longitude;
                     var zoom = val.zoom;
                     if (vm.recording) {
+                        console.log('marker while recording')
                         var marker = L.marker([lat, long], zoom).addTo(vm.map);
                         locationService.addtocurrentTrack(marker);
+                        locationService.addMarker(marker);
                     } else {
                         if (vm.hiThere === null) {
                             vm.hiThere = L.marker([lat, long], zoom);
@@ -105,7 +119,7 @@
                 } else {
                     console.log(val.error.message);
                 }
-            });
+            });*/
         }
 
         /**
@@ -121,10 +135,11 @@
 
                 track.track.addLayer(polyline);
                 polyline.addTo(vm.map);
-
+                track.polyline = polyline;
+                console.log(track.polyline.toGeoJSON())
                 track.track.addTo(vm.map);
 
-                vm.layercontrol.addOverlay(track, track.name, 'Tracks');
+                vm.layercontrol.addOverlay(track.track, track.name, 'Tracks');
 
                 locationService.start();
             } else {

@@ -5,10 +5,10 @@
         .module('TractNotes')
         .factory('locationService', locationService);
 
-    locationService.$inject = [];
+    locationService.$inject = ['$rootScope'];
 
     /* @ngInject */
-    function locationService() {
+    function locationService(rootScope) {
         var watchID = null;
         var zoom = 15; // @todo allow the user to set zoom
 
@@ -32,7 +32,9 @@
             setTrackMetadata: setTrackMetadata,
             setCurrentTrack: setCurrentTrack,
             getCurrentTrack: getCurrentTrack,
-            getTracks: getTracks
+            getTracks: getTracks,
+            getLastPos: getLastPos,
+            addMarker: addMarker
         };
         return service;
 
@@ -76,6 +78,7 @@
         function onSuccess(position) {
             var lat = position.coords.latitude;
             var long = position.coords.longitude;
+
             if (lastPos.lat === null) { // || lastPos.long === null) {
                 lastPos.lat = lat;
                 lastPos.long = long;
@@ -89,7 +92,7 @@
 
         function onError(error) {
             stop();
-            console.log(error.message);
+            console.log(error.message +error.code);
         }
 
 
@@ -103,6 +106,8 @@
             tracks.push({
                 track: new L.FeatureGroup(),
                 name: name,
+                polyline: '',
+                markers: [],
                 metadata: {
                     name: '',
                     desc: '',
@@ -115,7 +120,14 @@
         }
 
         function addtocurrentTrack(layer) {
+            console.log('layer added');
             currentTrack.track.addLayer(layer);
+        }
+
+        function addMarker(marker) {
+            currentTrack.markers.push(marker);
+            console.log('pushed');
+            console.log(currentTrack.markers.length)
         }
 
         function setTrackMetadata(metadata) {
@@ -142,6 +154,10 @@
 
         function getTracks() {
             return tracks;
+        }
+
+        function getLastPos(){
+            return lastPos;
         }
     }
 })();
