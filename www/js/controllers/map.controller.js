@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'locationService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'locationService', 'trackService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, locationService, controlService, drawnItemsService, xmldataService, ctecoDataService, $ionicPopover, popupService, IonicClosePopupService) {
+    function MapController($rootScope, $scope, $stateParams, locationService, trackService, controlService, drawnItemsService, xmldataService, ctecoDataService, $ionicPopover, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -18,6 +18,8 @@
         vm.layercontrol = null;
         vm.hiThere = null;
         vm.recording = false;
+        vm.currentTrack = null;
+        vm.currentPolyline = null;
         vm.drawnItems = null;
 
         vm.autoDiscover = autoDiscover;
@@ -60,67 +62,6 @@
             autoDiscover();
         }
 
-        $scope.$watch((function() {
-            return controlService.getDrawControl().checked;
-        }), function(newVal, oldVal) {
-            if (typeof newVal !== 'undefined') {
-                vm.draw(newVal);
-
-            }
-        });
-
-        $scope.$watch((function() {
-            return controlService.getScaleControl().checked;
-        }), function(newVal, oldVal) {
-            if (typeof newVal !== 'undefined') {
-                vm.scale(newVal);
-
-            }
-        });
-
-        $scope.$watch((function() {
-            return controlService.getSearchControl().checked;
-        }), function(newVal, oldVal) {
-            if (typeof newVal !== 'undefined') {
-                vm.search(newVal);
-
-            }
-        });
-
-        $scope.$watch((function() {
-            return xmldataService.getImportURL();
-        }), function(newVal, oldVal) {
-            if (typeof newVal !== 'undefined' && newVal !== null) {
-                vm.xmldata(newVal);
-
-            }
-        });
-
-        /** @listens $rootScope.AddCTECO */
-        $rootScope.$on('AddCTECO', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-        });
-
-        /** 
-         * @listens $rootScope.RemoveCTECO
-         * @todo remove layer from layer control
-         */
-        $rootScope.$on('RemoveCTECO', function(event, data) {
-            data.layer.removeFrom(vm.map);
-            //vm.layercontrol.removeLayer(CTECO.data.name);
-        });
-
-        /** 
-         * @listens $rootScope.WMSFromURL
-         */
-        $rootScope.$on('WMSFromURL', function(event, data) {
-            console.log('test');
-            console.log(data.layer);
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'Imported');
-        });
-
         /**
          * Set map view to the user's current location.
          * @function
@@ -142,33 +83,25 @@
 
         /**
          * Create a marker at the user's current location.
+         * During record mode, add the marker to the current Track.
          * @function
          */
         function createMarker() {
             console.log('test')
-            if(vm.recording){
+            if (vm.recording) {
                 var pos = locationService.getLastPos();
-                console.log(pos)
                 var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
-                        locationService.addtocurrentTrack(marker);
-                        locationService.addMarker(marker);
-            }
-            else{console.log('create marker')}
-/*            console.log('creating')
-            var currentPosition = locationService.locate();
-            currentPosition.then(function(val) {
-                console.log(val)
-                if (typeof(val.error) === 'undefined') {
-                    console.log('entered here')
-                    var lat = val.position.coords.latitude;
-                    var long = val.position.coords.longitude;
-                    var zoom = val.zoom;
-                    if (vm.recording) {
-                        console.log('marker while recording')
-                        var marker = L.marker([lat, long], zoom).addTo(vm.map);
-                        locationService.addtocurrentTrack(marker);
-                        locationService.addMarker(marker);
-                    } else {
+                vm.currentTrack.track.addLayer(marker);
+                vm.currentTrack.markers.push(marker);
+            } else {
+                var currentPosition = locationService.locate();
+                currentPosition.then(function(val) {
+                    console.log(val)
+                    if (typeof(val.error) === 'undefined') {
+                        console.log('entered here')
+                        var lat = val.position.coords.latitude;
+                        var long = val.position.coords.longitude;
+                        var zoom = val.zoom;
                         if (vm.hiThere === null) {
                             vm.hiThere = L.marker([lat, long], zoom);
                             vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
@@ -176,11 +109,11 @@
                             vm.hiThere.setLatLng([lat, long], zoom);
                             vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
                         }
+                    } else {
+                        console.log(val.error.message);
                     }
-                } else {
-                    console.log(val.error.message);
-                }
-            });*/
+                });
+            }
         }
 
         /**
@@ -191,16 +124,16 @@
         function record() {
             if (vm.recording === false) {
                 vm.recording = true;
-                var track = locationService.createTrack();
-                var polyline = locationService.createPolyline();
+                vm.currentTrack = trackService.createTrack();
+                vm.currentPolyline = trackService.createPolyline();
 
-                track.track.addLayer(polyline);
-                polyline.addTo(vm.map);
-                track.polyline = polyline;
-                console.log(track.polyline.toGeoJSON())
-                track.track.addTo(vm.map);
+                vm.currentTrack.track.addLayer(vm.currentPolyline);
+                vm.currentTrack.polyline = vm.currentPolyline;
+                vm.currentPolyline.addTo(vm.map);
 
-                vm.layercontrol.addOverlay(track.track, track.name, 'Tracks');
+                vm.currentTrack.track.addTo(vm.map);
+
+                vm.layercontrol.addOverlay(vm.currentTrack.track, vm.currentTrack.name, 'Tracks');
 
                 locationService.start();
             } else {
@@ -331,7 +264,7 @@
             //IonicClosePopupService.register(trackPopup);
 
             trackPopup.then(function(res) {
-                locationService.setTrackMetadata(res);
+                trackService.setTrackMetadata(res);
             });
         }
 
@@ -379,5 +312,14 @@
             data.layer.removeFrom(vm.map);
             //vm.layercontrol.removeLayer(CTECO.data.name);
         });
+
+        /** @listens $rootScope.WMSFromURL */
+        $rootScope.$on('WMSFromURL', function(event, data) {
+            console.log('test');
+            console.log(data.layer);
+            data.layer.addTo(vm.map);
+            vm.layercontrol.addOverlay(data.layer, data.name, 'Imported');
+        });
+
     }
 })();

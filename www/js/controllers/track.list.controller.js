@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('TrackListController', TrackListController);
 
-    TrackListController.$inject = ['locationService', 'trackViewService'];
+    TrackListController.$inject = ['trackService', 'trackViewService'];
 
     /* @ngInject */
-    function TrackListController(locationService, trackViewService) {
+    function TrackListController(trackService, trackViewService) {
         var vm = this;
         vm.title = 'TrackController';
         vm.tracks = [];
@@ -19,7 +19,7 @@
         ////////////////
 
         function activate() {
-            vm.tracks = locationService.getTracks();
+            vm.tracks = trackService.getTracks();
         }
 
         function sendTrack(track) {

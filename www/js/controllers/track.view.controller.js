@@ -43,15 +43,19 @@
 
         /** @todo Upload files to drive */
         function exportTrack() {
-            var toExport = {"type": "FeatureCollection", "features":[]}
-            // iterate through markers
+            var toExport = {
+                "type": "FeatureCollection",
+                "features": []
+            }
             toExport.features.push(vm.currentTrack.polyline.toGeoJSON());
-            for (var i = 0; i < vm.currentTrack.markers.length; i++){
-               toExport.features.push(vm.currentTrack.markers[i].toGeoJSON());
+            for (var i = 0; i < vm.currentTrack.markers.length; i++) {
+                toExport.features.push(vm.currentTrack.markers[i].toGeoJSON());
             }
             console.log(toExport)
-            var gpx = togpx(toExport, {metadata: vm.currentTrack.metadata});
-           console.log (gpx)
+            var gpx = togpx(toExport, {
+                metadata: vm.currentTrack.metadata
+            });
+            console.log(gpx)
             // create file
             // upload to drive
             // upload images to drive [audio, video]

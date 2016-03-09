@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('TrackEditController', TrackEditController);
 
-    TrackEditController.$inject = ['$ionicHistory', 'locationService', 'trackViewService', ];
+    TrackEditController.$inject = ['$ionicHistory', 'trackService', 'trackViewService', ];
 
     /* @ngInject */
-    function TrackEditController($ionicHistory, locationService, trackViewService) {
+    function TrackEditController($ionicHistory, trackService, trackViewService) {
         var vm = this;
         vm.title = 'TrackEditController';
         vm.currentTrack = null;
@@ -31,9 +31,9 @@
         }
 
         function update(input) {
-            locationService.setCurrentTrack(vm.currentTrack);
-            locationService.setTrackMetadata(input);
-            vm.currentTrack = locationService.getCurrentTrack();
+            trackService.setCurrentTrack(vm.currentTrack);
+            trackService.setTrackMetadata(input);
+            vm.currentTrack = trackService.getCurrentTrack();
             vm.back();
         }
     }
