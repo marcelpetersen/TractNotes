@@ -5,14 +5,19 @@
         .module('TractNotes')
         .controller('ControlController', ControlController);
 
+    ControlController.$inject = ['controlService'];
+
     /* @ngInject */
-    function ControlController($rootScope, $scope, controlService) {
+    function ControlController(controlService) {
         var vm = this;
         vm.title = 'ControlController';
+
         vm.drawControl = null;
         vm.scaleControl = null;
         vm.searchControl = null;
         vm.controls = [];
+
+        vm.setControl = setControl;
 
         activate();
 
@@ -25,33 +30,16 @@
             vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl];
         }
 
-        /** @fires $rootScope.Draw */
-        $scope.$watch('vm.drawControl.checked', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                controlService.setDrawControl(newValue);
-                var checked = controlService.getDrawControl().checked;
-                $rootScope.$emit('Draw', checked);
+        function setControl(control) {
+            if (control.text === 'Draw Control') {
+                controlService.setDrawControl(control.checked);
+            } else if (control.text === 'Scale Control') {
+                controlService.setScaleControl(control.checked);
+            } else if (control.text === 'Search Control') {
+                controlService.setSearchControl(control.checked);
+            } else {
+                console.log('Something went terribly wrong.');
             }
-        });
-
-        /** @fires $rootScope.Scale */
-        $scope.$watch('vm.scaleControl.checked', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                controlService.setScaleControl(newValue);
-                var checked = controlService.getScaleControl().checked;
-                $rootScope.$emit('Scale', checked);
-            }
-        });
-
-        /** @fires $rootScope.Search */
-        $scope.$watch('vm.searchControl.checked', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                controlService.setSearchControl(newValue);
-                var checked = controlService.getSearchControl().checked;
-                $rootScope.$emit('Search', checked);
-            }
-        });
+        }
     }
-
-    ControlController.$inject = ['$rootScope', '$scope', 'controlService'];
 })();

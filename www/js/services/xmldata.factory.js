@@ -17,11 +17,11 @@
         return service;
 
         ////////////////
-        function setImportURL(url){
+        function setImportURL(url) {
             toImport = url;
         }
 
-                function getImportURL(url){
+        function getImportURL(url) {
             return toImport;
         }
 
@@ -33,21 +33,23 @@
                 function(resolve, reject) {
                     $(function() {
                         $.ajax({
-                        type: "GET",
-                        url: layer,
-                        dataType: "xml",
-                        success: function(xml) {
-                            if ($('kml', xml).text() != '') {console.log(omnivore.kml(layer));
-                                resolve(omnivore.kml(layer));
+                            type: "GET",
+                            url: layer,
+                            dataType: "xml",
+                            success: function(xml) {
+                                if ($('kml', xml).text() != '') {
+                                    console.log(omnivore.kml(layer));
+                                    resolve(omnivore.kml(layer));
+                                }
+                                if ($('gpx', xml).text() != '') {
+                                    console.log(omnivore.gpx(layer));
+                                    resolve(omnivore.gpx(layer));
+                                }
+                            },
+                            error: function() {
+                                console.log('error');
                             }
-                            if ($('gpx', xml).text() != '') {console.log(omnivore.gpx(layer));
-                                resolve(omnivore.gpx(layer));
-                            }
-                        },
-                        error: function() {
-                            console.log('error');
-                        }
-                    });
+                        });
                     });
                 }
             );

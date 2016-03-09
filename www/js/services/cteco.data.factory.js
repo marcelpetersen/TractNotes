@@ -5,13 +5,11 @@
         .module('TractNotes')
         .factory('ctecoDataService', ctecoDataService);
 
-    ctecoDataService.$inject = [];
+    ctecoDataService.$inject = ['$rootScope'];
 
     /* @ngInject */
-    function ctecoDataService() {
-        ////////////////////////////////////////
+    function ctecoDataService($rootScope) {
         // Bedrock Geology Layers
-        ////////////////////////////////////////
         var bedrockGeology0 = {
             name: 'Bedrock Terrane',
             checked: false,
@@ -43,9 +41,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Elevation and Bathymetry Layers
-        ////////////////////////////////////////
         var elevationB0 = {
             name: 'Bathymetry',
             checked: false,
@@ -88,9 +84,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Erosion Layers
-        ////////////////////////////////////////
         var erosion0 = {
             name: 'Erosion Susceptibility',
             checked: false,
@@ -111,9 +105,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Habitat Layers
-        ////////////////////////////////////////
         var habitat0 = {
             name: 'Critical Habitats',
             checked: false,
@@ -145,10 +137,8 @@
             }
         };
 
-        ////////////////////////////////////////
         // Hurricane Evacuation Zones 2014 Layers
         // @todo Make these work
-        ////////////////////////////////////////
         var hurricaneEvac0 = {
             name: 'Hurricane Evacuation Zone A',
             checked: false,
@@ -180,9 +170,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Hurrican Surge Inundation Layers
-        ////////////////////////////////////////
         var hurricaneSurge0 = {
             name: 'Category 1',
             checked: false,
@@ -236,9 +224,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // NWI Wetlands Functions 2010 Layers
-        ////////////////////////////////////////
         var nwiWetlands0 = {
             name: 'Freshwater Emergent Wetland',
             checked: false,
@@ -336,9 +322,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Open Space Layers
-        ////////////////////////////////////////
         var openSpace0 = {
             name: '1997 Municipal and Private Open Space',
             checked: false,
@@ -414,9 +398,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Orthophoto Layers
-        ////////////////////////////////////////
         var ortho1990 = {
             name: 'Ortho 1990',
             image: 'img/ortho_1990.jpg',
@@ -484,9 +466,7 @@
         };
 
 
-        ////////////////////////////////////////
         // Quaternary Geology Layers
-        ////////////////////////////////////////
         var quaternary0 = {
             name: 'Quaternary Geology',
             checked: false,
@@ -507,9 +487,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Soil Layers
-        ////////////////////////////////////////
         var soils0 = {
             name: 'Soils',
             checked: false,
@@ -607,9 +585,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Surficial Materials Layers
-        ////////////////////////////////////////
         var surficialMats0 = {
             name: 'Surficial Materials',
             checked: false,
@@ -663,9 +639,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Water Resource Management Layers
-        ////////////////////////////////////////
         var waterResource0 = {
             name: 'Aquifer Protection Area',
             checked: false,
@@ -818,9 +792,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Watershed Layers
-        ////////////////////////////////////////
         var watershed0 = {
             name: 'Major Drainage Basins',
             checked: false,
@@ -885,9 +857,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // WMS Categories
-        ////////////////////////////////////////
         var categories = {
             bedrockGeology: bedrockGeology,
             elevationB: elevationB,
@@ -921,7 +891,7 @@
         var service = {
             getCtecoCategories: getCtecoCategories,
             getOrthoLayers: getOrthoLayers,
-            setLayer: setLayer
+            setCategoryLayer: setCategoryLayer
         };
         return service;
 
@@ -935,12 +905,17 @@
             return orthoLayers;
         }
 
-        function setLayer(layerObj, checked) {
-            layerObj.checked = checked;
-        }
+        function setCategoryLayer(cat) {
+            var name = cat.name;
+            categories.name = cat;
+            if (categories.name.checked) {
+                $rootScope.$emit('AddCTECO', categories.name);
+                console.log('add')
+            } else {
+                $rootScope.$emit('RemoveCTECO', categories.name);
+                console.log('remove')
 
-        function getLayer(layerObj) {
-            return layerObj;
+            }
         }
     }
 })();
