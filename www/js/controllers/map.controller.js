@@ -54,6 +54,7 @@
             vm.overlayMaps = {
                 'Imported': {},
                 'CTECO': {},
+                'WMS': {},
                 'Tracks': {},
                 'Other': {}
             };
@@ -312,12 +313,24 @@
             //vm.layercontrol.removeLayer(CTECO.data.name);
         });
 
+        /** @listens $rootScope.AddOrtho */
+        $rootScope.$on('AddOrtho', function(event, data) {
+            data.layer.addTo(vm.map);
+            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
+        });
+        /** @listens $rootScope.RemoveOrtho */
+        /** @todo remove layer from layer control */
+        $rootScope.$on('RemoveOrtho', function(event, data) {
+            data.layer.removeFrom(vm.map);
+            //vm.layercontrol.removeLayer(CTECO.data.name);
+        });
+
         /** @listens $rootScope.WMSFromURL */
         $rootScope.$on('WMSFromURL', function(event, data) {
             console.log('test');
             console.log(data.layer);
             data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'Imported');
+            vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
         });
 
     }
