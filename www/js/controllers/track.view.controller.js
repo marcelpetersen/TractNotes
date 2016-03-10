@@ -14,7 +14,6 @@
         vm.currentTrack = null;
         vm.back = back;
         vm.update = update;
-        vm.deleteTrack = deleteTrack;
         vm.exportTrack = exportTrack;
 
 
