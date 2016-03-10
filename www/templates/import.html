@@ -1,7 +1,7 @@
 <ion-view title="Add GPX/KML">
 
   <ion-content>
-    <div class="list">
+  <div class="list card">
             
 	    <div class="item item-divider"> 
 	      Select your file type
@@ -24,22 +24,18 @@
 	    <ion-radio name="source">
 	      Device
 	    </ion-radio>
-	    <ion-radio name="source">
-	      URL
-	    </ion-radio>
 
-	                <form novalidate>
-                <label class="item item-input item-stacked-label">
-                <span class="input-label">URL</span>
-                <input type="url" placeholder="URL here" ng-model="url">
-            </label>
+	    <form novalidate>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">URL</span>
+          <input type="url" placeholder="www.google.com" ng-model="url">
+        </label>
 	    
+	    <ion-item>
 	    <button class="button button-block button-positive" ng-click="vm.sendImportURL(url)">
 	      Add
 	    </button>
-	    <button class="button button-block button-balanced" ng-click="vm.urlPopup()">
-	      	Add layer from URL
-	    </button>
+		</ion-item>
 	  </div>
   </ion-content>
 </ion-view>
