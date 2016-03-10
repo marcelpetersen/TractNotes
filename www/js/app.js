@@ -58,19 +58,8 @@
             url: '/single_track',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/track.single.html',
+                    templateUrl: 'templates/track.view.html',
                     controller: 'TrackViewController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.edit_track', {
-            url: '/edit_track',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/track.edit.html',
-                    controller: 'TrackEditController',
                     controllerAs: 'vm'
                 }
             }

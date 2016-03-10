@@ -6,7 +6,7 @@
             </div>
             <ion-item ng-show="!vm.tracks.length">No tracks</ion-item>
             <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/single_track">
-                {{track.name}}
+                {{track.name}} ({{track.metadata.date}})
             </ion-item>
             <div class="item item-divider">
                 Track settings

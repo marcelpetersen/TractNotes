@@ -64,14 +64,17 @@
         }
 
         function setTrackMetadata(metadata) {
-            if (metadata.name && metadata.name !== '') {
+            if (metadata.name) {
                 currentTrack.name = metadata.name;
                 currentTrack.metadata.name = metadata.name;
             }
-            if (metadata.desc && metadata.desc !== '') {
+            else{
+                currentTrack.metadata.name = '';
+            }
+            if (metadata.desc) {
                 currentTrack.metadata.desc = metadata.desc;
             }
-            if (metadata.author && metadata.author !== '') {
+            if (metadata.author) {
                 currentTrack.metadata.author = metadata.author;
             }
         }
