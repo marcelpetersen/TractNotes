@@ -67,15 +67,18 @@
             if (metadata.name) {
                 currentTrack.name = metadata.name;
                 currentTrack.metadata.name = metadata.name;
-            }
-            else{
+            } else {
                 currentTrack.metadata.name = '';
             }
             if (metadata.desc) {
                 currentTrack.metadata.desc = metadata.desc;
+            } else {
+                currentTrack.metadata.desc = '';
             }
             if (metadata.author) {
                 currentTrack.metadata.author = metadata.author;
+            } else {
+                currentTrack.metadata.author = '';
             }
         }
 
