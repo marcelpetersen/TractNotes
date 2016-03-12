@@ -12,8 +12,10 @@
         var vm = this;
         vm.title = 'TrackViewController';
         vm.currentTrack = null;
+        vm.input = {};
+
         vm.back = back;
-        vm.update = update;
+        vm.updateMetadata = updateMetadata;
         vm.exportTrack = exportTrack;
 
         activate();
@@ -58,9 +60,9 @@
             $ionicHistory.goBack();
         }
 
-        function update() {
+        function updateMetadata() {
             trackService.setCurrentTrack(vm.currentTrack);
-            trackService.setTrackMetadata(input);
+            trackService.setTrackMetadata(vm.input);
             vm.input = angular.copy(trackViewService.getTrackView().metadata)
             vm.currentTrack = trackService.getCurrentTrack();
             //@todo should we go back?
