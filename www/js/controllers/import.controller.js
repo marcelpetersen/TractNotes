@@ -27,9 +27,9 @@
 
         // @todo error handling
         // kml or gpx
-        function sendImportURL(url){
-        	xmldataService.setImportURL(url);
-        	$rootScope.$emit('Import', url);
+        function sendImportURL(url) {
+            xmldataService.setImportURL(url);
+            $rootScope.$emit('Import', url);
         }
 
         function urlPopup() {
@@ -38,10 +38,8 @@
             var urlPopup = popupService.getURLPopup($scope, vm);
             //IonicClosePopupService.register(urlPopup);
 
-            urlPopup.then(function(metadata) 
-            {
-                if(metadata)
-                {
+            urlPopup.then(function(metadata) {
+                if (metadata) {
                     wmsUrlService.setLayerData(metadata);
                     sendWMSLayer(metadata);
                 }
@@ -50,8 +48,7 @@
 
         function sendWMSLayer(metadata) {
             var layer = null;
-            if (metadata.layerType == 'feature')
-            {
+            if (metadata.layerType == 'feature') {
                 console.log('feature layer');
                 layer = L.esri.featureLayer({
                     url: metadata.url,
@@ -61,9 +58,7 @@
                 metadata.layer = layer;
 
                 $rootScope.$emit('WMSFromURL', metadata);
-            }
-            else if (metadata.layerType == 'image')
-            {
+            } else if (metadata.layerType == 'image') {
                 console.log('image layer');
                 layer = L.esri.imageMapLayer({
                     url: metadata.url,
@@ -73,9 +68,7 @@
                 metadata.layer = layer;
 
                 $rootScope.$emit('WMSFromURL', metadata);
-            }
-            else if (metadata.layerType == 'dynamic')
-            {
+            } else if (metadata.layerType == 'dynamic') {
                 console.log('dynamic layer');
                 layer = L.esri.dynamicMapLayer({
                     url: metadata.url,
@@ -85,12 +78,10 @@
                 metadata.layer = layer;
 
                 $rootScope.$emit('WMSFromURL', metadata);
-            }
-            else
-            {
+            } else {
                 console.log('We might have a problem here.');
             }
-            
+
         }
     }
 })();

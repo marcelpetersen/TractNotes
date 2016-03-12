@@ -25,7 +25,8 @@
             getCurrentTrack: getCurrentTrack,
             getCurrentPolyline: getCurrentPolyline,
 
-            addToCurrentPolyline: addToCurrentPolyline
+            addToCurrentPolyline: addToCurrentPolyline,
+            deleteTrack: deleteTrack
         };
         return service;
 
@@ -64,21 +65,23 @@
         }
 
         function setTrackMetadata(metadata) {
-            if (metadata.name) {
-                currentTrack.name = metadata.name;
-                currentTrack.metadata.name = metadata.name;
-            } else {
-                currentTrack.metadata.name = '';
-            }
-            if (metadata.desc) {
-                currentTrack.metadata.desc = metadata.desc;
-            } else {
-                currentTrack.metadata.desc = '';
-            }
-            if (metadata.author) {
-                currentTrack.metadata.author = metadata.author;
-            } else {
-                currentTrack.metadata.author = '';
+            if (metadata) {
+                if (metadata.name) {
+                    currentTrack.name = metadata.name;
+                    currentTrack.metadata.name = metadata.name;
+                } else {
+                    currentTrack.metadata.name = '';
+                }
+                if (metadata.desc) {
+                    currentTrack.metadata.desc = metadata.desc;
+                } else {
+                    currentTrack.metadata.desc = '';
+                }
+                if (metadata.author) {
+                    currentTrack.metadata.author = metadata.author;
+                } else {
+                    currentTrack.metadata.author = '';
+                }
             }
         }
 
@@ -96,6 +99,10 @@
 
         function addToCurrentPolyline(lat, long) {
             currentPolyline.addLatLng(L.latLng(lat, long));
+        }
+
+        function deleteTrack(track) {
+            tracks.splice(tracks.indexOf(track), 1);
         }
     }
 })();

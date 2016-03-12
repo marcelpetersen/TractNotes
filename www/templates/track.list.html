@@ -1,17 +1,16 @@
 <ion-view title="Manage tracks">
-    <ion-content>
-        <div class="list card">
-            <div class="item item-divider">
-                Edit, delete, or export a track
-            </div>
-            <ion-item ng-show="!vm.tracks.length">No tracks</ion-item>
-            <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/single_track">
-                {{track.name}} ({{track.metadata.date}})
-            </ion-item>
-            <div class="item item-divider">
-                Track settings
-            </div>
-            <!-- Show/hide stats, Change line thickness, Ask Dave for more -->
-        </div>
-    </ion-content>
+  <ion-content>
+    <ion-item class="item-icon-left" ng-show="vm.tracks.length">
+      <i class="icon ion-ios-minus-outline" ng-click="vm.showDelete = !vm.showDelete"></i>
+      Click the button to show delete icons or click a track to edit
+    </ion-item>
+    <ion-list show-delete="vm.showDelete">
+      <ion-item ng-show="!vm.tracks.length">No tracks
+      </ion-item>
+      <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/single_track" class="item-remove-animate">
+        <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
+        {{track.name}} ({{track.metadata.date}})
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>

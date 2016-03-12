@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'locationService', 'trackService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicPopover', 'popupService', 'IonicClosePopupService'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicModal'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, locationService, trackService, controlService, drawnItemsService, xmldataService, ctecoDataService, $ionicPopover, popupService, IonicClosePopupService) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, controlService, drawnItemsService, xmldataService, ctecoDataService, $ionicModal) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -21,6 +21,7 @@
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
+        vm.input = null;
 
         vm.autoDiscover = autoDiscover;
         vm.createMarker = createMarker;
@@ -29,7 +30,8 @@
         vm.showPolygonArea = showPolygonArea;
         vm.showPolygonAreaEdited = showPolygonAreaEdited;
         vm.xmldata = xmldata;
-        vm.trackPopup = trackPopup;
+        vm.saveTrack = saveTrack;
+        vm.discardTrack = discardTrack;
 
 
         //@todo change events to factory listeners
@@ -42,6 +44,7 @@
 
         ////////////////
 
+        // @TODO refactor layers into service
         function activate() {
             L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
 
@@ -144,7 +147,7 @@
                 } else {
                     locationService.stop();
                     vm.recording = false;
-                    vm.trackPopup();
+                    $scope.openModal();
                 }
             }
         }
@@ -257,18 +260,25 @@
 
         }
 
-        function trackPopup() {
-            $scope.data = {};
+        function saveTrack() {
+            trackService.setCurrentTrack(vm.currentTrack);
+            trackService.setTrackMetadata(vm.input);
+            vm.input = null;
+            $scope.closeModal();
+        }
 
-            var trackPopup = popupService.getTrackPopup($scope, vm);
-            //IonicClosePopupService.register(trackPopup);
-
-            trackPopup.then(function(res) {
-                trackService.setTrackMetadata(res);
-            });
+        function discardTrack() {
+            layerControlService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
+            trackService.deleteTrack(vm.currentTrack.track);
+            $scope.closeModal();
         }
 
         ////////////////
+
+        $rootScope.$on('test', function(event, data) {
+            discardTrack(data);
+            console.log('true')
+        });
 
         /** @listens $rootScope.AddDraw */
         /** @todo force layer to be toggled while control is active */
@@ -307,10 +317,9 @@
             vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
         });
         /** @listens $rootScope.RemoveCTECO */
-        /** @todo remove layer from layer control */
         $rootScope.$on('RemoveCTECO', function(event, data) {
             data.layer.removeFrom(vm.map);
-            //vm.layercontrol.removeLayer(CTECO.data.name);
+            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
         });
 
         /** @listens $rootScope.AddOrtho */
@@ -319,10 +328,9 @@
             vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
         });
         /** @listens $rootScope.RemoveOrtho */
-        /** @todo remove layer from layer control */
         $rootScope.$on('RemoveOrtho', function(event, data) {
             data.layer.removeFrom(vm.map);
-            //vm.layercontrol.removeLayer(CTECO.data.name);
+            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
         });
 
         /** @listens $rootScope.WMSFromURL */
@@ -332,5 +340,35 @@
             vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
         });
 
+        // @todo remove once track.list.controller is refactored
+        $rootScope.$on('RemoveTrack', function(event, data) {
+            layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
+        })
+
+        // @TODO refactor into service
+        $ionicModal.fromTemplateUrl('../templates/modal.track.save.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+        $scope.openModal = function() {
+            $scope.modal.show();
+        };
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+        //Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+        });
+        // Execute action on hide modal
+        $scope.$on('modal.hidden', function() {
+            // Execute action
+        });
+        // Execute action on remove modal
+        $scope.$on('modal.removed', function() {
+            // Execute action
+        });
     }
 })();

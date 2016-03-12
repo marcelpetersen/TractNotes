@@ -11,8 +11,9 @@
     function DriveController($scope, Drive, $state, xmldataService) {
         var vm = this;
         vm.title = 'DriveController';
-        vm.importFromURL = importFromURL;
+
         vm.files = [];
+        vm.importFromURL = importFromURL;
 
         activate();
 

@@ -16,7 +16,6 @@
         vm.update = update;
         vm.exportTrack = exportTrack;
 
-
         activate();
 
         ////////////////
@@ -32,7 +31,9 @@
                 "type": "FeatureCollection",
                 "features": []
             }
+
             toExport.features.push(vm.currentTrack.polyline.toGeoJSON());
+
             for (var i = 0; i < vm.currentTrack.markers.length; i++) {
                 toExport.features.push(vm.currentTrack.markers[i].toGeoJSON());
             }
@@ -57,11 +58,12 @@
             $ionicHistory.goBack();
         }
 
-        function update(input) {
+        function update() {
             trackService.setCurrentTrack(vm.currentTrack);
             trackService.setTrackMetadata(input);
             vm.input = angular.copy(trackViewService.getTrackView().metadata)
             vm.currentTrack = trackService.getCurrentTrack();
+            //@todo should we go back?
         }
     }
 

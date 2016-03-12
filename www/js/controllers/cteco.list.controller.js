@@ -11,6 +11,7 @@
     function CTECOListController(ctecoDataService, ctecoViewService) {
         var vm = this;
         vm.title = 'CTECOListController';
+
         vm.sendCategory = sendCategory;
         vm.setOrthoLayer = setOrthoLayer;
 

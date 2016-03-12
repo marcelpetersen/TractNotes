@@ -19,8 +19,7 @@
         function sendLayerData(layerObj) {
             var wmsLayer = null;
             console.log(layerObj);
-            if (layerObj.layerType == 'feature')
-            {
+            if (layerObj.layerType == 'feature') {
                 console.log('feature layer');
                 wmsLayer = L.esri.featureLayer({
                     url: layerObj.url,
@@ -30,9 +29,7 @@
                 layerObj.layer = wmsLayer;
 
                 $rootScope.$emit('wmsFromURL', layerObj);
-            }
-            else if (layerObj.layerType == 'image')
-            {
+            } else if (layerObj.layerType == 'image') {
                 console.log('image layer');
                 wmsLayer = L.esri.imageMapLayer({
                     url: layerObj.url,
@@ -42,9 +39,7 @@
                 layerObj.layer = wmsLayer;
 
                 $rootScope.$emit('wmsFromURL', layerObj);
-            }
-            else if (layerObj.layerType == 'dynamic')
-            {
+            } else if (layerObj.layerType == 'dynamic') {
                 console.log('dynamic layer');
                 wmsLayer = L.esri.dynamicMapLayer({
                     url: layerObj.url,
@@ -54,9 +49,7 @@
                 layerObj.layer = wmsLayer;
 
                 $rootScope.$emit('wmsFromURL', layerObj);
-            }
-            else
-            {
+            } else {
                 console.log('We might have a problem here.');
             }
         }
