@@ -1,41 +1,35 @@
-<ion-view title="Add GPX/KML">
-
+<ion-view title="Import GPX/KML">
   <ion-content>
-  <div class="list card">
-            
-	    <div class="item item-divider"> 
-	      Select your file type
-	    </div>
-	    
-	    <ion-radio name="type">
-	      GPX
-	    </ion-radio>
-	    <ion-radio name="type">
-	      KML
-	    </ion-radio>
-
-	    <div class="item item-divider"> 
-	      Import from
-	    </div>
-	    
-	    <ion-radio name="source">
-	      Google Drive
-	    </ion-radio>
-	    <ion-radio name="source">
-	      Device
-	    </ion-radio>
-
-	    <form novalidate>
+    <div class="list card">
+      <ion-item class="item item-divider">
+        File type
+      </ion-item>
+      <ion-radio name="type">
+        GPX
+      </ion-radio>
+      <ion-radio name="type">
+        KML
+      </ion-radio>
+      <ion-item class="item item-divider">
+        Import from
+      </ion-item>
+      <ion-radio name="source">
+        Google Drive
+      </ion-radio>
+      <ion-radio name="source">
+        Device
+      </ion-radio>
+      <form novalidate>
         <label class="item item-input item-stacked-label">
           <span class="input-label">URL</span>
           <input type="url" placeholder="www.google.com" ng-model="url">
         </label>
-	    
-	    <ion-item>
-	    <button class="button button-block button-positive" ng-click="vm.sendImportURL(url)">
-	      Add
-	    </button>
-		</ion-item>
-	  </div>
+        <ion-item>
+          <button class="button button-block button-positive" ng-click="vm.sendImportURL(url)">
+            Import
+          </button>
+        </ion-item>
+    	</form>
+    </div>
   </ion-content>
 </ion-view>
