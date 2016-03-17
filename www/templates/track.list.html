@@ -7,7 +7,7 @@
     <ion-list show-delete="vm.showDelete">
       <ion-item ng-show="!vm.tracks.length">No tracks
       </ion-item>
-      <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/single_track" class="item-remove-animate">
+      <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/manage_tracks/{{track.name}}" class="item-remove-animate">
         <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
         {{track.name}} ({{track.metadata.date}})
       </ion-item>

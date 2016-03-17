@@ -55,7 +55,7 @@
         })
 
         .state('app.single_track', {
-            url: '/single_track',
+            url: '/manage_tracks/:trackName',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/track.view.html',
@@ -110,7 +110,7 @@
         })
 
         .state('app.single_cteco', {
-            url: '/single_cteco',
+            url: '/cteco_list/:ctecoName',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/cteco.layers.html',
