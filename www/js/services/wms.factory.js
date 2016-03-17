@@ -23,8 +23,7 @@
                 console.log('feature layer');
                 wmsLayer = L.esri.featureLayer({
                     url: layerObj.url,
-                    opacity: 0.5, //change this to be able to be set by the user
-                    layers: [layerObj.layerNum]
+                    opacity: layerObj.opacity
                 });
                 layerObj.layer = wmsLayer;
 
@@ -33,8 +32,7 @@
                 console.log('image layer');
                 wmsLayer = L.esri.imageMapLayer({
                     url: layerObj.url,
-                    opacity: 0.5, //change this to be able to be set by the user
-                    layers: [layerObj.layerNum]
+                    opacity: layerObj.opacity
                 });
                 layerObj.layer = wmsLayer;
 
@@ -43,9 +41,14 @@
                 console.log('dynamic layer');
                 wmsLayer = L.esri.dynamicMapLayer({
                     url: layerObj.url,
-                    opacity: 0.5, //change this to be able to be set by the user
-                    layers: [layerObj.layerNum]
+                    opacity: layerObj.opacity
                 });
+                layerObj.layer = wmsLayer;
+
+                $rootScope.$emit('wmsFromURL', layerObj);
+            } else if (layerObj.layerType == 'tile') {
+                console.log('tile layer');
+                wmsLayer = L.tileLayer(layerObj.url, {opacity: layerObj.opacity});
                 layerObj.layer = wmsLayer;
 
                 $rootScope.$emit('wmsFromURL', layerObj);

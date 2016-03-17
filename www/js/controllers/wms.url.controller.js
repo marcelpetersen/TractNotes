@@ -22,6 +22,7 @@
 
         function activate() {
             $scope.data.layerType = 'dynamic';
+            $scope.data.opacity = '0.5';
         }
 
         function back() {
