@@ -16,42 +16,42 @@
 
         ////////////////
 
-        function sendLayerData(layerObj) {
-            var wmsLayer = null;
-            console.log(layerObj);
-            if (layerObj.layerType == 'feature') {
+        function sendLayerData(wmsInput) {
+            var featureLayer, imageLayer, dynamicLayer, tileLayer = null;
+            console.log(wmsInput);
+            if (wmsInput.layerType == 'feature') {
                 console.log('feature layer');
-                wmsLayer = L.esri.featureLayer({
-                    url: layerObj.url,
-                    opacity: layerObj.opacity
+                featureLayer = L.esri.featureLayer({
+                    url: wmsInput.url,
+                    opacity: wmsInput.opacity
                 });
-                layerObj.layer = wmsLayer;
+                wmsInput.layer = featureLayer;
 
-                $rootScope.$emit('wmsFromURL', layerObj);
-            } else if (layerObj.layerType == 'image') {
+                $rootScope.$emit('wmsFromURL', wmsInput);
+            } else if (wmsInput.layerType == 'image') {
                 console.log('image layer');
-                wmsLayer = L.esri.imageMapLayer({
-                    url: layerObj.url,
-                    opacity: layerObj.opacity
+                imageLayer = L.esri.imageMapLayer({
+                    url: wmsInput.url,
+                    opacity: wmsInput.opacity
                 });
-                layerObj.layer = wmsLayer;
+                wmsInput.layer = imageLayer;
 
-                $rootScope.$emit('wmsFromURL', layerObj);
-            } else if (layerObj.layerType == 'dynamic') {
+                $rootScope.$emit('wmsFromURL', wmsInput);
+            } else if (wmsInput.layerType == 'dynamic') {
                 console.log('dynamic layer');
-                wmsLayer = L.esri.dynamicMapLayer({
-                    url: layerObj.url,
-                    opacity: layerObj.opacity
+                dynamicLayer = L.esri.dynamicMapLayer({
+                    url: wmsInput.url,
+                    opacity: wmsInput.opacity
                 });
-                layerObj.layer = wmsLayer;
+                wmsInput.layer = dynamicLayer;
 
-                $rootScope.$emit('wmsFromURL', layerObj);
-            } else if (layerObj.layerType == 'tile') {
+                $rootScope.$emit('wmsFromURL', wmsInput);
+            } else if (wmsInput.layerType == 'tile') {
                 console.log('tile layer');
-                wmsLayer = L.tileLayer(layerObj.url, {opacity: layerObj.opacity});
-                layerObj.layer = wmsLayer;
+                tileLayer = L.tileLayer(wmsInput.url, {opacity: wmsInput.opacity});
+                wmsInput.layer = tileLayer;
 
-                $rootScope.$emit('wmsFromURL', layerObj);
+                $rootScope.$emit('wmsFromURL', wmsInput);
             } else {
                 console.log('We might have a problem here.');
             }

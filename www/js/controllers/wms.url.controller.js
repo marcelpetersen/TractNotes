@@ -29,8 +29,8 @@
             $ionicHistory.goBack();
         }
 
-        function setWMSLayer(layerObj) {
-            wmsUrlService.sendLayerData(layerObj);           
+        function setWMSLayer(wmsInput) {
+            wmsUrlService.sendLayerData(wmsInput);           
         }
     }
 })();
