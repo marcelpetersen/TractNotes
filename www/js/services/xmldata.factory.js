@@ -5,10 +5,10 @@
         .module('TractNotes')
         .factory('xmldataService', xmldataService);
 
-    xmldataService.$inject = [];
+    xmldataService.$inject = ['$http'];
 
     /* @ngInject */
-    function xmldataService() {
+    function xmldataService($http) {
         var toImport = '';
         var service = {
             setImportURL: setImportURL,
@@ -25,38 +25,35 @@
             return toImport;
         }
 
-
         function getxmldata(layer) {
             var xml = layer;
-            console.log(layer);
             return new Promise(
                 function(resolve, reject) {
-                    $(function() {
-                        $.ajax({
-                            type: "GET",
-                            url: layer,
-                            dataType: "xml",
-                            success: function(xml) {
-                                if ($('kml', xml).text() != '') {
-                                    console.log(omnivore.kml(layer));
-                                    resolve(omnivore.kml(layer));
-                                }
-                                if ($('gpx', xml).text() != '') {
-                                    console.log(omnivore.gpx(layer));
-                                    resolve(omnivore.gpx(layer));
-                                }
-                            },
-                            error: function() {
-                                console.log('error');
+                    $http({
+                        method: 'GET',
+                        url: layer
+                    }).then(function successCallback(response) {
+                        var kml = omnivore.kml(layer);
+                        var gpx = omnivore.gpx(layer);
+                        kml.on('ready', function() {
+                            if (kml._leaflet_id) {
+                                resolve(omnivore.kml(layer));
                             }
                         });
+                        gpx.on('ready', function() {
+                            if (gpx._leaflet_id) {
+                                resolve(omnivore.gpx(layer));
+                            }
+                        });
+                        // this callback will be called asynchronously
+                        // when the response is available
+                    }, function errorCallback(response) {
+                        console.log(response)
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
                     });
                 }
             );
-
-            // @TODO: more robust error handling? we need ot use jquery to get the url, but maybe leaflet-omnivore is better for errors
-            // could use var layer = w.e. -> layer.layers.length not equal to 0
-            // @TODO: use file name as layer name, or end of web url: this will come into play once google drive is working
         }
     }
 })();
