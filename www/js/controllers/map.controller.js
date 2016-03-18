@@ -91,7 +91,6 @@
          * @function
          */
         function createMarker() {
-            console.log('test')
             if (vm.recording) {
                 var pos = locationService.getLastPos();
                 var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
@@ -100,9 +99,7 @@
             } else {
                 var currentPosition = locationService.locate();
                 currentPosition.then(function(val) {
-                    console.log(val)
                     if (typeof(val.error) === 'undefined') {
-                        console.log('entered here')
                         var lat = val.position.coords.latitude;
                         var long = val.position.coords.longitude;
                         var zoom = val.zoom;
@@ -189,16 +186,14 @@
             var layer = e.layer;
             if (type === 'polyline') {
                 drawnItemsService.addToDrawnItems(layer);
-                var tempLatLng = null;
+                var tempLatLng = e.layer._latlngs[0];
                 var totalDistance = 0.00000;
-                $.each(e.layer._latlngs, function(i, latlng) {
-                    if (tempLatLng === null) {
-                        tempLatLng = latlng;
-                        return;
-                    }
+                console.log(e.layer._latlngs.length)
+                for (var i = 0; i < e.layer._latlngs.length; i++){
+                    var latlng = e.layer._latlngs[i];
                     totalDistance += tempLatLng.distanceTo(latlng);
                     tempLatLng = latlng;
-                });
+                }
                 e.layer.bindPopup((totalDistance).toFixed(2) + ' meters');
                 e.layer.openPopup();
             } else if (type === 'circle') {
@@ -275,11 +270,6 @@
 
         ////////////////
 
-        $rootScope.$on('test', function(event, data) {
-            discardTrack(data);
-            console.log('true')
-        });
-
         /** @listens $rootScope.AddDraw */
         /** @todo force layer to be toggled while control is active */
         $rootScope.$on('AddDraw', function(event, data) {
@@ -343,7 +333,7 @@
         // @todo remove once track.list.controller is refactored
         $rootScope.$on('RemoveTrack', function(event, data) {
             layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
-        })
+        });
 
         // @TODO refactor into service
         $ionicModal.fromTemplateUrl('../templates/modal.track.save.html', {
