@@ -1,5 +1,6 @@
 ## TractNotes
-2015/2016 Senior Design project at the University of Connecticut. 
+2015/2016 Senior Design project at the University of Connecticut.
+GH-pages: http://water42.github.io/TractNotes-test/#/app/map (track save modal does not work but works on mobile/localhost)
 
 ## The Team
 
@@ -17,11 +18,11 @@ A multi-platform Android/iOS mobile application to assist land trust organizatio
 
 http://ionicframework.com/getting-started/
 
+Most useful command: ionic run --livereload -c
+
+## Documentation
+
 References: https://github.com/water42/TractNotes/wiki/References
-
-## API Reference
-
-TODO
 
 ## License
 
