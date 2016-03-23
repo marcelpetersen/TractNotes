@@ -5,15 +5,15 @@
         .module('TractNotes')
         .controller('DriveController', DriveController);
 
-    DriveController.$inject = ['$scope', 'Drive', '$state', 'xmldataService'];
+    DriveController.$inject = ['$rootScope', '$scope', 'Drive', '$state', 'xmldataService'];
 
     /* @ngInject */
-    function DriveController($scope, Drive, $state, xmldataService) {
+    function DriveController($rootScope, $scope, Drive, $state, xmldataService) {
         var vm = this;
         vm.title = 'DriveController';
 
         vm.files = [];
-        vm.importFromURL = importFromURL;
+        vm.importFromDrive = importFromDrive;
 
         activate();
 
@@ -25,6 +25,7 @@
 
         function importFromDrive(file) {
             xmldataService.setImportURL(file.url);
+            $rootScope.$emit('Import', file.url);
         }
     }
 })();

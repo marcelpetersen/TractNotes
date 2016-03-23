@@ -4,20 +4,14 @@
       <ion-item class="item item-divider">
         File type
       </ion-item>
-      <ion-radio name="type">
-        GPX
-      </ion-radio>
-      <ion-radio name="type">
-        KML
+      <ion-radio ng-repeat="item in vm.type" ng-value="item.value" ng-model="vm.selectedType" name="type">
+      {{ item.text }}
       </ion-radio>
       <ion-item class="item item-divider">
         Import from
       </ion-item>
-      <ion-radio name="source">
-        Google Drive
-      </ion-radio>
-      <ion-radio name="source">
-        Device
+      <ion-radio ng-repeat="item in vm.source" ng-value="item.value" ng-model="vm.selectedSource" name="source">
+      {{ item.text }}
       </ion-radio>
       <form novalidate>
         <label class="item item-input item-stacked-label">
@@ -25,11 +19,11 @@
           <input type="url" placeholder="www.google.com" ng-model="url">
         </label>
         <ion-item>
-          <button class="button button-block button-positive" ng-click="vm.sendImportURL(url)">
+          <button class="button button-block button-positive" ng-click="vm.importButton(url)">
             Import
           </button>
         </ion-item>
-    	</form>
+      </form>
     </div>
   </ion-content>
 </ion-view>
