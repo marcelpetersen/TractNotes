@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('TrackViewController', TrackViewController);
 
-    TrackViewController.$inject = ['trackService', 'trackViewService', '$ionicHistory'];
+    TrackViewController.$inject = ['trackService', 'trackViewService', '$ionicHistory', 'Drive'];
 
     /* @ngInject */
-    function TrackViewController(trackService, trackViewService, $ionicHistory) {
+    function TrackViewController(trackService, trackViewService, $ionicHistory, Drive) {
         var vm = this;
         vm.title = 'TrackViewController';
         vm.currentTrack = null;
@@ -46,10 +46,25 @@
 
             var kml = tokml(toExport);
 
-            console.log("GPX file:")
-            console.log(gpx)
-            console.log("KML file:")
-            console.log(kml)
+            console.log("GPX file:");
+            console.log(gpx);
+            console.log("KML file:");
+            console.log(kml);
+
+            //generate metadata for drive file
+            // var name = vm.currentTrack.metadata.name + ".gpx";
+            var name = vm.currentTrack.metadata.name + ".kml";
+            var metadata = {
+              'title': name
+              // 'mimeType': 'application/gpx+xml',
+              // "description": vm.currentTrack.metadata.desc
+            };
+            Drive.saveFile(metadata, kml).then(function(files) {
+                console.log("FileRead: success.");
+                // window.alert("file uploaded");
+            }, function() {
+                console.log("FileRead: error.");
+            });
 
             // create file
             // upload to drive
