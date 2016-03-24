@@ -272,7 +272,7 @@
         });
 
         // @TODO refactor into service
-        $ionicModal.fromTemplateUrl('../templates/modal.track.save.html', {
+        $ionicModal.fromTemplateUrl('./templates/modal.track.save.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
