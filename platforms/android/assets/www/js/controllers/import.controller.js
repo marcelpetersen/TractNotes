@@ -5,89 +5,60 @@
         .module('TractNotes')
         .controller('ImportController', ImportController);
 
-    ImportController.$inject = ['$scope', '$rootScope', 'xmldataService', 'popupService', 'wmsUrlService'];
+    ImportController.$inject = ['$scope', '$rootScope', 'xmldataService', 'popupService', 'wmsUrlService', 'Drive', '$state'];
 
     /* @ngInject */
-    function ImportController($scope, $rootScope, xmldataService, popupService, wmsUrlService) {
+    function ImportController($scope, $rootScope, xmldataService, popupService, wmsUrlService, Drive, $state) {
         var vm = this;
         vm.title = 'ImportController';
-        vm.sendImportURL = sendImportURL;
-        vm.urlPopup = urlPopup;
-        vm.sendWMSLayer = sendWMSLayer;
-        vm.data = {};
+
+        vm.importFromDevice = importFromDevice;
+        vm.goToDrive = goToDrive;
+        vm.importFromURL = importFromURL;
 
         activate();
 
         ////////////////
 
-        function activate() {
-            vm.data.layerType = 'dynamic';
-        }
+        function activate() {}
 
-        // @todo error handling
-        function sendImportURL(url) {
-            xmldataService.setImportURL(url);
-        }
-
-        function urlPopup() {
-            $scope.data = {};
-
-            var urlPopup = popupService.getURLPopup($scope, vm);
-            //IonicClosePopupService.register(urlPopup);
-
-            urlPopup.then(function(metadata) 
-            {
-                if(metadata)
-                {
-                    wmsUrlService.setLayerData(metadata);
-                    sendWMSLayer(metadata);
-                }
+        // todo : event -> service, name -> importfromdevice
+        // get text contents of file with cordova file thing, then use that
+        function importFromDevice() {
+            fileChooser.open(function(uri) {
+                console.log(uri);
+                $rootScope.$emit('Import', uri);
             });
         }
 
-        function sendWMSLayer(metadata) {
-            var layer = null;
-            if (metadata.layerType == 'feature')
-            {
-                console.log('feature layer');
-                layer = L.esri.featureLayer({
-                    url: metadata.url,
-                    opacity: 0.5, //change this to be able to be set by the user
-                    layers: [metadata.layerNum]
+        // restructured import.html so it now uses 3 buttons
+        // load all gpx/kml files in this function (eventually we should have a search bar that dynamically generates lists based on user input)
+        function goToDrive() {
+            var auth_token = gapi.auth.getToken();
+            if (auth_token) {
+                Drive.readFilesOfType('@TODO').then(function(files) {
+                    console.log("FileRead: success.");
+                    Drive.setFileList(files);
+                    $state.go('app.drive');
+                }, function() {
+                    console.log("FileRead: error.");
                 });
-                metadata.layer = layer;
+            }
 
-                $rootScope.$emit('WMSFromURL', metadata);
-            }
-            else if (metadata.layerType == 'image')
-            {
-                console.log('image layer');
-                layer = L.esri.imageMapLayer({
-                    url: metadata.url,
-                    opacity: 0.5, //change this to be able to be set by the user
-                    layers: [metadata.layerNum]
-                });
-                metadata.layer = layer;
-
-                $rootScope.$emit('WMSFromURL', metadata);
-            }
-            else if (metadata.layerType == 'dynamic')
-            {
-                console.log('dynamic layer');
-                layer = L.esri.dynamicMapLayer({
-                    url: metadata.url,
-                    opacity: 0.5, //change this to be able to be set by the user
-                    layers: [metadata.layerNum]
-                });
-                metadata.layer = layer;
-
-                $rootScope.$emit('WMSFromURL', metadata);
-            }
-            else
-            {
-                console.log('We might have a problem here.');
-            }
-            
+            //Google Picker API
+            // Drive.showPicker().then(function(id) {
+            //     vm.id = id;
+            //     console.log("FileSelection: success.");
+            //     }, function() {
+            //         console.log("FileSelection: error.");
+            //         });
         }
+
+        // todo event to service
+        function importFromURL(url) {
+            xmldataService.setImportURL(url);
+            $rootScope.$emit('Import', url);
+        }
+
     }
 })();

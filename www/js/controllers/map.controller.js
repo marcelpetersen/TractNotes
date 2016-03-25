@@ -159,7 +159,7 @@
         }
 
         function xmldata(layer) {
-            var layerResult = xmldataService.getxmldata(layer);
+            var layerResult = xmldataService.xmlFromURL(layer);
             layerResult.then(function(val) {
                 $scope.$apply(function() {
                     var finalLayer = val.on('ready', function() {

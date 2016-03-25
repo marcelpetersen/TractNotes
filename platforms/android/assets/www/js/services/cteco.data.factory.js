@@ -5,13 +5,11 @@
         .module('TractNotes')
         .factory('ctecoDataService', ctecoDataService);
 
-    ctecoDataService.$inject = [];
+    ctecoDataService.$inject = ['$rootScope'];
 
     /* @ngInject */
-    function ctecoDataService() {
-        ////////////////////////////////////////
+    function ctecoDataService($rootScope) {
         // Bedrock Geology Layers
-        ////////////////////////////////////////
         var bedrockGeology0 = {
             name: 'Bedrock Terrane',
             checked: false,
@@ -43,9 +41,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Elevation and Bathymetry Layers
-        ////////////////////////////////////////
         var elevationB0 = {
             name: 'Bathymetry',
             checked: false,
@@ -88,9 +84,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Erosion Layers
-        ////////////////////////////////////////
         var erosion0 = {
             name: 'Erosion Susceptibility',
             checked: false,
@@ -111,9 +105,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Habitat Layers
-        ////////////////////////////////////////
         var habitat0 = {
             name: 'Critical Habitats',
             checked: false,
@@ -145,17 +137,16 @@
             }
         };
 
-        ////////////////////////////////////////
         // Hurricane Evacuation Zones 2014 Layers
         // @todo Make these work
-        ////////////////////////////////////////
         var hurricaneEvac0 = {
             name: 'Hurricane Evacuation Zone A',
             checked: false,
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
                 opacity: 0.5,
-                layers: [0]
+                layers: [0],
+                f: 'image'
             })
         };
 
@@ -165,7 +156,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
                 opacity: 0.5,
-                layers: [1]
+                layers: [1],
+                f: 'image'
             })
         };
 
@@ -180,9 +172,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Hurrican Surge Inundation Layers
-        ////////////////////////////////////////
         var hurricaneSurge0 = {
             name: 'Category 1',
             checked: false,
@@ -236,16 +226,15 @@
             }
         };
 
-        ////////////////////////////////////////
         // NWI Wetlands Functions 2010 Layers
-        ////////////////////////////////////////
         var nwiWetlands0 = {
             name: 'Freshwater Emergent Wetland',
             checked: false,
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [0]
+                layers: [0],
+                f: 'image'
             })
         };
 
@@ -255,7 +244,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [1]
+                layers: [1],
+                f: 'image'
             })
         };
 
@@ -265,7 +255,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [2]
+                layers: [2],
+                f: 'image'
             })
         };
 
@@ -275,7 +266,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [3]
+                layers: [3],
+                f: 'image'
             })
         };
 
@@ -285,7 +277,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [4]
+                layers: [4],
+                f: 'image'
             })
         };
 
@@ -295,7 +288,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [5]
+                layers: [5],
+                f: 'image'
             })
         };
 
@@ -305,7 +299,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [6]
+                layers: [6],
+                f: 'image'
             })
         };
 
@@ -315,7 +310,8 @@
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
-                layers: [7]
+                layers: [7],
+                f: 'image'
             })
         };
 
@@ -336,9 +332,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Open Space Layers
-        ////////////////////////////////////////
         var openSpace0 = {
             name: '1997 Municipal and Private Open Space',
             checked: false,
@@ -414,79 +408,148 @@
             }
         };
 
-        ////////////////////////////////////////
         // Orthophoto Layers
-        ////////////////////////////////////////
         var ortho1990 = {
             name: 'Ortho 1990',
             image: 'img/ortho_1990.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_1990/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2004 = {
             name: 'Ortho 2004',
             image: 'img/ortho_2004.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2004/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2004cc = {
             name: 'Ortho 2004 Coast Color',
             image: 'img/ortho_2004_cc.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2004_coast_color/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2004ci = {
             name: 'Ortho 2004 Coast Infrared',
             image: 'img/ortho_2004_ci.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2004_color_infrared/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2005ci = {
             name: 'Ortho 2005 Coast Infrared',
             image: 'img/ortho_2005_ci.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2005_coast_infrared/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2006 = {
             name: 'Ortho 2006 Color NAIP',
             image: 'img/ortho_2006.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2006_color_NAIP/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2008naip = {
             name: 'Ortho 2008 4Band NAIP',
             image: 'img/ortho_2008_naip.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2008_4band_NAIP/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2008ua = {
             name: 'Ortho 2008 Urban Area Color',
             image: 'img/ortho_2008_ua.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2008_color_urban_area/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2009 = {
             name: 'Ortho 2009 CRCOG Color',
             image: 'img/ortho_2009.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2009_color_CRCOG/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2010coast = {
             name: 'Ortho 2010 Coast 4Band',
             image: 'img/ortho_2010_coast.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2010_coast_4band/ImageServer',
+                f: 'image'
+            })
         };
 
         var ortho2010naip = {
             name: 'Ortho 4Band NAIP',
             image: 'img/ortho_2010_naip.jpg',
-            checked: false
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2010_4band_NAIP/ImageServer',
+                f: 'image'
+            })
         };
 
+        var ortho2012 = {
+            name: 'Ortho 2012 4Band',
+            image: 'img/ortho_2012.jpg',
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2012/ImageServer',
+                f: 'image'
+            })
+        };
 
-        ////////////////////////////////////////
+        var ortho2012naip = {
+            name: 'Ortho 2012 4Band NAIP',
+            image: 'img/ortho_2012_naip.jpg',
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2012_4band_NAIP/ImageServer',
+                f: 'image'
+            })
+        };
+
+        var ortho2014 = {
+            name: 'Ortho 2014 4Band NAIP',
+            image: 'img/ortho_2014_naip.jpg',
+            checked: false,
+            layer: L.esri.imageMapLayer({
+                url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2014_4band_NAIP/ImageServer',
+                f: 'image'
+            })
+        };
+
         // Quaternary Geology Layers
-        ////////////////////////////////////////
         var quaternary0 = {
             name: 'Quaternary Geology',
             checked: false,
@@ -507,9 +570,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Soil Layers
-        ////////////////////////////////////////
         var soils0 = {
             name: 'Soils',
             checked: false,
@@ -607,9 +668,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Surficial Materials Layers
-        ////////////////////////////////////////
         var surficialMats0 = {
             name: 'Surficial Materials',
             checked: false,
@@ -663,9 +722,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Water Resource Management Layers
-        ////////////////////////////////////////
         var waterResource0 = {
             name: 'Aquifer Protection Area',
             checked: false,
@@ -818,9 +875,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // Watershed Layers
-        ////////////////////////////////////////
         var watershed0 = {
             name: 'Major Drainage Basins',
             checked: false,
@@ -885,9 +940,7 @@
             }
         };
 
-        ////////////////////////////////////////
         // WMS Categories
-        ////////////////////////////////////////
         var categories = {
             bedrockGeology: bedrockGeology,
             elevationB: elevationB,
@@ -915,13 +968,17 @@
             ortho2008ua: ortho2008ua,
             ortho2009: ortho2009,
             ortho2010coast: ortho2010coast,
-            ortho2010naip: ortho2010naip
+            ortho2010naip: ortho2010naip,
+            ortho2012: ortho2012,
+            ortho2012naip: ortho2012naip,
+            ortho2014: ortho2014
         };
 
         var service = {
             getCtecoCategories: getCtecoCategories,
             getOrthoLayers: getOrthoLayers,
-            setLayer: setLayer
+            sendCTECOLayer: sendCTECOLayer,
+            sendOrthoLayer: sendOrthoLayer
         };
         return service;
 
@@ -935,12 +992,25 @@
             return orthoLayers;
         }
 
-        function setLayer(layerObj, checked) {
-            layerObj.checked = checked;
+        function sendCTECOLayer(cat) {
+            var name = cat.name;
+            categories.name = cat;
+            if (categories.name.checked) {
+                $rootScope.$emit('AddCTECO', categories.name);
+            } else {
+                $rootScope.$emit('RemoveCTECO', categories.name);
+            }
         }
 
-        function getLayer(layerObj) {
-            return layerObj;
+        function sendOrthoLayer(orthoObj) {
+            if (orthoObj.checked)
+            {
+                $rootScope.$emit('AddOrtho', orthoObj);
+            }
+            else
+            {
+                $rootScope.$emit('RemoveOrtho', orthoObj);
+            }
         }
     }
 })();

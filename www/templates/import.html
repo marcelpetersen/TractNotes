@@ -1,25 +1,19 @@
 <ion-view title="Import GPX/KML">
   <ion-content>
     <div class="list card">
-      <ion-item class="item item-divider">
-        File type
-      </ion-item>
-      <ion-radio ng-repeat="item in vm.type" ng-value="item.value" ng-model="vm.selectedType" name="type">
-      {{ item.text }}
-      </ion-radio>
-      <ion-item class="item item-divider">
-        Import from
-      </ion-item>
-      <ion-radio ng-repeat="item in vm.source" ng-value="item.value" ng-model="vm.selectedSource" name="source">
-      {{ item.text }}
-      </ion-radio>
+        <button class="button button-block button-positive" ng-click="">
+          Drive
+        </button>
+        <button class="button button-block button-positive" ng-click="vm.importFromDevice(url)">
+          Device
+        </button>
       <form novalidate>
         <label class="item item-input item-stacked-label">
           <span class="input-label">URL</span>
           <input type="url" placeholder="www.google.com" ng-model="url">
         </label>
         <ion-item>
-          <button class="button button-block button-positive" ng-click="vm.importButton(url)">
+          <button class="button button-block button-positive" ng-click="vm.importFromURL(url)">
             Import
           </button>
         </ion-item>

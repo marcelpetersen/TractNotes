@@ -5,36 +5,45 @@
         .module('TractNotes')
         .factory('controlService', controlService);
 
-    controlService.$inject = [];
+    controlService.$inject = ['$rootScope', 'drawnItemsService'];
 
     /* @ngInject */
-    function controlService() {
-
+    function controlService($rootScope, drawnItemsService) {
         var drawControl = {
             text: 'Draw Control',
             checked: false,
-            position: 'topleft'
+            position: 'topleft',
+            control: new L.Control.Draw({
+                draw: {
+                    position: 'topleft'
+                },
+                edit: {
+                    featureGroup: drawnItemsService.getDrawnItems() // better way of doing this?
+                }
+            })
         };
 
         var scaleControl = {
             text: 'Scale Control',
             checked: false,
-            position: 'bottomleft'
+            position: 'bottomleft',
+            control: L.control.scale()
         };
 
         var searchControl = {
             text: 'Search Control',
             checked: false,
-            position: 'topright'
+            position: 'topright',
+            control: L.Control.geocoder()
         };
 
         var service = {
             getDrawControl: getDrawControl,
             getScaleControl: getScaleControl,
             getSearchControl: getSearchControl,
-            setDrawControl: setDrawControl,
-            setScaleControl: setScaleControl,
-            setSearchControl: setSearchControl,
+            sendDrawControl: sendDrawControl,
+            sendScaleControl: sendScaleControl,
+            sendSearchControl: sendSearchControl,
         };
         return service;
 
@@ -52,16 +61,31 @@
             return searchControl;
         }
 
-        function setDrawControl(checked) {
+        function sendDrawControl(checked) {
             drawControl.checked = checked;
+            if (checked) {
+                $rootScope.$emit('AddDraw', drawControl);
+            } else {
+                $rootScope.$emit('RemoveDraw', drawControl);
+            }
         }
 
-        function setScaleControl(checked) {
+        function sendScaleControl(checked) {
             scaleControl.checked = checked;
+            if (checked) {
+                $rootScope.$emit('AddScale', scaleControl);
+            } else {
+                $rootScope.$emit('RemoveScale', scaleControl);
+            }
         }
 
-        function setSearchControl(checked) {
+        function sendSearchControl(checked) {
             searchControl.checked = checked;
+            if (checked) {
+                $rootScope.$emit('AddSearch', searchControl);
+            } else {
+                $rootScope.$emit('RemoveSearch', searchControl);
+            }
         }
     }
 })();

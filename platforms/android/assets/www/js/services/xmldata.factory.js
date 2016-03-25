@@ -5,57 +5,85 @@
         .module('TractNotes')
         .factory('xmldataService', xmldataService);
 
-    xmldataService.$inject = [];
+    xmldataService.$inject = ['$http'];
 
     /* @ngInject */
-    function xmldataService() {
-        var toImport = '';
+    function xmldataService($http) {
+        var importURL = '';
+        var importURI = '';
+
         var service = {
             setImportURL: setImportURL,
+            setImportURI: setImportURI,
             getImportURL: getImportURL,
-            getxmldata: getxmldata
+            gtImportURI: getImportURI,
+            xmlFromURL: xmlFromURL,
+            xmlFromDevice: xmlFromDevice
         };
         return service;
 
         ////////////////
         function setImportURL(url) {
-            toImport = url;
+            importURL = url;
         }
 
-        function getImportURL() {
-            return toImport;
+        function setImportURI(uri) {
+            importURI = uri;
         }
 
+        function getImportURL(url) {
+            return importURL;
+        }
 
-        function getxmldata(layer) {
+        function getImportURI(uri) {
+            return importURI;
+        }
+
+        function xmlFromURL(layer) {
             var xml = layer;
-            console.log(layer);
             return new Promise(
                 function(resolve, reject) {
-                    $(function() {
-                        $.ajax({
-                            type: "GET",
-                            url: layer,
-                            dataType: "xml",
-                            success: function(xml) {
-                                if ($('kml', xml).text() != '') {
-                                    console.log(omnivore.kml(layer));
-                                    resolve(omnivore.kml(layer));
-                                }
-                                if ($('gpx', xml).text() != '') {
-                                    console.log(omnivore.gpx(layer));
-                                    resolve(omnivore.gpx(layer));
-                                }
-                            },
-                            error: function() {
-                                console.log('error');
+                    $http({
+                        method: 'GET',
+                        url: layer
+                    }).then(function successCallback(response) {
+                        var kml = omnivore.kml(layer);
+                        var gpx = omnivore.gpx(layer);
+                        kml.on('ready', function() {
+                            if (kml._leaflet_id) {
+                                resolve(omnivore.kml(layer));
                             }
                         });
+                        gpx.on('ready', function() {
+                            if (gpx._leaflet_id) {
+                                resolve(omnivore.gpx(layer));
+                            }
+                        });
+                        // this callback will be called asynchronously
+                        // when the response is available
+                    }, function errorCallback(response) {
+                        console.log(response)
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
                     });
                 }
             );
+        }
 
-            // @TODO: use file name as layer name, or end of web url: this will come into play once google drive is working
+        function xmlFromDevice(uri) {
+            return new Promise(
+                function(resolve, reject) {
+                    kml.on('ready', function() {
+                        if (kml._leaflet_id) {
+                            resolve(omnivore.kml(layer));
+                        }
+                    });
+                    gpx.on('ready', function() {
+                        if (gpx._leaflet_id) {
+                            resolve(omnivore.gpx(layer));
+                        }
+                    });
+                })
         }
     }
 })();

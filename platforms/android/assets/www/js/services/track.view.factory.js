@@ -9,7 +9,7 @@
 
     /* @ngInject */
     function trackViewService() {
-        var displayedTrack = '';
+        var displayedTrack = null;
 
         var service = {
             setTrackView: setTrackView,

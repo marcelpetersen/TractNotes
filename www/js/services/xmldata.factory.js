@@ -9,23 +9,37 @@
 
     /* @ngInject */
     function xmldataService($http) {
-        var toImport = '';
+        var importURL = '';
+        var importURI = '';
+
         var service = {
             setImportURL: setImportURL,
-            getxmldata: getxmldata
+            setImportURI: setImportURI,
+            getImportURL: getImportURL,
+            gtImportURI: getImportURI,
+            xmlFromURL: xmlFromURL,
+            xmlFromDevice: xmlFromDevice
         };
         return service;
 
         ////////////////
         function setImportURL(url) {
-            toImport = url;
+            importURL = url;
+        }
+
+        function setImportURI(uri) {
+            importURI = uri;
         }
 
         function getImportURL(url) {
-            return toImport;
+            return importURL;
         }
 
-        function getxmldata(layer) {
+        function getImportURI(uri) {
+            return importURI;
+        }
+
+        function xmlFromURL(layer) {
             var xml = layer;
             return new Promise(
                 function(resolve, reject) {
@@ -54,6 +68,22 @@
                     });
                 }
             );
+        }
+
+        function xmlFromDevice(uri) {
+            return new Promise(
+                function(resolve, reject) {
+                    kml.on('ready', function() {
+                        if (kml._leaflet_id) {
+                            resolve(omnivore.kml(layer));
+                        }
+                    });
+                    gpx.on('ready', function() {
+                        if (gpx._leaflet_id) {
+                            resolve(omnivore.gpx(layer));
+                        }
+                    });
+                })
         }
     }
 })();

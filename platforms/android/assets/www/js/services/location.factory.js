@@ -5,10 +5,10 @@
         .module('TractNotes')
         .factory('locationService', locationService);
 
-    locationService.$inject = [];
+    locationService.$inject = ['trackService'];
 
     /* @ngInject */
-    function locationService() {
+    function locationService(trackService) {
         var watchID = null;
         var zoom = 15; // @todo allow the user to set zoom
 
@@ -17,30 +17,15 @@
             long: null
         };
 
-        var tracks = []; // @todo allow the user to delete tracks
-        var currentTrack = null;
-        var currentPolyline = null;
-
         var service = {
-            setZoom: setZoom,
             locate: locate,
             start: start,
             stop: stop,
-            createPolyline: createPolyline,
-            createTrack: createTrack,
-            addtocurrentTrack: addtocurrentTrack,
-            setTrackMetadata: setTrackMetadata,
-            setCurrentTrack: setCurrentTrack,
-            getCurrentTrack: getCurrentTrack,
-            getTracks: getTracks
+            getLastPos: getLastPos
         };
         return service;
 
         ////////////////
-
-        function setZoom(zoom) {
-            zoom = zoom;
-        }
 
         function locate() {
             return new Promise(
@@ -70,20 +55,20 @@
                 navigator.geolocation.clearWatch(watchID);
                 watchID = null;
             }
-            currentPolyline = null;
         }
 
         function onSuccess(position) {
             var lat = position.coords.latitude;
             var long = position.coords.longitude;
-            if (lastPos.lat === null) { // || lastPos.long === null) {
+
+            if (lastPos.lat === null) {
                 lastPos.lat = lat;
                 lastPos.long = long;
-                currentPolyline.addLatLng(L.latLng(lastPos.lat, lastPos.long));
-            } else if (lastPos.lat != lat || lastPos.long != long) { //if distance is 0, same point then add to line
+                trackService.addToCurrentPolyline(lastPos.lat, lastPos.long); // should this be moved somewhere?
+            } else if (lastPos.lat != lat || lastPos.long != long) {
                 lastPos.lat = lat;
                 lastPos.long = long;
-                currentPolyline.addLatLng(L.latLng(lastPos.lat, lastPos.long));
+                trackService.addToCurrentPolyline(lastPos.lat, lastPos.long); // should this be moved somewhere?
             }
         }
 
@@ -92,56 +77,8 @@
             console.log(error.message);
         }
 
-
-        function createPolyline() {
-            currentPolyline = L.polyline([]);
-            return currentPolyline;
-        }
-
-        function createTrack() {
-            var name = 'Track ' + tracks.length;
-            tracks.push({
-                track: new L.FeatureGroup(),
-                name: name,
-                metadata: {
-                    name: '',
-                    desc: '',
-                    author: '',
-                    date: new Date().toLocaleString()
-                }
-            });
-            currentTrack = tracks[tracks.length - 1];
-            return currentTrack;
-        }
-
-        function addtocurrentTrack(layer) {
-            currentTrack.track.addLayer(layer);
-        }
-
-        function setTrackMetadata(metadata) {
-            if (metadata.name && metadata.name != '') {
-                currentTrack.name = metadata.name;
-                currentTrack.metadata.name = metadata.name;
-            }
-            if (metadata.desc && metadata.desc != '') {
-                currentTrack.metadata.desc = metadata.desc;
-            }
-            if (metadata.author && metadata.author != '') {
-                currentTrack.metadata.author = metadata.author;
-            }
-        }
-
-        function setCurrentTrack(track) {
-            currentTrack = track;
-        }
-
-        function getCurrentTrack(track) {
-            return currentTrack;
-        }
-
-
-        function getTracks() {
-            return tracks;
+        function getLastPos() {
+            return lastPos;
         }
     }
 })();

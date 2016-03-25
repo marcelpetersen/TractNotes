@@ -5,13 +5,15 @@
         .module('TractNotes')
         .controller('CTECOListController', CTECOListController);
 
-    CTECOListController.$inject = ['$scope', '$rootScope', 'ctecoDataService', 'ctecoViewService'];
+    CTECOListController.$inject = ['ctecoDataService', 'ctecoViewService'];
 
     /* @ngInject */
-    function CTECOListController($scope, $rootScope, ctecoDataService, ctecoViewService) {
+    function CTECOListController(ctecoDataService, ctecoViewService) {
         var vm = this;
         vm.title = 'CTECOListController';
+
         vm.sendCategory = sendCategory;
+        vm.setOrthoLayer = setOrthoLayer;
 
         activate();
 
@@ -24,6 +26,10 @@
 
         function sendCategory(cat) {
             ctecoViewService.setCategory(cat);
+        }
+
+        function setOrthoLayer(orthoLayer) {
+            ctecoDataService.sendOrthoLayer(orthoLayer);
         }
     }
 })();

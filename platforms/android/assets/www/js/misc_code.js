@@ -1,4 +1,79 @@
 
+        function trackPopup() {
+            $scope.data = {};
+
+            var trackPopup = popupService.getTrackPopup($scope, vm);
+            //IonicClosePopupService.register(trackPopup);
+
+            trackPopup.then(function(res) {
+                trackService.setTrackMetadata(res);
+            });
+        }
+
+
+
+        function getTrackPopup(scope) {
+            return $ionicPopup.show({
+                title: 'Edit Track Information',
+                template: 'Name<input type="text" ng-model="data.name"> Description <input type="text" ng-model="data.desc"> Author<input type="text" ng-model="data.author">', // @TODO: if not valid url, output error message    
+                scope: scope,
+                buttons: [{
+                    text: 'Save',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        return scope.data;
+                    }
+                }, {
+                    text: 'Cancel',
+                    type: 'button-positive'
+                }]
+            });
+        }
+
+
+
+(function() {
+    'use strict';
+
+    angular
+        .module('TractNotes')
+        .controller('TrackEditController', TrackEditController);
+
+    TrackEditController.$inject = ['$ionicHistory', 'trackService', 'trackViewService', ];
+
+    /* @ngInject */
+    function TrackEditController($ionicHistory, trackService, trackViewService) {
+        var vm = this;
+        vm.title = 'TrackEditController';
+        vm.currentTrack = null;
+        vm.back = back;
+        vm.update = update;
+        vm.input = {};
+
+        activate();      
+
+        ////////////////
+
+        function activate() {
+            vm.currentTrack = trackViewService.getTrackView();
+            vm.input = angular.copy(vm.currentTrack.metadata);
+        }
+
+        function back() {
+            vm.input = angular.copy(trackViewService.getTrackView().metadata)
+            $ionicHistory.goBack();
+        }
+
+        function update(input) {
+            trackService.setCurrentTrack(vm.currentTrack);
+            trackService.setTrackMetadata(input);
+            vm.currentTrack = trackService.getCurrentTrack();
+            vm.back();
+        }
+    }
+
+})();
+
 var geoJsonData = [{
   "type": "FeatureCollection",
   "features": [{

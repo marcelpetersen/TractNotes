@@ -5,17 +5,19 @@
         .module('TractNotes')
         .controller('ControlController', ControlController);
 
-
-    ControlController.$inject = ['$rootScope', '$scope', 'controlService'];
+    ControlController.$inject = ['controlService'];
 
     /* @ngInject */
-    function ControlController($rootScope, $scope, controlService) {
+    function ControlController(controlService) {
         var vm = this;
         vm.title = 'ControlController';
+
         vm.drawControl = null;
         vm.scaleControl = null;
         vm.searchControl = null;
         vm.controls = [];
+
+        vm.setControl = setControl;
 
         activate();
 
@@ -28,22 +30,16 @@
             vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl];
         }
 
-        $scope.$watch('vm.drawControl.checked', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                controlService.setDrawControl(newValue);
+        function setControl(control) {
+            if (control.text === 'Draw Control') {
+                controlService.sendDrawControl(control.checked);
+            } else if (control.text === 'Scale Control') {
+                controlService.sendScaleControl(control.checked);
+            } else if (control.text === 'Search Control') {
+                controlService.sendSearchControl(control.checked);
+            } else {
+                console.log('Something went terribly wrong.');
             }
-        });
-
-        $scope.$watch('vm.scaleControl.checked', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                controlService.setScaleControl(newValue);
-            }
-        });
-
-        $scope.$watch('vm.searchControl.checked', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                controlService.setSearchControl(newValue);
-            }
-        });
+        }
     }
 })();

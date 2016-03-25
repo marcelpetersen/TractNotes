@@ -18,6 +18,12 @@
         },
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
+        },
+        "com.megster.cordova.FileChooser": {
+            "PACKAGE_NAME": "com.ionicframework.landtrustdev739055"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.tractnotes739055"
         }
     },
     "dependent_plugins": {}

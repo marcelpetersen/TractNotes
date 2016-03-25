@@ -55,22 +55,11 @@
         })
 
         .state('app.single_track', {
-            url: '/single_track',
+            url: '/manage_tracks/:trackName',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/track.single.html',
+                    templateUrl: 'templates/track.view.html',
                     controller: 'TrackViewController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.edit_track', {
-            url: '/edit_track',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/track.edit.html',
-                    controller: 'TrackEditController',
                     controllerAs: 'vm'
                 }
             }
@@ -87,12 +76,24 @@
             }
         })
 
+        .state('app.login', {
+            url: '/login',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/login.html',
+                    controller: 'GAuthController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
         .state('app.form', {
             url: '/form',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/form.html',
-                    controller: 'GAuthController'
+                    controller: 'FormController',
+                    controllerAs: 'vm'
                 }
             }
         })
@@ -120,11 +121,22 @@
         })
 
         .state('app.single_cteco', {
-            url: '/single_cteco',
+            url: '/cteco_list/:ctecoName',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/cteco.layers.html',
                     controller: 'CTECOLayersController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.wms', {
+            url: '/wms',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/wms.fromurl.html',
+                    controller: 'wmsUrlController',
                     controllerAs: 'vm'
                 }
             }

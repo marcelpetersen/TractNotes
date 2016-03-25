@@ -23,6 +23,7 @@
             vm.files = Drive.getFileList();
         }
 
+        // todo event to service
         function importFromDrive(file) {
             xmldataService.setImportURL(file.url);
             $rootScope.$emit('Import', file.url);
