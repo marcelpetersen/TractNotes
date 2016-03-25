@@ -158,6 +158,14 @@ angular.module('TractNotes')
             return deferred.promise;
         };
 
+        /**
+         * Open a form from Drive with InAppBrowser.
+         */
+        this.openForm = function (file) {
+          var url = file.url;
+          var browserRef = window.open(url, '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+        };
+
 
         this.readFiles = function() {
           /*
@@ -212,6 +220,33 @@ angular.module('TractNotes')
               for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 read_files.push({name: file.title, id: file.id, url: file.webContentLink});
+              }
+              deffer.resolve(read_files);
+            } else {
+              deffer.reject("No files found");
+              //appendPre('No files found.');
+              console.log("No files found");
+            }
+          });
+          return deffer.promise;
+        };
+
+        this.readForms = function() {
+          /*
+           * Return list of forms
+           **/
+
+          var deffer = $q.defer();
+          var request = gapi.client.drive.files.list({
+            q: "mimeType='application/vnd.google-apps.form'"
+          });
+          request.execute(function (resp) {
+            var files = resp.items;
+            var read_files = [];
+            if (files && files.length > 0) {
+              for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                read_files.push({name: file.title, id: file.id, url: file.alternateLink});
               }
               deffer.resolve(read_files);
             } else {

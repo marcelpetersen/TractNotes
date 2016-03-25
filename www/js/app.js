@@ -76,12 +76,23 @@
             }
         })
 
+        .state('app.login', {
+            url: '/login',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/login.html',
+                    controller: 'GAuthController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
         .state('app.form', {
             url: '/form',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/form.html',
-                    controller: 'GAuthController',
+                    controller: 'FormController',
                     controllerAs: 'vm'
                 }
             }

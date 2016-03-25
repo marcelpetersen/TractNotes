@@ -50,7 +50,8 @@
                     importFromDrive();
                 }
             }
-            if(vm.selectedSource == "url") {
+            // if(vm.selectedSource == "url") {
+                else {
                 sendImportURL(url);
             }
         }
