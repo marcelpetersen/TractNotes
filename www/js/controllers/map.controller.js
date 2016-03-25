@@ -204,6 +204,13 @@
             $scope.closeModal();
         }
 
+        /** 
+         * Patches map in corner bug, by "resizing" the map whenever it would occur  
+         */
+        $scope.$on('$ionicView.afterEnter', function() {
+          ionic.trigger('resize');
+        });
+
         ////////////////
 
         /** @listens $rootScope.AddDraw */
