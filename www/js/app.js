@@ -65,6 +65,18 @@
             }
         })
 
+        .state('app.single_layer', {
+            url: '/manage_layers/:layerName',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/layer.view.html',
+                    controller: 'LayerViewController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+
         .state('app.control', {
             url: '/control',
             views: {

@@ -10,15 +10,18 @@
     /* @ngInject */
     function wmsUrlService($rootScope) {
         var service = {
-            sendLayerData: sendLayerData
+            sendLayerData: sendLayerData,
+            getActiveWMSLayers: getActiveWMSLayers
         };
+
+        var activeWMSLayers = [];
+
         return service;
 
         ////////////////
 
         function sendLayerData(wmsInput) {
             var featureLayer, imageLayer, dynamicLayer, tileLayer = null;
-            console.log(wmsInput);
             if (wmsInput.layerType == 'feature') {
                 console.log('feature layer');
                 featureLayer = L.esri.featureLayer({
@@ -26,6 +29,8 @@
                     opacity: wmsInput.opacity
                 });
                 wmsInput.layer = featureLayer;
+
+                activeWMSLayers.push(wmsInput);
 
                 $rootScope.$emit('wmsFromURL', wmsInput);
             } else if (wmsInput.layerType == 'image') {
@@ -36,6 +41,8 @@
                 });
                 wmsInput.layer = imageLayer;
 
+                activeWMSLayers.push(wmsInput);
+
                 $rootScope.$emit('wmsFromURL', wmsInput);
             } else if (wmsInput.layerType == 'dynamic') {
                 console.log('dynamic layer');
@@ -45,16 +52,24 @@
                 });
                 wmsInput.layer = dynamicLayer;
 
+                activeWMSLayers.push(wmsInput);
+
                 $rootScope.$emit('wmsFromURL', wmsInput);
             } else if (wmsInput.layerType == 'tile') {
                 console.log('tile layer');
                 tileLayer = L.tileLayer(wmsInput.url, {opacity: wmsInput.opacity});
                 wmsInput.layer = tileLayer;
 
+                activeWMSLayers.push(wmsInput);
+
                 $rootScope.$emit('wmsFromURL', wmsInput);
             } else {
                 console.log('We might have a problem here.');
             }
+        }
+
+        function getActiveWMSLayers() {
+            return activeWMSLayers;
         }
     }
 })();

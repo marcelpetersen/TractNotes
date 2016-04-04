@@ -978,8 +978,15 @@
             getCtecoCategories: getCtecoCategories,
             getOrthoLayers: getOrthoLayers,
             sendCTECOLayer: sendCTECOLayer,
-            sendOrthoLayer: sendOrthoLayer
+            sendOrthoLayer: sendOrthoLayer,
+            getActiveCTECOLayers: getActiveCTECOLayers,
+            getActiveOrthoLayers: getActiveOrthoLayers,
+            getOpacity: getOpacity
         };
+
+        var activeCTECOLayers = [];
+        var activeOrthoLayers = [];
+
         return service;
 
         ////////////////
@@ -992,12 +999,27 @@
             return orthoLayers;
         }
 
+        function getActiveCTECOLayers() {
+            return activeCTECOLayers;
+        }
+
+        function getActiveOrthoLayers() {
+            return activeOrthoLayers;
+        }
+
+        function getOpacity(layer) {
+            return layer.options.opacity;
+        }
+
+         
         function sendCTECOLayer(cat) {
             var name = cat.name;
             categories.name = cat;
             if (categories.name.checked) {
+                activeCTECOLayers.push(categories.name);
                 $rootScope.$emit('AddCTECO', categories.name);
             } else {
+                //todo: remove layer from activeCTECOLayers
                 $rootScope.$emit('RemoveCTECO', categories.name);
             }
         }
@@ -1005,10 +1027,12 @@
         function sendOrthoLayer(orthoObj) {
             if (orthoObj.checked)
             {
+                activeOrthoLayers.push(orthoObj);
                 $rootScope.$emit('AddOrtho', orthoObj);
             }
             else
             {
+                //todo: remove layer from activeOrthoLayers
                 $rootScope.$emit('RemoveOrtho', orthoObj);
             }
         }
