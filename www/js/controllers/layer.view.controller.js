@@ -16,6 +16,8 @@
 
         vm.back = back;
         vm.updateLayerData = updateLayerData;
+        vm.updateSliderOpacity = updateSliderOpacity;
+        vm.updateTextOpacity = updateTextOpacity;
 
         activate();
 
@@ -24,7 +26,8 @@
         function activate() {
             vm.currentLayer = layerViewService.getLayerView();
             vm.input.name = angular.copy(vm.currentLayer.name);
-            vm.input.opacity = angular.copy(vm.currentLayer.layer.options.opacity);
+            vm.input.sliderOpacity = angular.copy(vm.currentLayer.layer.options.opacity) * 100;
+            vm.input.textOpacity = vm.input.sliderOpacity;
         }
 
         function back() {
@@ -33,11 +36,20 @@
 
         function updateLayerData() {
             vm.currentLayer.name = vm.input.name;
-            vm.currentLayer.layer.options.opacity = vm.input.opacity;
+            var layerOpacity = vm.input.textOpacity/100;
+            vm.currentLayer.layer.options.opacity = layerOpacity;
             if (vm.currentLayer.layerType == 'tile') {
-                vm.currentLayer.layer.setOpacity(vm.input.opacity);
+                vm.currentLayer.layer.setOpacity(layerOpacity);
             }
             //@todo should we go back?
+        }
+
+        function updateSliderOpacity(textOpacity) {
+            vm.input.sliderOpacity = textOpacity;
+        }
+        
+        function updateTextOpacity(sliderOpacity) {
+            vm.input.textOpacity = Number(sliderOpacity);
         }
     }
 
