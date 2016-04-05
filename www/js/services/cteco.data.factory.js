@@ -1011,29 +1011,29 @@
             return layer.options.opacity;
         }
 
-         
-        function sendCTECOLayer(cat) {
-            var name = cat.name;
-            categories.name = cat;
-            if (categories.name.checked) {
-                activeCTECOLayers.push(categories.name);
-                $rootScope.$emit('AddCTECO', categories.name);
+        function sendCTECOLayer(cteco) {
+            console.log(cteco)
+            if (cteco.checked) {
+                console.log('send addcteco event')
+                activeCTECOLayers.push(cteco);
+                $rootScope.$emit('AddCTECO', cteco);
             } else {
                 //todo: remove layer from activeCTECOLayers
-                $rootScope.$emit('RemoveCTECO', categories.name);
+                console.log('send removecteco event')
+                $rootScope.$emit('RemoveCTECO', cteco);
             }
         }
 
-        function sendOrthoLayer(orthoObj) {
-            if (orthoObj.checked)
+        function sendOrthoLayer(ortho) {
+            if (ortho.checked)
             {
-                activeOrthoLayers.push(orthoObj);
-                $rootScope.$emit('AddOrtho', orthoObj);
+                activeOrthoLayers.push(ortho);
+                $rootScope.$emit('AddOrtho', ortho);
             }
             else
             {
                 //todo: remove layer from activeOrthoLayers
-                $rootScope.$emit('RemoveOrtho', orthoObj);
+                $rootScope.$emit('RemoveOrtho', ortho);
             }
         }
     }

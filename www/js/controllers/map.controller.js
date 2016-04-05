@@ -204,11 +204,11 @@
             $scope.closeModal();
         }
 
-        /** 
-         * Patches map in corner bug, by "resizing" the map whenever it would occur  
+        /**
+         * Patches map in corner bug, by "resizing" the map whenever it would occur
          */
         $scope.$on('$ionicView.afterEnter', function() {
-          ionic.trigger('resize');
+            ionic.trigger('resize');
         });
 
         ////////////////

@@ -30,7 +30,7 @@
         }
 
         function setWMSLayer(wmsInput) {
-            wmsUrlService.sendLayerData(wmsInput);           
+            wmsUrlService.sendLayerData(wmsInput);
         }
     }
 })();

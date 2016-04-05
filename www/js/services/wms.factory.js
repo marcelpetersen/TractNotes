@@ -57,7 +57,9 @@
                 $rootScope.$emit('wmsFromURL', wmsInput);
             } else if (wmsInput.layerType == 'tile') {
                 console.log('tile layer');
-                tileLayer = L.tileLayer(wmsInput.url, {opacity: wmsInput.opacity});
+                tileLayer = L.tileLayer(wmsInput.url, {
+                    opacity: wmsInput.opacity
+                });
                 wmsInput.layer = tileLayer;
 
                 activeWMSLayers.push(wmsInput);

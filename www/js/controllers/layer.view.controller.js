@@ -11,6 +11,7 @@
     function LayerViewController(layerViewService, $ionicHistory) {
         var vm = this;
         vm.title = 'LayerViewController';
+
         vm.currentLayer = null;
         vm.input = {};
 
@@ -36,7 +37,7 @@
 
         function updateLayerData() {
             vm.currentLayer.name = vm.input.name;
-            var layerOpacity = vm.input.textOpacity/100;
+            var layerOpacity = vm.input.textOpacity / 100;
             vm.currentLayer.layer.options.opacity = layerOpacity;
             if (vm.currentLayer.layerType == 'tile') {
                 vm.currentLayer.layer.setOpacity(layerOpacity);
@@ -47,7 +48,7 @@
         function updateSliderOpacity(textOpacity) {
             vm.input.sliderOpacity = textOpacity;
         }
-        
+
         function updateTextOpacity(sliderOpacity) {
             vm.input.textOpacity = Number(sliderOpacity);
         }

@@ -11,6 +11,7 @@
     function TrackListController($rootScope, layerControlService, trackService, trackViewService, layerViewService, ctecoDataService, wmsUrlService) {
         var vm = this;
         vm.title = 'TrackController';
+
         vm.tracks = [];
         vm.ctecoLayers = [];
         vm.wmsLayers = [];

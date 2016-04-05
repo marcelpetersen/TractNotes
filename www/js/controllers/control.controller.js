@@ -38,7 +38,7 @@
             } else if (control.text === 'Search Control') {
                 controlService.sendSearchControl(control.checked);
             } else {
-                console.log('Something went terribly wrong.');
+                console.log('error in setting control');
             }
         }
     }
