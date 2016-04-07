@@ -8,7 +8,8 @@
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Layer URL</span>
-          <input type="text" placeholder="http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/" ng-model="data.url">
+          <input type="text" placeholder="{{vm.placeholderText}}" ng-model="data.url">
+          <!-- http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/ -->
         </label>
         <label class="item item-stacked-label">
           <span>Layer Opacity: {{data.opacity}} / 1</span>
@@ -16,10 +17,10 @@
             <input type="range" min="0" max="1.00" value="data.opacity" step="0.01" ng-model="data.opacity">
           </div>
         </label>
-        <ion-radio ng-model="data.layerType" value="dynamic" checked>ESRI Dynamic Map Layer</ion-radio> 
-        <ion-radio ng-model="data.layerType" value="image">ESRI Image Map Layer</ion-radio> 
-        <ion-radio ng-model="data.layerType" value="feature">ESRI Feature Layer</ion-radio>
-        <ion-radio ng-model="data.layerType" value="tile">Tile Layer</ion-radio>
+        <ion-radio ng-model="data.layerType" ng-click="vm.updatePlaceholder(data.layerType)" value="dynamic" checked>ESRI Dynamic Map Layer</ion-radio> 
+        <ion-radio ng-model="data.layerType" ng-click="vm.updatePlaceholder(data.layerType)" value="image">ESRI Image Map Layer</ion-radio> 
+        <ion-radio ng-model="data.layerType" ng-click="vm.updatePlaceholder(data.layerType)" value="feature">ESRI Feature Layer</ion-radio>
+        <ion-radio ng-model="data.layerType" ng-click="vm.updatePlaceholder(data.layerType)" value="tile">Tile Layer</ion-radio>
         <div class="item item-input-inset">
           <div class="col">
             <button class="button button-block button-positive" ng-click="vm.setWMSLayer(data)">Add</button>
