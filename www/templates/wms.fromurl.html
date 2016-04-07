@@ -4,11 +4,11 @@
       <form novalidate>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Layer Name</span>
-          <input type="text" placeholder="World Terrain" ng-model="data.name">
+          <input type="text" placeholder="{{vm.placeholderNameText}}" ng-model="data.name">
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Layer URL</span>
-          <input type="text" placeholder="{{vm.placeholderText}}" ng-model="data.url">
+          <input type="text" placeholder="{{vm.placeholderURLText}}" ng-model="data.url">
           <!-- http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/ -->
         </label>
         <label class="item item-stacked-label">
