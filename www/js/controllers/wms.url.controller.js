@@ -17,14 +17,18 @@
         vm.placeholderNameText;
         vm.updatePlaceholder = updatePlaceholder;
         // placeholder text for different layer types //
-        vm.dynamicNamePlaceholder = 'World Terrain';
-        vm.imageNamePlaceholder = 'World/MODIS';
-        vm.featureNamePlaceholder = 'Portland Neighborhoods';
-        vm.tileNamePlaceholder = 'Thunderforest Landscape';
-        vm.dynamicURLPlaceholder = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/';
-        vm.imageURLPlaceholder = 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer';
-        vm.featureURLPlaceholder = 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/';
-        vm.tileURLPlaceholder = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
+        vm.namePlaceholder = {
+            dynamic: 'World Terrain',
+            image: 'World/MODIS',
+            feature: 'Portland Neighborhoods',
+            tile: 'Thunderforest Landscape'
+        };
+        vm.urlPlaceholder = {
+            dynamic: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/',
+            image: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer',
+            feature: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/',
+            tile: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png'
+        };
 
         $scope.data = {};
 
@@ -35,8 +39,8 @@
         function activate() {
             $scope.data.layerType = 'dynamic';
             $scope.data.opacity = '0.5';
-            vm.placeholderNameText = vm.dynamicNamePlaceholder;
-            vm.placeholderURLText = vm.dynamicURLPlaceholder;
+            vm.placeholderNameText = vm.namePlaceholder.dynamic;
+            vm.placeholderURLText = vm.urlPlaceholder.dynamic;
         }
 
         function back() {
@@ -48,22 +52,22 @@
         }
 
         function updatePlaceholder(layerType) {
-            switch(layerType) {
+            switch (layerType) {
                 case 'dynamic':
-                    vm.placeholderNameText = vm.dynamicNamePlaceholder;
-                    vm.placeholderURLText = vm.dynamicURLPlaceholder;
+                    vm.placeholderNameText = vm.namePlaceholder.dynamic;
+                    vm.placeholderURLText = vm.urlPlaceholder.dynamic;
                     break;
                 case 'image':
-                    vm.placeholderNameText = vm.imageNamePlaceholder;
-                    vm.placeholderURLText = vm.imageURLPlaceholder;
+                    vm.placeholderNameText = vm.namePlaceholder.image;
+                    vm.placeholderURLText = vm.urlPlaceholder.image;
                     break;
                 case 'feature':
-                    vm.placeholderNameText = vm.featureNamePlaceholder;
-                    vm.placeholderURLText = vm.featureURLPlaceholder;
+                    vm.placeholderNameText = vm.namePlaceholder.feature;
+                    vm.placeholderURLText = vm.urlPlaceholder.feature;
                     break;
                 case 'tile':
-                    vm.placeholderNameText = vm.tileNamePlaceholder;
-                    vm.placeholderURLText = vm.tileURLPlaceholder;
+                    vm.placeholderNameText = vm.namePlaceholder.tile;
+                    vm.placeholderURLText = vm.urlPlaceholder.tile;
                     break;
             }
         }
