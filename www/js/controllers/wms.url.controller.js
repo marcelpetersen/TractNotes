@@ -30,15 +30,14 @@
             tile: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png'
         };
 
-        $scope.data = {};
-
         activate();
 
         ////////////////
 
         function activate() {
-            $scope.data.layerType = 'dynamic';
-            $scope.data.opacity = '0.5';
+            vm.input = {};
+            vm.input.layerType = 'dynamic';
+            vm.input.opacity = '0.5';
             vm.placeholderNameText = vm.namePlaceholder.dynamic;
             vm.placeholderURLText = vm.urlPlaceholder.dynamic;
         }
