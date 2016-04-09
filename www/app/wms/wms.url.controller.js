@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('wmsUrlController', wmsUrlController);
 
-    wmsUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$window'];
+    wmsUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$ionicPopup'];
 
     /* @ngInject */
-    function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $window) {
+    function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $ionicPopup) {
         var vm = this;
         vm.title = 'wmsUrlController';
 
@@ -50,15 +50,24 @@
         function setWMSLayer(wmsInput) {
             if (wmsInput.name == null && wmsInput.url == null) {
                 console.log('Layer name and URL required.');
-                $window.alert('Please enter a valid layer name and URL.')
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Form is incomplete.',
+                    template: 'Please enter a valid layer name and URL.'
+                });
             }
             else if (wmsInput.name == null) {
                 console.log('Layer name required.');
-                $window.alert('Please enter a valid layer name.')
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Form is incomplete.',
+                    template: 'Please enter a valid layer name.'
+                });
             }
             else if (wmsInput.url == null) {
                 console.log('Layer URL required.');
-                $window.alert('Please enter a valid layer URL.')
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Form is incomplete.',
+                    template: 'Please enter a valid layer URL.'
+                });
             }
             else {
                 console.log('Name: ' + wmsInput.name + ', URL: ' + wmsInput.url);

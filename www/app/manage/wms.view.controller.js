@@ -14,11 +14,11 @@
 
 // @todo rename variables
 
-        vm.currentLayer = null;
+        vm.currentWmsLayer = null;
         vm.input = {};
 
         vm.back = back;
-        vm.updateLayerData = updateLayerData;
+        vm.updateWmsLayerData = updateWmsLayerData;
         vm.updateSliderOpacity = updateSliderOpacity;
         vm.updateTextOpacity = updateTextOpacity;
 
@@ -27,9 +27,9 @@
         ////////////////
 
         function activate() {
-            vm.currentLayer = layerViewService.getLayerView();
-            vm.input.name = angular.copy(vm.currentLayer.name);
-            vm.input.sliderOpacity = angular.copy(vm.currentLayer.layer.options.opacity) * 100;
+            vm.currentWmsLayer = layerViewService.getLayerView();
+            vm.input.name = angular.copy(vm.currentWmsLayer.name);
+            vm.input.sliderOpacity = angular.copy(vm.currentWmsLayer.layer.options.opacity) * 100;
             vm.input.textOpacity = vm.input.sliderOpacity;
         }
 
@@ -37,12 +37,12 @@
             $ionicHistory.goBack();
         }
 
-        function updateLayerData() {
-            vm.currentLayer.name = vm.input.name;
+        function updateWmsLayerData() {
+            vm.currentWmsLayer.name = vm.input.name;
             var layerOpacity = vm.input.textOpacity / 100;
-            vm.currentLayer.layer.options.opacity = layerOpacity;
-            if (vm.currentLayer.layerType == 'tile') {
-                vm.currentLayer.layer.setOpacity(layerOpacity);
+            vm.currentWmsLayer.layer.options.opacity = layerOpacity;
+            if (vm.currentWmsLayer.layerType == 'tile') {
+                vm.currentWmsLayer.layer.setOpacity(layerOpacity);
             }
             //@todo should we go back?
         }

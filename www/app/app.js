@@ -55,7 +55,7 @@
         })
 
         .state('app.track_layer', {
-            url: '/manage_layers/:trackName',
+            url: '/manage_layers/track/:trackName',
             views: {
                 'menuContent': {
                     templateUrl: 'app/manage/track.view.html',
@@ -66,7 +66,7 @@
         })
 
         .state('app.wms_layer', {
-            url: '/manage_layers/:wmsName',
+            url: '/manage_layers/wms/:wmsName',
             views: {
                 'menuContent': {
                     templateUrl: 'app/manage/wms.view.html',
