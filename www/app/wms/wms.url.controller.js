@@ -11,12 +11,12 @@
     function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $window) {
         var vm = this;
         vm.title = 'wmsUrlController';
-        vm.setWMSLayer = setWMSLayer;
+
         vm.back = back;
-        vm.placeholderURLText;
-        vm.placeholderNameText;
+        vm.setWMSLayer = setWMSLayer;
         vm.updatePlaceholder = updatePlaceholder;
-        // placeholder text for different layer types //
+
+        vm.input = {};
         vm.namePlaceholder = {
             dynamic: 'World Terrain',
             image: 'World/MODIS',
@@ -35,7 +35,6 @@
         ////////////////
 
         function activate() {
-            vm.input = {};
             vm.input.layerType = 'dynamic';
             vm.input.opacity = '0.5';
             vm.placeholderNameText = vm.namePlaceholder.dynamic;

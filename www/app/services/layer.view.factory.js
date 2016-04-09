@@ -7,6 +7,8 @@
 
     layerViewService.$inject = [];
 
+//@todo rename
+
     /* @ngInject */
     function layerViewService() {
         var displayedLayer = null;

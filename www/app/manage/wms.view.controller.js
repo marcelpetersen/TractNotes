@@ -3,14 +3,16 @@
 
     angular
         .module('TractNotes')
-        .controller('LayerViewController', LayerViewController);
+        .controller('WMSViewController', WMSViewController);
 
-    LayerViewController.$inject = ['layerViewService', '$ionicHistory'];
+    WMSViewController.$inject = ['layerViewService', '$ionicHistory'];
 
     /* @ngInject */
-    function LayerViewController(layerViewService, $ionicHistory) {
+    function WMSViewController(layerViewService, $ionicHistory) {
         var vm = this;
-        vm.title = 'LayerViewController';
+        vm.title = 'WMSViewController';
+
+// @todo rename variables
 
         vm.currentLayer = null;
         vm.input = {};
