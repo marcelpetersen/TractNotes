@@ -81,7 +81,7 @@
             url: '/control',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/tools/control.html',
+                    templateUrl: 'app/control/control.html',
                     controller: 'ControlController',
                     controllerAs: 'vm'
                 }

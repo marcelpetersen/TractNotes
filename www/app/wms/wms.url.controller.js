@@ -17,6 +17,8 @@
         vm.updatePlaceholder = updatePlaceholder;
 
         vm.input = {};
+        vm.placeholderNameText = '';
+        vm.placeholderURLText = '';
         vm.namePlaceholder = {
             dynamic: 'World Terrain',
             image: 'World/MODIS',

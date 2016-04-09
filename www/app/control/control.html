@@ -1,9 +1,9 @@
 <ion-view title="Toggle Tools">
   <ion-content>
     <ion-list>
-      <ion-checkbox ng-repeat="control in vm.controls" ng-model="control.checked" ng-click="vm.setControl(control)">
+      <ion-toggle toggle-class="toggle-positive" ng-repeat="control in vm.controls" ng-model="control.checked" ng-click="vm.setControl(control)">
         {{ control.text }}
-      </ion-checkbox>
+      </ion-toggle>
       <ion-item class="item-divider">
         Tool settings
       </ion-item>
