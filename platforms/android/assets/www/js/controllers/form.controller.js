@@ -20,15 +20,14 @@
 
         function activate() {
             var auth_token = gapi.auth.getToken();
-            if(auth_token) {
+            if (auth_token) {
                 Drive.readForms().then(function(files) {
                     console.log("FileRead: success.");
                     vm.files = files;
                 }, function() {
-                  console.log("FileRead: error.");
+                    console.log("FileRead: error.");
                 });
             }
-            
         }
 
         function openForm(file) {

@@ -11,13 +11,15 @@
       <ion-item class="item item-divider">
         Orthophoto Layers
       </ion-item>
-      <!-- <ion-item ng-repeat="ortho in vm.orthoLayers" class="item item-thumbnail-left" ng-click="vm.sendCategory(ortho)" href="#/app/single_cteco">
+      <!-- 
+      <ion-item ng-repeat="ortho in vm.orthoLayers" class="item item-thumbnail-left" ng-click="vm.sendCategory(ortho)" href="#/app/single_cteco">
         <img ng-src="{{ortho.image}}" style="border:1px solid black">
         <div class="item-text-center">{{ortho.name}}</div>
-      </ion-item> -->
-      <ion-checkbox ng-repeat="ortho in vm.orthoLayers" ng-model="ortho.checked" ng-change="vm.setOrthoLayer(ortho)">
+      </ion-item> 
+      -->
+      <ion-toggle toggle-class="toggle-positive" ng-repeat="ortho in vm.orthoLayers" ng-model="ortho.checked" ng-change="vm.setOrthoLayer(ortho)">
         {{ortho.name}}
-      </ion-checkbox>
+      </ion-toggle>
     </ion-list>
   </ion-content>
 </ion-view>

@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('wmsUrlController', wmsUrlController);
 
-    wmsUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory'];
+    wmsUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$window'];
 
     /* @ngInject */
-    function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory) {
+    function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $window) {
         var vm = this;
         vm.title = 'wmsUrlController';
         vm.setWMSLayer = setWMSLayer;
@@ -26,7 +26,7 @@
         vm.urlPlaceholder = {
             dynamic: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/',
             image: 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer',
-            feature: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/stops/FeatureServer/0/',
+            feature: 'http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Neighborhoods_pdx/FeatureServer/0',
             tile: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png'
         };
 
@@ -47,7 +47,22 @@
         }
 
         function setWMSLayer(wmsInput) {
-            wmsUrlService.sendLayerData(wmsInput);
+            if (wmsInput.name == null && wmsInput.url == null) {
+                console.log('Layer name and URL required.');
+                $window.alert('Please enter a valid layer name and URL.')
+            }
+            else if (wmsInput.name == null) {
+                console.log('Layer name required.');
+                $window.alert('Please enter a valid layer name.')
+            }
+            else if (wmsInput.url == null) {
+                console.log('Layer URL required.');
+                $window.alert('Please enter a valid layer URL.')
+            }
+            else {
+                console.log('Name: ' + wmsInput.name + ', URL: ' + wmsInput.url);
+                wmsUrlService.sendLayerData(wmsInput);
+            }
         }
 
         function updatePlaceholder(layerType) {

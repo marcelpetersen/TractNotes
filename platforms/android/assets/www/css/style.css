@@ -70,3 +70,17 @@ body {
     top: 0;
     height: 100%;
 }
+
+.input-symbol{
+  position: relative;
+}
+.input-symbol span{
+  position: absolute;
+  transform: translate(0,-50%);
+  top: 50%;
+  pointer-events: none;
+  margin-left: 3.2em; /* adjust as appropriate */
+}
+.input-symbol input{
+  text-indent: 2em; /* adjust as appropriate */
+}

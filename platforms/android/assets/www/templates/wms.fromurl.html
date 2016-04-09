@@ -1,28 +1,35 @@
 <ion-view title="Add WMS Layer from URL">
   <ion-content padding="true">
     <ion-list>
-      <form novalidate>
+      <form novalidate name="wmsFromURL">
         <label class="item item-input item-stacked-label">
           <span class="input-label">Layer Name</span>
-          <input type="text" placeholder="World Terrain" ng-model="data.name">
+          <input type="text" name="nameInput" placeholder="{{vm.placeholderNameText}}" ng-model="vm.input.name" required>
+          <span style="color:red" ng-show="wmsFromURL.nameInput.$dirty && wmsFromURL.nameInput.$invalid">
+            <span ng-show="wmsFromURL.nameInput.$error.required">Layer name is required.</span>
+          </span>
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Layer URL</span>
-          <input type="text" placeholder="http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/" ng-model="data.url">
+          <input type="url" name="urlInput" placeholder="{{vm.placeholderURLText}}" ng-model="vm.input.url" required>
+          <span style="color:red" ng-show="wmsFromURL.urlInput.$dirty && wmsFromURL.urlInput.$invalid">
+            <span ng-show="wmsFromURL.urlInput.$error.required">Layer URL is required.</span>
+            <span ng-show="wmsFromURL.urlInput.$error.url">Invalid layer URL.</span>
+          </span>
         </label>
         <label class="item item-stacked-label">
-          <span>Layer Opacity: {{data.opacity}} / 1</span>
+          <span>Layer Opacity: {{vm.input.opacity}} / 1</span>
           <div class="range range-positive">
-            <input type="range" min="0" max="1.00" value="data.opacity" step="0.01" ng-model="data.opacity">
+            <input type="range" min="0" max="1.00" value="vm.input.opacity" step="0.01" ng-model="vm.input.opacity">
           </div>
         </label>
-        <ion-radio ng-model="data.layerType" value="dynamic" checked>ESRI Dynamic Map Layer</ion-radio> 
-        <ion-radio ng-model="data.layerType" value="image">ESRI Image Map Layer</ion-radio> 
-        <ion-radio ng-model="data.layerType" value="feature">ESRI Feature Layer</ion-radio>
-        <ion-radio ng-model="data.layerType" value="tile">Tile Layer</ion-radio>
+        <ion-radio ng-model="vm.input.layerType" ng-click="vm.updatePlaceholder(vm.input.layerType)" value="dynamic" checked>ESRI Dynamic Map Layer</ion-radio> 
+        <ion-radio ng-model="vm.input.layerType" ng-click="vm.updatePlaceholder(vm.input.layerType)" value="image">ESRI Image Map Layer</ion-radio> 
+        <ion-radio ng-model="vm.input.layerType" ng-click="vm.updatePlaceholder(vm.input.layerType)" value="feature">ESRI Feature Layer</ion-radio>
+        <ion-radio ng-model="vm.input.layerType" ng-click="vm.updatePlaceholder(vm.input.layerType)" value="tile">Tile Layer</ion-radio>
         <div class="item item-input-inset">
           <div class="col">
-            <button class="button button-block button-positive" ng-click="vm.setWMSLayer(data)">Add</button>
+            <button class="button button-block button-positive" ng-click="vm.setWMSLayer(vm.input)">Add</button>
           </div>
           <div class="col">
             <button class="button button-block button-positive" ng-click="vm.back()">Cancel</button>

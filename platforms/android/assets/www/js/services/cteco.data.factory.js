@@ -978,8 +978,15 @@
             getCtecoCategories: getCtecoCategories,
             getOrthoLayers: getOrthoLayers,
             sendCTECOLayer: sendCTECOLayer,
-            sendOrthoLayer: sendOrthoLayer
+            sendOrthoLayer: sendOrthoLayer,
+            getActiveCTECOLayers: getActiveCTECOLayers,
+            getActiveOrthoLayers: getActiveOrthoLayers,
+            getOpacity: getOpacity
         };
+
+        var activeCTECOLayers = [];
+        var activeOrthoLayers = [];
+
         return service;
 
         ////////////////
@@ -992,24 +999,41 @@
             return orthoLayers;
         }
 
-        function sendCTECOLayer(cat) {
-            var name = cat.name;
-            categories.name = cat;
-            if (categories.name.checked) {
-                $rootScope.$emit('AddCTECO', categories.name);
+        function getActiveCTECOLayers() {
+            return activeCTECOLayers;
+        }
+
+        function getActiveOrthoLayers() {
+            return activeOrthoLayers;
+        }
+
+        function getOpacity(layer) {
+            return layer.options.opacity;
+        }
+
+        function sendCTECOLayer(cteco) {
+            console.log(cteco)
+            if (cteco.checked) {
+                console.log('send addcteco event')
+                activeCTECOLayers.push(cteco);
+                $rootScope.$emit('AddCTECO', cteco);
             } else {
-                $rootScope.$emit('RemoveCTECO', categories.name);
+                //todo: remove layer from activeCTECOLayers
+                console.log('send removecteco event')
+                $rootScope.$emit('RemoveCTECO', cteco);
             }
         }
 
-        function sendOrthoLayer(orthoObj) {
-            if (orthoObj.checked)
+        function sendOrthoLayer(ortho) {
+            if (ortho.checked)
             {
-                $rootScope.$emit('AddOrtho', orthoObj);
+                activeOrthoLayers.push(ortho);
+                $rootScope.$emit('AddOrtho', ortho);
             }
             else
             {
-                $rootScope.$emit('RemoveOrtho', orthoObj);
+                //todo: remove layer from activeOrthoLayers
+                $rootScope.$emit('RemoveOrtho', ortho);
             }
         }
     }

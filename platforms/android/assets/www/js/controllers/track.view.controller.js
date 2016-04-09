@@ -24,7 +24,9 @@
 
         function activate() {
             vm.currentTrack = trackViewService.getTrackView();
-            vm.input = angular.copy(vm.currentTrack.metadata);
+            if(vm.currentTrack) {
+                vm.input = angular.copy(vm.currentTrack.metadata);
+            }
         }
 
         /** @todo Upload files to drive */

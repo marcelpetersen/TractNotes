@@ -4,9 +4,9 @@
       <ion-item item-body>
         <center><img data-ng-src="{{vm.currentCategory.image_full}}" style="border:1px solid black"></center>
         <ion-list id="checkboxes">
-          <ion-checkbox ng-repeat="layer in vm.currentCategory.layers" ng-model="layer.checked" ng-change="vm.setCTECOLayer(layer)">
+          <ion-toggle toggle-class="toggle-positive" ng-repeat="layer in vm.currentCategory.layers" ng-model="layer.checked" ng-change="vm.setCTECOLayer(layer)">
             {{layer.name}}
-          </ion-checkbox>
+          </ion-toggle>
         </ion-list>
       </ion-item>
     </ion-item>

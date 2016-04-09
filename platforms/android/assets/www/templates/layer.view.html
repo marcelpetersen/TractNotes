@@ -1,0 +1,32 @@
+<ion-view title="Edit Track Information">
+  <ion-content padding="true">
+    <ion-item class="list card">
+      <form novalidate>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Name</span>
+          <input type="text" placeholder={{vm.currentLayer.name}} ng-model="vm.input.name">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Layer Opacity:</span>
+          <div class="input-symbol">
+            <span>&#37;</span>
+            <input type="number" ng-model="vm.input.textOpacity" ng-change="vm.updateSliderOpacity(vm.input.textOpacity)" min="0" max="100" step="1" style="width: 125px">
+          </div>
+        </label>
+        <label>
+          <div class="item range range-positive">
+            0%<input type="range" min="0" max="100" value="vm.input.sliderOpacity" step="1" ng-model="vm.input.sliderOpacity" ng-change="vm.updateTextOpacity(vm.input.sliderOpacity)">100%
+          </div>
+        </label>
+        <div class="item item-input-inset">
+          <div class="col">
+            <button class="button button-block button-positive" ng-click="vm.updateLayerData()">Update</button>
+          </div>
+          <div class="col">
+            <button class="button button-block button-positive" ng-click="vm.back()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </ion-item>
+  </ion-content>
+</ion-view>
