@@ -5,18 +5,20 @@
         .module('TractNotes')
         .controller('wmsUrlController', wmsUrlController);
 
-    wmsUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$window'];
+    wmsUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$ionicPopup'];
 
     /* @ngInject */
-    function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $window) {
+    function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $ionicPopup) {
         var vm = this;
         vm.title = 'wmsUrlController';
-        vm.setWMSLayer = setWMSLayer;
+
         vm.back = back;
-        vm.placeholderURLText;
-        vm.placeholderNameText;
+        vm.setWMSLayer = setWMSLayer;
         vm.updatePlaceholder = updatePlaceholder;
-        // placeholder text for different layer types //
+
+        vm.input = {};
+        vm.placeholderNameText = '';
+        vm.placeholderURLText = '';
         vm.namePlaceholder = {
             dynamic: 'World Terrain',
             image: 'World/MODIS',
@@ -35,11 +37,11 @@
         ////////////////
 
         function activate() {
-            vm.input = {};
-            vm.input.layerType = 'dynamic';
+            vm.input.layerType = 'Dynamic Map Layer';
             vm.input.opacity = '0.5';
             vm.placeholderNameText = vm.namePlaceholder.dynamic;
             vm.placeholderURLText = vm.urlPlaceholder.dynamic;
+            vm.color = 'Dynamic Map Layer';
         }
 
         function back() {
@@ -47,17 +49,27 @@
         }
 
         function setWMSLayer(wmsInput) {
+            console.log('Layer type: ' + wmsInput.layerType);
             if (wmsInput.name == null && wmsInput.url == null) {
                 console.log('Layer name and URL required.');
-                $window.alert('Please enter a valid layer name and URL.')
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Form is incomplete.',
+                    template: 'Please enter a valid layer name and URL.'
+                });
             }
             else if (wmsInput.name == null) {
                 console.log('Layer name required.');
-                $window.alert('Please enter a valid layer name.')
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Form is incomplete.',
+                    template: 'Please enter a valid layer name.'
+                });
             }
             else if (wmsInput.url == null) {
                 console.log('Layer URL required.');
-                $window.alert('Please enter a valid layer URL.')
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Form is incomplete.',
+                    template: 'Please enter a valid layer URL.'
+                });
             }
             else {
                 console.log('Name: ' + wmsInput.name + ', URL: ' + wmsInput.url);
@@ -67,19 +79,19 @@
 
         function updatePlaceholder(layerType) {
             switch (layerType) {
-                case 'dynamic':
+                case 'Dynamic Map Layer':
                     vm.placeholderNameText = vm.namePlaceholder.dynamic;
                     vm.placeholderURLText = vm.urlPlaceholder.dynamic;
                     break;
-                case 'image':
+                case 'ESRI Image Map Layer':
                     vm.placeholderNameText = vm.namePlaceholder.image;
                     vm.placeholderURLText = vm.urlPlaceholder.image;
                     break;
-                case 'feature':
+                case 'ESRI Feature Layer':
                     vm.placeholderNameText = vm.namePlaceholder.feature;
                     vm.placeholderURLText = vm.urlPlaceholder.feature;
                     break;
-                case 'tile':
+                case 'Tile Layer':
                     vm.placeholderNameText = vm.namePlaceholder.tile;
                     vm.placeholderURLText = vm.urlPlaceholder.tile;
                     break;

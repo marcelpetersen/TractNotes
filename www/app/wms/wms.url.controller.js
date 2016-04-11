@@ -15,6 +15,7 @@
         vm.back = back;
         vm.setWMSLayer = setWMSLayer;
         vm.updatePlaceholder = updatePlaceholder;
+        vm.toggleDefaultWMSLayer = toggleDefaultWMSLayer;
 
         vm.input = {};
         vm.placeholderNameText = '';
@@ -37,10 +38,11 @@
         ////////////////
 
         function activate() {
-            vm.input.layerType = 'dynamic';
+            vm.input.layerType = 'Dynamic Map Layer';
             vm.input.opacity = '0.5';
             vm.placeholderNameText = vm.namePlaceholder.dynamic;
             vm.placeholderURLText = vm.urlPlaceholder.dynamic;
+            vm.defaultWMSLayers = wmsUrlService.getDefaultWMSLayers();
         }
 
         function back() {
@@ -48,6 +50,7 @@
         }
 
         function setWMSLayer(wmsInput) {
+            console.log('Layer type: ' + wmsInput.layerType);
             if (wmsInput.name == null && wmsInput.url == null) {
                 console.log('Layer name and URL required.');
                 var alertPopup = $ionicPopup.alert({
@@ -71,29 +74,33 @@
             }
             else {
                 console.log('Name: ' + wmsInput.name + ', URL: ' + wmsInput.url);
-                wmsUrlService.sendLayerData(wmsInput);
+                wmsUrlService.sendUrlLayerData(wmsInput);
             }
         }
 
         function updatePlaceholder(layerType) {
             switch (layerType) {
-                case 'dynamic':
+                case 'Dynamic Map Layer':
                     vm.placeholderNameText = vm.namePlaceholder.dynamic;
                     vm.placeholderURLText = vm.urlPlaceholder.dynamic;
                     break;
-                case 'image':
+                case 'ESRI Image Map Layer':
                     vm.placeholderNameText = vm.namePlaceholder.image;
                     vm.placeholderURLText = vm.urlPlaceholder.image;
                     break;
-                case 'feature':
+                case 'ESRI Feature Layer':
                     vm.placeholderNameText = vm.namePlaceholder.feature;
                     vm.placeholderURLText = vm.urlPlaceholder.feature;
                     break;
-                case 'tile':
+                case 'Tile Layer':
                     vm.placeholderNameText = vm.namePlaceholder.tile;
                     vm.placeholderURLText = vm.urlPlaceholder.tile;
                     break;
             }
+        }
+
+        function toggleDefaultWMSLayer(defaultWMS) {
+            wmsUrlService.sendDefaultLayerData(defaultWMS);
         }
     }
 })();

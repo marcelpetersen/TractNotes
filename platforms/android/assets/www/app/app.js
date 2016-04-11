@@ -17,7 +17,7 @@
         .state('app', {
             url: '/app',
             abstract: true,
-            templateUrl: 'menu/menu.html' //,
+            templateUrl: 'app/menu/menu.html' //,
             //controller: 'MenuController'
         })
 
@@ -25,7 +25,7 @@
             url: '/map',
             views: {
                 'menuContent': {
-                    templateUrl: 'map/map.html',
+                    templateUrl: 'app/map/map.html',
                     controller: 'MapController',
                     controllerAs: 'vm'
                 }
@@ -36,41 +36,41 @@
             url: '/import',
             views: {
                 'menuContent': {
-                    templateUrl: 'import/import.html',
+                    templateUrl: 'app/import/import.html',
                     controller: 'ImportController',
                     controllerAs: 'vm'
                 }
             }
         })
 
-        .state('app.manage_tracks', {
-            url: '/manage_tracks',
+        .state('app.manage_layers', {
+            url: '/manage_layers',
             views: {
                 'menuContent': {
-                    templateUrl: 'manage/track.list.html',
-                    controller: 'TrackListController',
+                    templateUrl: 'app/manage/layer.list.html',
+                    controller: 'LayerListController',
                     controllerAs: 'vm'
                 }
             }
         })
 
-        .state('app.single_track', {
-            url: '/manage_tracks/:trackName',
+        .state('app.track_layer', {
+            url: '/manage_layers/track/:trackName',
             views: {
                 'menuContent': {
-                    templateUrl: 'manage/track.view.html',
+                    templateUrl: 'app/manage/track.view.html',
                     controller: 'TrackViewController',
                     controllerAs: 'vm'
                 }
             }
         })
 
-        .state('app.single_layer', {
-            url: '/manage_layers/:layerName',
+        .state('app.wms_layer', {
+            url: '/manage_layers/wms/:wmsName',
             views: {
                 'menuContent': {
-                    templateUrl: 'manage/layer.view.html',
-                    controller: 'LayerViewController',
+                    templateUrl: 'app/manage/wms.view.html',
+                    controller: 'WMSViewController',
                     controllerAs: 'vm'
                 }
             }
@@ -81,7 +81,7 @@
             url: '/control',
             views: {
                 'menuContent': {
-                    templateUrl: 'tools/control.html',
+                    templateUrl: 'app/control/control.html',
                     controller: 'ControlController',
                     controllerAs: 'vm'
                 }
@@ -92,7 +92,7 @@
             url: '/login',
             views: {
                 'menuContent': {
-                    templateUrl: 'google/login.html',
+                    templateUrl: 'app/google/login.html',
                     controller: 'GAuthController',
                     controllerAs: 'vm'
                 }
@@ -103,7 +103,7 @@
             url: '/form',
             views: {
                 'menuContent': {
-                    templateUrl: 'google/form.html',
+                    templateUrl: 'app/google/form.html',
                     controller: 'FormController',
                     controllerAs: 'vm'
                 }
@@ -114,7 +114,7 @@
             url: '/drive',
             views: {
                 'menuContent': {
-                    templateUrl: 'google/drive.html',
+                    templateUrl: 'app/google/drive.html',
                     controller: 'DriveController',
                     controllerAs: 'vm'
                 }
@@ -125,7 +125,7 @@
             url: '/cteco_list',
             views: {
                 'menuContent': {
-                    templateUrl: 'cteco/cteco.list.html',
+                    templateUrl: 'app/cteco/cteco.list.html',
                     controller: 'CTECOListController',
                     controllerAs: 'vm'
                 }
@@ -136,7 +136,7 @@
             url: '/cteco_list/:ctecoName',
             views: {
                 'menuContent': {
-                    templateUrl: 'cteco/cteco.layers.html',
+                    templateUrl: 'app/cteco/cteco.layers.html',
                     controller: 'CTECOLayersController',
                     controllerAs: 'vm'
                 }
@@ -147,7 +147,7 @@
             url: '/wms',
             views: {
                 'menuContent': {
-                    templateUrl: 'wms/wms.fromurl.html',
+                    templateUrl: '/app/wms/wms.fromurl.html',
                     controller: 'wmsUrlController',
                     controllerAs: 'vm'
                 }

@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'controlService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicModal'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicModal'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, controlService, drawnItemsService, xmldataService, ctecoDataService, $ionicModal) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, xmldataService, ctecoDataService, $ionicModal) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -278,7 +278,7 @@
         });
 
         // @TODO refactor into service
-        $ionicModal.fromTemplateUrl('./modal.track.save.html', {
+        $ionicModal.fromTemplateUrl('app/map/modal.track.save.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
