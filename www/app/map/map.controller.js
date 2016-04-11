@@ -267,7 +267,7 @@
         });
 
         /** @listens $rootScope.WMSFromURL */
-        $rootScope.$on('wmsFromURL', function(event, data) {
+        $rootScope.$on('AddWMSFromURL', function(event, data) {
             data.layer.addTo(vm.map);
             vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
         });

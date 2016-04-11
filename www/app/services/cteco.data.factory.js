@@ -1018,8 +1018,9 @@
                 activeCTECOLayers.push(cteco);
                 $rootScope.$emit('AddCTECO', cteco);
             } else {
-                //todo: remove layer from activeCTECOLayers
                 console.log('send removecteco event')
+                // remove cteco from activeCTECOLayers
+                activeCTECOLayers.splice(activeCTECOLayers.indexOf(cteco));
                 $rootScope.$emit('RemoveCTECO', cteco);
             }
         }
@@ -1032,7 +1033,8 @@
             }
             else
             {
-                //todo: remove layer from activeOrthoLayers
+                // remove ortho from activeOrthoLayers
+                activeOrthoLayers.splice(activeOrthoLayers.indexOf(ortho));
                 $rootScope.$emit('RemoveOrtho', ortho);
             }
         }

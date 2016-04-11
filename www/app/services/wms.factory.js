@@ -87,7 +87,7 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('wmsFromURL', wmsInput);
+                $rootScope.$emit('AddWMSFromURL', wmsInput);
             } else if (wmsInput.layerType == 'ESRI Image Map Layer') {
                 console.log('image layer');
                 imageLayer = L.esri.imageMapLayer({
@@ -98,7 +98,7 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('wmsFromURL', wmsInput);
+                $rootScope.$emit('AddWMSFromURL', wmsInput);
             } else if (wmsInput.layerType == 'Dynamic Map Layer') {
                 console.log('dynamic layer');
                 dynamicLayer = L.esri.dynamicMapLayer({
@@ -109,7 +109,7 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('wmsFromURL', wmsInput);
+                $rootScope.$emit('AddWMSFromURL', wmsInput);
             } else if (wmsInput.layerType == 'Tile Layer') {
                 console.log('tile layer');
                 tileLayer = L.tileLayer(wmsInput.url, {
@@ -119,7 +119,7 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('wmsFromURL', wmsInput);
+                $rootScope.$emit('AddWMSFromURL', wmsInput);
             } else {
                 console.log('We might have a problem here.');
             }
