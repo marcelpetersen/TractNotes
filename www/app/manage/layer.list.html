@@ -1,6 +1,6 @@
 <ion-view title="Manage Tracks and Layers">
   <ion-content>
-    <ion-item class="item-icon-left" ng-show="vm.tracks.length">
+    <ion-item class="item-icon-left" ng-show="vm.tracks.length || vm.ctecoLayers.length || vm.orthoLayers.length || vm.wmsLayers.length">
       <i class="icon ion-ios-minus-outline" ng-click="vm.showDelete = !vm.showDelete"></i>
       Click the button to show delete icons, or click a track/layer to edit.
     </ion-item>
@@ -19,31 +19,31 @@
         CT ECO Layers
       </ion-item>
       <ion-item ng-show="!vm.ctecoLayers.length">
-        No CT ECO layers
+        No CT ECO layers.
       </ion-item>
-      <ion-item ng-repeat="layer in vm.ctecoLayers" ng-click="vm.sendLayer(layer)" href="#/app/manage_layers/wms/{{layer.name}}" class="item-remove-animate">
-        <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendLayerDelete(layer)"></ion-delete-button>
-        {{layer.name}}
+      <ion-item ng-repeat="cteco in vm.ctecoLayers" ng-click="vm.sendLayer(cteco)" href="#/app/manage_layers/wms/{{cteco.name}}" class="item-remove-animate">
+        <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendLayerDelete(cteco)"></ion-delete-button>
+        {{cteco.name}}
       </ion-item>
       <ion-item class="item item-divider">
         Orthophoto Layers
       </ion-item>
       <ion-item ng-show="!vm.orthoLayers.length">
-        No orthophoto layers
+        No orthophoto layers.
       </ion-item>
-      <ion-item ng-repeat="layer in vm.orthoLayers" ng-click="vm.sendLayer(layer)" href="#/app/manage_layers/wms/{{layer.name}}" class="item-remove-animate">
-        <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendLayerDelete(layer)"></ion-delete-button>
-        {{layer.name}}
+      <ion-item ng-repeat="ortho in vm.orthoLayers" ng-click="vm.sendLayer(ortho)" href="#/app/manage_layers/wms/{{ortho.name}}" class="item-remove-animate">
+        <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendLayerDelete(ortho)"></ion-delete-button>
+        {{ortho.name}}
       </ion-item>
       <ion-item class="item item-divider">
         WMS Layers
       </ion-item>
       <ion-item ng-show="!vm.wmsLayers.length">
-        No WMS layers
+        No WMS layers.
       </ion-item>
-      <ion-item ng-repeat="layer in vm.wmsLayers" ng-click="vm.sendLayer(layer)" href="#/app/manage_layers/wms/{{layer.name}}" class="item-remove-animate">
-        <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendLayerDelete(layer)"></ion-delete-button>
-        {{layer.name}}
+      <ion-item ng-repeat="wms in vm.wmsLayers" ng-click="vm.sendLayer(wms)" href="#/app/manage_layers/wms/{{wms.name}}" class="item-remove-animate">
+        <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendLayerDelete(wms)"></ion-delete-button>
+        {{wms.name}}
       </ion-item>
     </ion-list>
   </ion-content>

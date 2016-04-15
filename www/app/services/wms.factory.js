@@ -13,7 +13,9 @@
             sendUrlLayerData: sendUrlLayerData,
             sendDefaultLayerData: sendDefaultLayerData,
             getActiveWMSLayers: getActiveWMSLayers,
-            getDefaultWMSLayers: getDefaultWMSLayers
+            getDefaultWMSLayers: getDefaultWMSLayers,
+            removeFromActiveWMS: removeFromActiveWMS,
+            deleteLayer: deleteLayer
         };
 
         var activeWMSLayers = [];
@@ -23,42 +25,42 @@
             name: 'OpenStreetMap Mapnik',
             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             opacity: '1.0',
-            layerType: 'tile'
+            layerType: 'wmsTile'
         };
 
         var thunderforestOutdoors = {
             name: 'Thunderforest Outdoors',
             url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
             opacity: '1.0',
-            layerType: 'tile'
+            layerType: 'wmsTile'
         };
 
         var stamenToner = {
             name: 'Stamen Toner',
             url: 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
             opacity: '1.0',
-            layerType: 'tile'
+            layerType: 'wmsTile'
         };
 
         var esriWorldImagery = {
             name: 'ESRI World Imagery',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             opacity: '1.0',
-            layerType: 'tile'
+            layerType: 'wmsTile'
         };
 
         var esriOceanBasemap = {
             name: 'ESRI Ocean Basemap',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}',
             opacity: '1.0',
-            layerType: 'tile'
+            layerType: 'wmsTile'
         };
 
         var esriWorldTopoMap = {
             name: 'ESRI World Topo Map',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
             opacity: '1.0',
-            layerType: 'tile'
+            layerType: 'wmsTile'
         };
 
 
@@ -81,7 +83,7 @@
                 console.log('feature layer');
                 featureLayer = L.esri.featureLayer({
                     url: wmsInput.url,
-                    opacity: wmsInput.opacity
+                    opacity: wmsInput.opacity / 100
                 });
                 wmsInput.layer = featureLayer;
 
@@ -92,7 +94,7 @@
                 console.log('image layer');
                 imageLayer = L.esri.imageMapLayer({
                     url: wmsInput.url,
-                    opacity: wmsInput.opacity
+                    opacity: wmsInput.opacity / 100
                 });
                 wmsInput.layer = imageLayer;
 
@@ -103,7 +105,7 @@
                 console.log('dynamic layer');
                 dynamicLayer = L.esri.dynamicMapLayer({
                     url: wmsInput.url,
-                    opacity: wmsInput.opacity
+                    opacity: wmsInput.opacity / 100
                 });
                 wmsInput.layer = dynamicLayer;
 
@@ -113,7 +115,7 @@
             } else if (wmsInput.layerType == 'Tile Layer') {
                 console.log('tile layer');
                 tileLayer = L.tileLayer(wmsInput.url, {
-                    opacity: wmsInput.opacity
+                    opacity: wmsInput.opacity / 100
                 });
                 wmsInput.layer = tileLayer;
 
@@ -123,6 +125,10 @@
             } else {
                 console.log('We might have a problem here.');
             }
+        }
+
+        function removeFromActiveWMS(wms) {
+            activeWMSLayers.splice(activeWMSLayers.indexOf(wms), 1);
         }
 
         function sendDefaultLayerData(defaultWMS) {
@@ -143,7 +149,7 @@
             else if (defaultWMS.checked == false) {
                 console.log('Removing default WMS layer from map');
                 // remove from activeWMSLayers
-                activeWMSLayers.splice(activeWMSLayers.indexOf(defaultWMS));
+                removeFromActiveWMS(defaultWMS);
                 console.log(activeWMSLayers);
                 console.log(defaultWMS);
                 $rootScope.$emit('RemoveWMSFromDefault', defaultWMS);
@@ -159,6 +165,12 @@
 
         function getDefaultWMSLayers() {
             return defaultWMSLayers;
+        }
+
+        function deleteLayer(wms) {
+            removeFromActiveWMS(wms);
+            console.log('Send remove wms event');
+            $rootScope.$emit('RemoveWMSFromDefault', wms);
         }
     }
 })();

@@ -16,13 +16,14 @@
 
         vm.tracks = [];
         vm.ctecoLayers = [];
+        vm.orthoLayers = [];
         vm.wmsLayers = [];
         vm.showDelete = false;
 
         vm.sendTrack = sendTrack;
         vm.sendTrackDelete = sendTrackDelete;
         vm.sendLayer = sendLayer;
-        //vm.sendLayerDelete = sendLayerDelete;
+        vm.sendLayerDelete = sendLayerDelete;
 
         activate();
 
@@ -50,11 +51,16 @@
             //utilityService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
         }
 
-        /*// @todo refactor to modify layer control in service, remove listener in map controller
-        function sendLayerDelete(layer) {
-            trackService.deleteTrack(track);
-            $rootScope.$emit("RemoveLayer", layer)
-            //utilityService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
-        }*/
+        function sendLayerDelete(selectedLayer) {
+            console.log('Layer type: ' + selectedLayer.layerType);
+            if (selectedLayer.layerType == 'cteco' || selectedLayer.layerType == 'ortho') 
+            {
+                ctecoDataService.deleteLayer(selectedLayer);
+            }
+            else if (selectedLayer.layerType == 'wmsTile')
+            {
+                wmsUrlService.deleteLayer(selectedLayer);
+            }
+        }
     }
 })();

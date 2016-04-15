@@ -39,7 +39,7 @@
 
         function activate() {
             vm.input.layerType = 'Dynamic Map Layer';
-            vm.input.opacity = '0.5';
+            vm.input.opacity = '50';
             vm.placeholderNameText = vm.namePlaceholder.dynamic;
             vm.placeholderURLText = vm.urlPlaceholder.dynamic;
             vm.defaultWMSLayers = wmsUrlService.getDefaultWMSLayers();

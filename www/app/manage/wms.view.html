@@ -7,15 +7,18 @@
           <input type="text" placeholder={{vm.currentWmsLayer.name}} ng-model="vm.input.name">
         </label>
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Layer Opacity:</span>
+          <span class="input-label">Layer Opacity: {{vm.input.opacity}}%</span>
           <div class="input-symbol">
-            <span>&#37;</span>
-            <input type="number" ng-model="vm.input.textOpacity" ng-change="vm.updateSliderOpacity(vm.input.textOpacity)" min="0" max="100" step="1" style="width: 125px">
+            <!-- <span>&#37;</span>
+            <input type="number" ng-model="vm.input.textOpacity" ng-change="vm.updateSliderOpacity(vm.input.textOpacity)" min="0" max="100" step="1" style="width: 125px"> -->
           </div>
         </label>
         <label>
+          <!-- <div class="item range range-positive">
+            0%<input type="range" min="0" max="100" value="vm.input.sliderOpacity" step="1" ng-model="vm.input.sliderOpacity">100%
+          </div> -->
           <div class="item range range-positive">
-            0%<input type="range" min="0" max="100" value="vm.input.sliderOpacity" step="1" ng-model="vm.input.sliderOpacity" ng-change="vm.updateTextOpacity(vm.input.sliderOpacity)">100%
+            0%<input type="range" min="0" max="100" value="vm.input.opacity" step="1" ng-model="vm.input.opacity">100%
           </div>
         </label>
         <div class="item item-input-inset">

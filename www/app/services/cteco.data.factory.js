@@ -13,6 +13,7 @@
         var bedrockGeology0 = {
             name: 'Bedrock Terrane',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Bedrock_Geology/MapServer',
                 opacity: 0.5,
@@ -23,6 +24,7 @@
         var bedrockGeology1 = {
             name: 'Bedrock Geology',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Bedrock_Geology/MapServer',
                 opacity: 0.5,
@@ -45,6 +47,7 @@
         var elevationB0 = {
             name: 'Bathymetry',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Elevation_Bathymetry/MapServer',
                 opacity: 0.5,
@@ -55,6 +58,7 @@
         var elevationB1 = {
             name: 'Elevation Contours',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Elevation_Bathymetry/MapServer',
                 opacity: 0.5,
@@ -65,6 +69,7 @@
         var elevationB2 = {
             name: 'Imagery and Topo',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Elevation_Bathymetry/MapServer',
                 opacity: 0.5,
@@ -88,6 +93,7 @@
         var erosion0 = {
             name: 'Erosion Susceptibility',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Erosion_Susceptibility/MapServer',
                 opacity: 0.5,
@@ -109,6 +115,7 @@
         var habitat0 = {
             name: 'Critical Habitats',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Habitat/MapServer',
                 opacity: 0.5,
@@ -119,6 +126,7 @@
         var habitat1 = {
             name: 'Natural Diversity Database Areas',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Habitat/MapServer',
                 opacity: 0.5,
@@ -142,6 +150,7 @@
         var hurricaneEvac0 = {
             name: 'Hurricane Evacuation Zone A',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
                 opacity: 0.5,
@@ -153,6 +162,7 @@
         var hurricaneEvac1 = {
             name: 'Hurricane Evacuation Zone B',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/CT_Hurricane_Evacuation_Zones_2014/MapServer',
                 opacity: 0.5,
@@ -176,6 +186,7 @@
         var hurricaneSurge0 = {
             name: 'Category 1',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Hurricane_Surge_Inundation/MapServer',
                 opacity: 0.5,
@@ -186,6 +197,7 @@
         var hurricaneSurge1 = {
             name: 'Category 2',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Hurricane_Surge_Inundation/MapServer',
                 opacity: 0.5,
@@ -196,6 +208,7 @@
         var hurricaneSurge2 = {
             name: 'Category 3',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Hurricane_Surge_Inundation/MapServer',
                 opacity: 0.5,
@@ -206,6 +219,7 @@
         var hurricaneSurge3 = {
             name: 'Category 4',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Hurricane_Surge_Inundation/MapServer',
                 opacity: 0.5,
@@ -230,6 +244,7 @@
         var nwiWetlands0 = {
             name: 'Freshwater Emergent Wetland',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -241,6 +256,7 @@
         var nwiWetlands1 = {
             name: 'Freshwater Forest and Shrub Wetlands',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -252,6 +268,7 @@
         var nwiWetlands2 = {
             name: 'Other Freshwater Wetland',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -263,6 +280,7 @@
         var nwiWetlands3 = {
             name: 'Estuarine and Marine Wetlands',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -274,6 +292,7 @@
         var nwiWetlands4 = {
             name: 'Estuarine and Marine Deep Water',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -285,6 +304,7 @@
         var nwiWetlands5 = {
             name: 'Freshwater Ponds',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -296,6 +316,7 @@
         var nwiWetlands6 = {
             name: 'Lakes',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -307,6 +328,7 @@
         var nwiWetlands7 = {
             name: 'Riverine',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/NWI_CT_Wetland_Functions_2010/MapServer',
                 opacity: 0.5,
@@ -336,6 +358,7 @@
         var openSpace0 = {
             name: '1997 Municipal and Private Open Space',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -346,6 +369,7 @@
         var openSpace1 = {
             name: 'DOT Scenic Land Strips',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -356,6 +380,7 @@
         var openSpace2 = {
             name: 'Protected Open Space Mapping Project',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -366,6 +391,7 @@
         var openSpace3 = {
             name: 'Federal Open Space',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -376,6 +402,7 @@
         var openSpace4 = {
             name: 'DEP Property',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -386,6 +413,7 @@
         var openSpace5 = {
             name: 'Parcels for Protected Open Space Mapping',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -413,6 +441,7 @@
             name: 'Ortho 1990',
             image: 'img/ortho_1990.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_1990/ImageServer',
                 f: 'image'
@@ -423,6 +452,7 @@
             name: 'Ortho 2004',
             image: 'img/ortho_2004.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2004/ImageServer',
                 f: 'image'
@@ -433,6 +463,7 @@
             name: 'Ortho 2004 Coast Color',
             image: 'img/ortho_2004_cc.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2004_coast_color/ImageServer',
                 f: 'image'
@@ -443,6 +474,7 @@
             name: 'Ortho 2004 Coast Infrared',
             image: 'img/ortho_2004_ci.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2004_color_infrared/ImageServer',
                 f: 'image'
@@ -453,6 +485,7 @@
             name: 'Ortho 2005 Coast Infrared',
             image: 'img/ortho_2005_ci.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2005_coast_infrared/ImageServer',
                 f: 'image'
@@ -463,6 +496,7 @@
             name: 'Ortho 2006 Color NAIP',
             image: 'img/ortho_2006.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2006_color_NAIP/ImageServer',
                 f: 'image'
@@ -473,6 +507,7 @@
             name: 'Ortho 2008 4Band NAIP',
             image: 'img/ortho_2008_naip.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2008_4band_NAIP/ImageServer',
                 f: 'image'
@@ -483,6 +518,7 @@
             name: 'Ortho 2008 Urban Area Color',
             image: 'img/ortho_2008_ua.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2008_color_urban_area/ImageServer',
                 f: 'image'
@@ -493,6 +529,7 @@
             name: 'Ortho 2009 CRCOG Color',
             image: 'img/ortho_2009.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2009_color_CRCOG/ImageServer',
                 f: 'image'
@@ -503,6 +540,7 @@
             name: 'Ortho 2010 Coast 4Band',
             image: 'img/ortho_2010_coast.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2010_coast_4band/ImageServer',
                 f: 'image'
@@ -513,6 +551,7 @@
             name: 'Ortho 4Band NAIP',
             image: 'img/ortho_2010_naip.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2010_4band_NAIP/ImageServer',
                 f: 'image'
@@ -523,6 +562,7 @@
             name: 'Ortho 2012 4Band',
             image: 'img/ortho_2012.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2012/ImageServer',
                 f: 'image'
@@ -533,6 +573,7 @@
             name: 'Ortho 2012 4Band NAIP',
             image: 'img/ortho_2012_naip.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2012_4band_NAIP/ImageServer',
                 f: 'image'
@@ -543,6 +584,7 @@
             name: 'Ortho 2014 4Band NAIP',
             image: 'img/ortho_2014_naip.jpg',
             checked: false,
+            layerType: 'ortho',
             layer: L.esri.imageMapLayer({
                 url: 'http://www.ctecoapp3.uconn.edu/arcgis/rest/services/images/ortho_2014_4band_NAIP/ImageServer',
                 f: 'image'
@@ -553,6 +595,7 @@
         var quaternary0 = {
             name: 'Quaternary Geology',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/ArcGIS/rest/services/maps/Open_Space/MapServer/',
                 opacity: 0.5,
@@ -574,6 +617,7 @@
         var soils0 = {
             name: 'Soils',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -584,6 +628,7 @@
         var soils1 = {
             name: 'Farmland Soils',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -594,6 +639,7 @@
         var soils2 = {
             name: 'Hydric Soils',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -604,6 +650,7 @@
         var soils3 = {
             name: 'Inland Wetland Soils',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -614,6 +661,7 @@
         var soils4 = {
             name: 'Soil Parent Material',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -624,6 +672,7 @@
         var soils5 = {
             name: 'Soil Potential for Subsurface Sewage Disposal',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -634,6 +683,7 @@
         var soils6 = {
             name: 'Soil Flooding Class',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -644,6 +694,7 @@
         var soils7 = {
             name: 'Soil Drainage Class',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Soils/MapServer',
                 opacity: 0.5,
@@ -672,6 +723,7 @@
         var surficialMats0 = {
             name: 'Surficial Materials',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Surficial_Materials/MapServer',
                 opacity: 0.5,
@@ -682,6 +734,7 @@
         var surficialMats1 = {
             name: 'Surficial Stratified Drift',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Surficial_Materials/MapServer',
                 opacity: 0.5,
@@ -692,6 +745,7 @@
         var surficialMats2 = {
             name: 'Surficial Aquifer Texture',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Surficial_Materials/MapServer',
                 opacity: 0.5,
@@ -702,6 +756,7 @@
         var surficialMats3 = {
             name: 'Surficial Aquifer Potential',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Surficial_Materials/MapServer',
                 opacity: 0.5,
@@ -726,6 +781,7 @@
         var waterResource0 = {
             name: 'Aquifer Protection Area',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -736,6 +792,7 @@
         var waterResource1 = {
             name: 'Assessed Waterbody 305b 2014',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -746,6 +803,7 @@
         var waterResource2 = {
             name: 'Impaired Waterbody 2014',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -756,6 +814,7 @@
         var waterResource3 = {
             name: 'Assessed Waterbody 305b 2012',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -766,6 +825,7 @@
         var waterResource4 = {
             name: 'Impaired Waterbody 2012',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -776,6 +836,7 @@
         var waterResource5 = {
             name: 'Assessed Waterbody 305b 2010',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -786,6 +847,7 @@
         var waterResource6 = {
             name: 'Impaired Waterbody 2010',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -796,6 +858,7 @@
         var waterResource7 = {
             name: 'Assessed Waterbody 305b 2008',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -806,6 +869,7 @@
         var waterResource8 = {
             name: 'Impaired Waterbodies 2008',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -816,6 +880,7 @@
         var waterResource9 = {
             name: 'Assessed Waterbody 305b 2006',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -826,6 +891,7 @@
         var waterResource10 = {
             name: 'Impaired Waterbodies 2006',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -836,6 +902,7 @@
         var waterResource11 = {
             name: 'Surface Water Quality',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -846,6 +913,7 @@
         var waterResource12 = {
             name: 'Ground Water Quality Classifications',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Water_Resource_Mgmt/MapServer',
                 opacity: 0.5,
@@ -879,6 +947,7 @@
         var watershed0 = {
             name: 'Major Drainage Basins',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Watershed/MapServer',
                 opacity: 0.5,
@@ -889,6 +958,7 @@
         var watershed1 = {
             name: 'Regional Drainage Basins',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Watershed/MapServer',
                 opacity: 0.5,
@@ -899,6 +969,7 @@
         var watershed2 = {
             name: 'Subregional Drainage Basins',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Watershed/MapServer',
                 opacity: 0.5,
@@ -909,6 +980,7 @@
         var watershed3 = {
             name: 'Local Drainage Basins',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Watershed/MapServer',
                 opacity: 0.5,
@@ -919,6 +991,7 @@
         var watershed4 = {
             name: 'All Drainage Basins',
             checked: false,
+            layerType: 'cteco',
             layer: L.esri.dynamicMapLayer({
                 url: 'http://www.ctecoapp2.uconn.edu/arcgis/rest/services/maps/Watershed/MapServer',
                 opacity: 0.5,
@@ -981,7 +1054,10 @@
             sendOrthoLayer: sendOrthoLayer,
             getActiveCTECOLayers: getActiveCTECOLayers,
             getActiveOrthoLayers: getActiveOrthoLayers,
-            getOpacity: getOpacity
+            getOpacity: getOpacity,
+            removeFromActiveCTECO: removeFromActiveCTECO,
+            removeFromActiveOrtho: removeFromActiveOrtho,
+            deleteLayer: deleteLayer
         };
 
         var activeCTECOLayers = [];
@@ -1020,7 +1096,7 @@
             } else {
                 console.log('send removecteco event')
                 // remove cteco from activeCTECOLayers
-                activeCTECOLayers.splice(activeCTECOLayers.indexOf(cteco));
+                removeFromActiveCTECO(cteco);
                 $rootScope.$emit('RemoveCTECO', cteco);
             }
         }
@@ -1034,9 +1110,34 @@
             else
             {
                 // remove ortho from activeOrthoLayers
-                activeOrthoLayers.splice(activeOrthoLayers.indexOf(ortho));
+                removeFromActiveOrtho(ortho);
                 $rootScope.$emit('RemoveOrtho', ortho);
             }
         }
+
+        function removeFromActiveCTECO(cteco) {
+            activeCTECOLayers.splice(activeCTECOLayers.indexOf(cteco), 1);
+        }
+
+        function removeFromActiveOrtho(ortho) {
+            activeOrthoLayers.splice(activeOrthoLayers.indexOf(ortho), 1);
+        }
+
+        function deleteLayer(layerToDelete) {
+            if (layerToDelete.layerType == 'cteco')
+            {
+                removeFromActiveCTECO(layerToDelete);
+                console.log('Send remove cteco event');
+                $rootScope.$emit('RemoveCTECO', layerToDelete);
+            }
+            else if (layerToDelete.layerType == 'ortho')
+            {
+                removeFromActiveOrtho(layerToDelete);
+                console.log('Send remove ortho event');
+                $rootScope.$emit('RemoveOrtho', layerToDelete);
+            }
+        }
+
+
     }
 })();
