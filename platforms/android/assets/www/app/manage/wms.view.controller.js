@@ -19,8 +19,8 @@
 
         vm.back = back;
         vm.updateWmsLayerData = updateWmsLayerData;
-        vm.updateSliderOpacity = updateSliderOpacity;
-        vm.updateTextOpacity = updateTextOpacity;
+        // vm.updateSliderOpacity = updateSliderOpacity;
+        // vm.updateTextOpacity = updateTextOpacity;
 
         activate();
 
@@ -29,8 +29,9 @@
         function activate() {
             vm.currentWmsLayer = layerViewService.getLayerView();
             vm.input.name = angular.copy(vm.currentWmsLayer.name);
-            vm.input.sliderOpacity = angular.copy(vm.currentWmsLayer.layer.options.opacity) * 100;
-            vm.input.textOpacity = vm.input.sliderOpacity;
+            // vm.input.sliderOpacity = angular.copy(vm.currentWmsLayer.layer.options.opacity) * 100;
+            // vm.input.textOpacity = vm.input.sliderOpacity;
+            vm.input.opacity = angular.copy(vm.currentWmsLayer.layer.options.opacity) * 100;
         }
 
         function back() {
@@ -39,21 +40,24 @@
 
         function updateWmsLayerData() {
             vm.currentWmsLayer.name = vm.input.name;
-            var layerOpacity = vm.input.textOpacity / 100;
+            // var layerOpacity = vm.input.textOpacity / 100;
+            var layerOpacity = vm.input.opacity / 100;
             vm.currentWmsLayer.layer.options.opacity = layerOpacity;
-            if (vm.currentWmsLayer.layerType == 'tile') {
+            vm.currentWmsLayer.opacity = layerOpacity;
+            console.log(vm.currentWmsLayer);
+            if (vm.currentWmsLayer.layerType == 'Tile Layer') {
                 vm.currentWmsLayer.layer.setOpacity(layerOpacity);
             }
             //@todo should we go back?
         }
 
-        function updateSliderOpacity(textOpacity) {
+        /*function updateSliderOpacity(textOpacity) {
             vm.input.sliderOpacity = textOpacity;
         }
 
         function updateTextOpacity(sliderOpacity) {
             vm.input.textOpacity = Number(sliderOpacity);
-        }
+        }*/
     }
 
 })();

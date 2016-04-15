@@ -267,9 +267,22 @@
         });
 
         /** @listens $rootScope.WMSFromURL */
-        $rootScope.$on('wmsFromURL', function(event, data) {
+        $rootScope.$on('AddWMSFromURL', function(event, data) {
             data.layer.addTo(vm.map);
             vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
+        });
+
+        /** @listens $rootScope.AddWMSFromDefault */
+        $rootScope.$on('AddWMSFromDefault', function(event, data) {
+            data.layer.addTo(vm.map);
+            vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
+        });
+
+        /** @listens $rootScope.RemoveWMSFromDefault */
+        $rootScope.$on('RemoveWMSFromDefault', function(event, data) {
+            console.log(data.layer);
+            vm.map.removeLayer(data.layer);
+            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
         });
 
         // @todo remove once track.list.controller is refactored

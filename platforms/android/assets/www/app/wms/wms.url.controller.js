@@ -15,6 +15,7 @@
         vm.back = back;
         vm.setWMSLayer = setWMSLayer;
         vm.updatePlaceholder = updatePlaceholder;
+        vm.toggleDefaultWMSLayer = toggleDefaultWMSLayer;
 
         vm.input = {};
         vm.placeholderNameText = '';
@@ -38,10 +39,10 @@
 
         function activate() {
             vm.input.layerType = 'Dynamic Map Layer';
-            vm.input.opacity = '0.5';
+            vm.input.opacity = '50';
             vm.placeholderNameText = vm.namePlaceholder.dynamic;
             vm.placeholderURLText = vm.urlPlaceholder.dynamic;
-            vm.color = 'Dynamic Map Layer';
+            vm.defaultWMSLayers = wmsUrlService.getDefaultWMSLayers();
         }
 
         function back() {
@@ -73,7 +74,7 @@
             }
             else {
                 console.log('Name: ' + wmsInput.name + ', URL: ' + wmsInput.url);
-                wmsUrlService.sendLayerData(wmsInput);
+                wmsUrlService.sendUrlLayerData(wmsInput);
             }
         }
 
@@ -96,6 +97,10 @@
                     vm.placeholderURLText = vm.urlPlaceholder.tile;
                     break;
             }
+        }
+
+        function toggleDefaultWMSLayer(defaultWMS) {
+            wmsUrlService.sendDefaultLayerData(defaultWMS);
         }
     }
 })();

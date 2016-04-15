@@ -5,7 +5,7 @@
         .module('TractNotes', [
             'ionic',
             'ionic.closePopup',
-            'ngCordova'
+            'ngCordovaOauth'
         ])
         .config(config)
         .run(run);
