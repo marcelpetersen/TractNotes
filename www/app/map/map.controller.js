@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'xmldataService', 'ctecoDataService', '$ionicModal'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, xmldataService, ctecoDataService, $ionicModal) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -30,12 +30,6 @@
         vm.xmldata = xmldata;
         vm.saveTrack = saveTrack;
         vm.discardTrack = discardTrack;
-
-        //@todo change events to factory listeners
-        /** @listens $rootScope.Import */
-        $rootScope.$on('Import', function(event, data) {
-            vm.xmldata(data);
-        });
 
         activate();
 
@@ -158,37 +152,53 @@
             vm.map.on('draw:edited', drawnItemsService.showPolygonAreaEdited);
         }
 
-        function xmldata(layer) {
-            var layerResult = xmldataService.xmlFromURL(layer);
-            layerResult.then(function(val) {
-                $scope.$apply(function() {
-                    var finalLayer = val.on('ready', function() {
-                        vm.map.fitBounds(val.getBounds());
-                        val.eachLayer(function(layer) {
-                            var content;
-                            var name = layer.feature.properties.name;
-                            var desc = layer.feature.properties.desc;
+        function xmldata(p) {
+            // @todo layer should be object with source information + url
+            // this check will change
+            if (p.indexOf('content://') > -1) {
+                var textResult = importService.getFileText(p);
+                textResult.then(function(text) {
+                    var layer = importService.importFromText(text);
+                    console.log(layer)
+                    addLayer(layer);
+                });
+            } else {
+                var layerResult = importService.importFromURL(p);
+                layerResult.then(function(layer) {
+                    addLayer(layer);
+                });
+            }
 
-                            if (name !== undefined) {
-                                content = '<h2>' + name + '</h2>';
-                                if (desc !== undefined) {
-                                    content += '<p>' + desc + '</p';
-                                    layer.bindPopup(content);
-                                } else {
+            //@todo should move to VM, better yet, move to map factory
+            function addLayer(layer) {
+                $scope.$apply(function() {
+                    var finalLayer = layer.on('ready', function() {
+                        if (layer._leaflet_id == true) {
+                            vm.map.fitBounds(layer.getBounds());
+                            layer.eachLayer(function(layer) {
+                                var content;
+                                var name = layer.feature.properties.name;
+                                var desc = layer.feature.properties.desc;
+
+                                if (name !== undefined) {
+                                    content = '<h2>' + name + '</h2>';
+                                    if (desc !== undefined) {
+                                        content += '<p>' + desc + '</p';
+                                        layer.bindPopup(content);
+                                    } else {
+                                        layer.bindPopup(content);
+                                    }
+                                } else if (desc !== undefined) {
+                                    content = '<h2>' + desc + '</h2>';
                                     layer.bindPopup(content);
                                 }
-                            } else if (desc !== undefined) {
-                                content = '<h2>' + desc + '</h2>';
-                                layer.bindPopup(content);
-                            }
-                        });
+                            });
+                        }
                     });
                     finalLayer.addTo(vm.map);
                     vm.layercontrol.addOverlay(finalLayer, layer);
                 });
-
-            });
-
+            }
         }
 
         function saveTrack() {
@@ -213,6 +223,10 @@
 
         ////////////////
 
+        /** @listens $rootScope.Import */
+        $rootScope.$on('Import', function(event, data) {
+            vm.xmldata(data);
+        });
         /** @listens $rootScope.AddDraw */
         /** @todo force layer to be toggled while control is active */
         $rootScope.$on('AddDraw', function(event, data) {

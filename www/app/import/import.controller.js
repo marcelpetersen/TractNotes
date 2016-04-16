@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('ImportController', ImportController);
 
-    ImportController.$inject = ['$scope', '$rootScope', 'xmldataService', 'popupService', 'wmsUrlService', 'Drive', '$state'];
+    ImportController.$inject = ['$scope', '$rootScope', 'importService', 'popupService', 'wmsUrlService', 'Drive', '$state'];
 
     /* @ngInject */
-    function ImportController($scope, $rootScope, xmldataService, popupService, wmsUrlService, Drive, $state) {
+    function ImportController($scope, $rootScope, importService, popupService, wmsUrlService, Drive, $state) {
         var vm = this;
         vm.title = 'ImportController';
 
@@ -56,7 +56,7 @@
 
         // todo event to service
         function importFromURL(url) {
-            xmldataService.setImportURL(url);
+            importService.setImportURL(url);
             $rootScope.$emit('Import', url);
         }
 
