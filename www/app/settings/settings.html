@@ -1,0 +1,36 @@
+<ion-view title="Settings">
+  <ion-content>
+    <div class="list card">
+      <ion-item class="item-divider">
+        Controls
+      </ion-item>
+      <ion-toggle toggle-class="toggle-positive" ng-repeat="control in vm.controls" ng-model="control.checked" ng-click="vm.setControl(control)">
+        {{control.text}}
+      </ion-toggle>
+      <ion-item class="item-divider">
+        Tools
+      </ion-item>
+      <ion-item>
+        <!-- @TODO: tools settings here -->
+      </ion-item>
+      <ion-item class="item-divider">
+        Cache
+      </ion-item>
+      <ion-item>
+        <!-- @TODO: cache settings here -->
+      </ion-item>
+      <ion-item class="item-divider">
+        Google
+      </ion-item>
+      <div class="item item-input-inset">
+        <!-- @TODO: login/logout/other Google settings -->
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="">Login</button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="">Logout</button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
