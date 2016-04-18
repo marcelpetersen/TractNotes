@@ -32,22 +32,22 @@
             }
         })
 
-        .state('app.import', {
-            url: '/import',
+        .state('app.tracks', {
+            url: '/tracks',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/import/import.html',
-                    controller: 'ImportController',
+                    templateUrl: 'app/tracks/tracks.html',
+                    controller: 'TrackViewController',
                     controllerAs: 'vm'
                 }
             }
         })
 
-        .state('app.manage_layers', {
-            url: '/manage_layers',
+        .state('app.layers', {
+            url: '/layers',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/manage/layer.list.html',
+                    templateUrl: 'app/layers/layers.html',
                     controller: 'LayerListController',
                     controllerAs: 'vm'
                 }
@@ -55,10 +55,10 @@
         })
 
         .state('app.track_layer', {
-            url: '/manage_layers/track/:trackName',
+            url: '/tracks/:trackName',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/manage/track.view.html',
+                    templateUrl: 'app/tracks/track.view.html',
                     controller: 'TrackViewController',
                     controllerAs: 'vm'
                 }
@@ -66,23 +66,11 @@
         })
 
         .state('app.wms_layer', {
-            url: '/manage_layers/wms/:wmsName',
+            url: '/layers/:wmsName',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/manage/wms.view.html',
+                    templateUrl: 'app/layers/wms.view.html',
                     controller: 'WMSViewController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-
-        .state('app.control', {
-            url: '/control',
-            views: {
-                'menuContent': {
-                    templateUrl: 'app/control/control.html',
-                    controller: 'ControlController',
                     controllerAs: 'vm'
                 }
             }
@@ -149,6 +137,17 @@
                 'menuContent': {
                     templateUrl: '/app/wms/wms.fromurl.html',
                     controller: 'wmsUrlController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.settings', {
+            url: '/settings',
+            views: {
+                'menuContent': {
+                    templateUrl: '/app/settings/settings.html',
+                    controller: 'SettingsController',
                     controllerAs: 'vm'
                 }
             }

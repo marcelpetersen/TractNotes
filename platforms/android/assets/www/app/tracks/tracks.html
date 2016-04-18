@@ -1,0 +1,41 @@
+<ion-view title="Tracks">
+  <ion-content>
+    <div class="list card">
+      <button class="button button-block button-positive" ng-click="vm.goToDrive()">
+        Drive
+      </button>
+      <button class="button button-block button-positive" ng-click="vm.importFromDevice(url)">
+        Device
+      </button>
+      <form novalidate>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">URL</span>
+          <input type="url" placeholder="www.google.com" ng-model="url">
+        </label>
+        <ion-item>
+          <button class="button button-block button-positive" ng-click="vm.importFromURL(url)">
+            Import
+          </button>
+        </ion-item>
+      </form>
+    </div>
+    <div class="list card">
+      <ion-item class="item-icon-left" ng-show="vm.tracks.length">
+        <i class="icon ion-ios-minus-outline" ng-click="vm.showDelete = !vm.showDelete"></i>
+        Click the button to show delete icons, or click a track to edit.
+      </ion-item>
+      <ion-list show-delete="vm.showDelete">
+        <ion-item class="item item-divider">
+          Tracks
+        </ion-item>
+        <ion-item ng-show="!vm.tracks.length">
+          No tracks.
+        </ion-item>
+        <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/tracks/{{track.name}}" class="item-remove-animate">
+          <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
+          {{track.name}} ({{track.metadata.date}})
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-view>

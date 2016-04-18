@@ -3,14 +3,14 @@
 
     angular
         .module('TractNotes')
-        .controller('ControlController', ControlController);
+        .controller('SettingsController', SettingsController);
 
-    ControlController.$inject = ['controlService'];
+    SettingsController.$inject = ['settingsService'];
 
     /* @ngInject */
-    function ControlController(controlService) {
+    function SettingsController(settingsService) {
         var vm = this;
-        vm.title = 'ControlController';
+        vm.title = 'SettingsController';
 
         vm.drawControl = null;
         vm.scaleControl = null;
@@ -24,19 +24,19 @@
         ////////////////
 
         function activate() {
-            vm.drawControl = controlService.getDrawControl();
-            vm.scaleControl = controlService.getScaleControl();
-            vm.searchControl = controlService.getSearchControl();
+            vm.drawControl = settingsService.getDrawControl();
+            vm.scaleControl = settingsService.getScaleControl();
+            vm.searchControl = settingsService.getSearchControl();
             vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl];
         }
 
         function setControl(control) {
             if (control.text === 'Draw Control') {
-                controlService.sendDrawControl(control.checked);
+                settingsService.sendDrawControl(control.checked);
             } else if (control.text === 'Scale Control') {
-                controlService.sendScaleControl(control.checked);
+                settingsService.sendScaleControl(control.checked);
             } else if (control.text === 'Search Control') {
-                controlService.sendSearchControl(control.checked);
+                settingsService.sendSearchControl(control.checked);
             } else {
                 console.log('error in setting control');
             }
