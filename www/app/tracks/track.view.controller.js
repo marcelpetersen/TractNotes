@@ -177,7 +177,7 @@
         function showUrlPopup() {
             $scope.data = {};
             var urlPopup = $ionicPopup.show({
-                template: '<input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
+                template: '<div ng-show="data.invalidUrl" style="color:red">Invalid URL.</div><input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
                 title: 'Enter a URL',
                 scope: $scope,
                 buttons: [
@@ -188,13 +188,11 @@
                             if (!$scope.data.urlInput) {
                                 //prevent the popup from being submitted without a valid URL
                                 e.preventDefault();
-                                var alertPopup = $ionicPopup.alert({
-                                    title: 'Invalid URL.',
-                                    template: 'Please enter a valid URL.'
-                                });
+                                $scope.data.invalidUrl = true;
                             }
                             else {
                                 console.log('URL: ' + $scope.data.urlInput);
+                                $scope.data.invalidUrl = false;
                                 vm.importFromURL($scope.data.urlInput);
                             }
                         }
