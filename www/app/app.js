@@ -32,6 +32,17 @@
             }
         })
 
+        .state('app.form', {
+            url: '/form',
+            views: {
+                'menuContent': {
+                    templateUrl: 'app/google/form.html',
+                    controller: 'FormController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
         .state('app.tracks', {
             url: '/tracks',
             views: {
@@ -43,16 +54,16 @@
             }
         })
 
-        .state('app.layers', {
-            url: '/layers',
+        .state('app.drive', {
+            url: '/drive',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/layers/layers.html',
-                    controller: 'LayerController',
+                    templateUrl: 'app/google/drive.html',
+                    controller: 'DriveController',
                     controllerAs: 'vm'
                 }
             }
-        })
+        })  
 
         .state('app.track_layer', {
             url: '/tracks/:trackName',
@@ -65,45 +76,12 @@
             }
         })
 
-        .state('app.wms_layer', {
-            url: '/layers/:wmsName',
+        .state('app.layers', {
+            url: '/layers',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/layers/layer.view.html',
-                    controller: 'LayerViewController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.login', {
-            url: '/login',
-            views: {
-                'menuContent': {
-                    templateUrl: 'app/google/login.html',
-                    controller: 'GAuthController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.form', {
-            url: '/form',
-            views: {
-                'menuContent': {
-                    templateUrl: 'app/google/form.html',
-                    controller: 'FormController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.drive', {
-            url: '/drive',
-            views: {
-                'menuContent': {
-                    templateUrl: 'app/google/drive.html',
-                    controller: 'DriveController',
+                    templateUrl: 'app/layers/layers.html',
+                    controller: 'LayerController',
                     controllerAs: 'vm'
                 }
             }
@@ -142,12 +120,34 @@
             }
         })
 
+        .state('app.wms_layer', {
+            url: '/layers/:wmsName',
+            views: {
+                'menuContent': {
+                    templateUrl: 'app/layers/layer.view.html',
+                    controller: 'LayerViewController',
+                    controllerAs: 'vm'
+                }
+            }
+        })           
+
         .state('app.settings', {
             url: '/settings',
             views: {
                 'menuContent': {
                     templateUrl: 'app/settings/settings.html',
                     controller: 'SettingsController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.login', {
+            url: '/login',
+            views: {
+                'menuContent': {
+                    templateUrl: 'app/google/login.html',
+                    controller: 'GAuthController',
                     controllerAs: 'vm'
                 }
             }
