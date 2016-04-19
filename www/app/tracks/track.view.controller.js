@@ -54,7 +54,7 @@
         function goToDrive() {
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
-                Drive.readGPXAndKML().then(function(files) {
+                Drive.readGPXAndKML(null).then(function(files) {
                     console.log("FileRead: success.");
                     Drive.setFileList(files);
                     $state.go('app.drive');

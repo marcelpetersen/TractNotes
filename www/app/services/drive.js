@@ -201,16 +201,25 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
-            this.readGPXAndKML = function() {
+            this.readGPXAndKML = function(fileName) {
                 /*
                  * Return all GPX and KML files from user's Drive
                  **/
 
                 var deffer = $q.defer();
                 var request;
-                request = gapi.client.drive.files.list({
-                    q: "fileExtension='gpx' or fileExtension='kml'"
-                });
+                if(fileName) {
+                    var query = "title contains '" + fileName + "'";
+                    console.log(query);
+                    request = gapi.client.drive.files.list({
+                        q: query
+                    });
+                }
+                else {
+                    request = gapi.client.drive.files.list({
+                        q: "fileExtension='gpx' or fileExtension='kml'"
+                    });
+                }
 
 
                 request.execute(function(resp) {
