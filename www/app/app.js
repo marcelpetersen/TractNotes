@@ -124,7 +124,7 @@
             url: '/cteco_list/:ctecoName',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/cteco/cteco.layers.html',
+                    templateUrl: 'app/wms/cteco.layers.html',
                     controller: 'CTECOLayersController',
                     controllerAs: 'vm'
                 }
