@@ -109,12 +109,12 @@
             }
         })
 
-        .state('app.cteco_list', {
-            url: '/cteco_list',
+        .state('app.wms_list', {
+            url: '/wms_list',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/cteco/cteco.list.html',
-                    controller: 'CTECOListController',
+                    templateUrl: 'app/wms/wms.list.html',
+                    controller: 'WMSListController',
                     controllerAs: 'vm'
                 }
             }
@@ -131,8 +131,8 @@
             }
         })
 
-        .state('app.wms', {
-            url: '/wms',
+        .state('app.add_wms', {
+            url: '/add_wms',
             views: {
                 'menuContent': {
                     templateUrl: '/app/wms/wms.fromurl.html',

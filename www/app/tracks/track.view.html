@@ -1,7 +1,10 @@
 <ion-view title="Edit Track Information">
   <ion-content padding="true">
-    <ion-list>
+    <div class="list card">
       <form novalidate>
+        <ion-item class="item item-divider">
+          Track Information
+        </ion-item>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Name</span>
           <input type="text" placeholder={{vm.currentTrack.metadata.name}} ng-model="vm.input.name">
@@ -22,10 +25,24 @@
             <button class="button button-block button-positive" ng-click="vm.back()">Cancel</button>
           </div>
         </div>
-        <div class="item item-input-inset">
-          <button class="button button-block button-positive padding-horizontal" ng-click="vm.exportTrack()">Export to Google Drive</button>
-        </div>
       </form>
-    </ion-list>
+    </div>
+    <div class="list card">
+      <ion-item class="item item-divider">
+        Export Track
+      </ion-item>
+      <div class="item item-input-inset">
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="vm.exportTrackToDevice()">
+            <i class="icon icon-phone"></i> Device
+          </button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="vm.exportTrack()">
+            <i class="icon icon-google-drive"></i> Google Drive
+          </button>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

@@ -3,17 +3,18 @@
 
     angular
         .module('TractNotes')
-        .controller('CTECOListController', CTECOListController);
+        .controller('WMSListController', WMSListController);
 
-    CTECOListController.$inject = ['ctecoDataService', 'ctecoViewService'];
+    WMSListController.$inject = ['ctecoDataService', 'ctecoViewService', 'wmsUrlService'];
 
     /* @ngInject */
-    function CTECOListController(ctecoDataService, ctecoViewService) {
+    function WMSListController(ctecoDataService, ctecoViewService, wmsUrlService) {
         var vm = this;
-        vm.title = 'CTECOListController';
+        vm.title = 'WMSListController';
 
         vm.sendCategory = sendCategory;
         vm.setOrthoLayer = setOrthoLayer;
+        vm.toggleDefaultWMSLayer = toggleDefaultWMSLayer;
 
         activate();
 
@@ -22,6 +23,7 @@
         function activate() {
             vm.ctecoCategories = ctecoDataService.getCtecoCategories();
             vm.orthoLayers = ctecoDataService.getOrthoLayers();
+            vm.defaultWMSLayers = wmsUrlService.getDefaultWMSLayers();
         }
 
         function sendCategory(cat) {
@@ -30,6 +32,10 @@
 
         function setOrthoLayer(orthoLayer) {
             ctecoDataService.sendOrthoLayer(orthoLayer);
+        }
+
+        function toggleDefaultWMSLayer(defaultWMS) {
+            wmsUrlService.sendDefaultLayerData(defaultWMS);
         }
     }
 })();

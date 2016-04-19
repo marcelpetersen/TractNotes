@@ -7,13 +7,13 @@
       <div class="item item-input-inset">
         <div class="col">
           <!-- slide transition can be disabled with nav-transition="none" -->
-          <a href="#/app/cteco_list">
-            <button class="button button-block button-positive">CT ECO Layers</button>
+          <a href="#/app/wms_list">
+            <button class="button button-block button-positive">WMS Layers</button>
           </a>
         </div>
         <div class="col">
-          <a href="#/app/wms">
-            <button class="button button-block button-positive">Other WMS Layers</button>
+          <a href="#/app/add_wms">
+            <button class="button button-block button-positive">Add from URL</button>
           </a>
         </div>
       </div>
@@ -45,10 +45,10 @@
           {{ortho.name}}
         </ion-item>
         <ion-item class="item item-divider">
-          WMS Layers
+          Other WMS Layers
         </ion-item>
         <ion-item ng-show="!vm.wmsLayers.length">
-          No WMS layers.
+          No other WMS layers.
         </ion-item>
         <ion-item ng-repeat="wms in vm.wmsLayers" ng-click="vm.sendLayer(wms)" href="#/app/layers/{{wms.name}}" class="item-remove-animate">
           <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendLayerDelete(wms)"></ion-delete-button>
