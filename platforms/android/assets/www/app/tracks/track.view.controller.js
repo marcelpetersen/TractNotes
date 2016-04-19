@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('TrackViewController', TrackViewController);
 
-    TrackViewController.$inject = ['$scope', '$rootScope', 'importService', 'trackService', 'trackViewService', '$ionicHistory', 'Drive', '$state'];
+    TrackViewController.$inject = ['$scope', '$rootScope', 'importService', 'trackService', 'trackViewService', '$ionicHistory', 'Drive', '$ionicPopup', 'IonicClosePopupService', '$state'];
 
     /* @ngInject */
-    function TrackViewController($scope, $rootScope, importService, trackService, trackViewService, $ionicHistory, Drive, $state) {
+    function TrackViewController($scope, $rootScope, importService, trackService, trackViewService, $ionicHistory, Drive, $ionicPopup, IonicClosePopupService, $state) {
         var vm = this;
         vm.title = 'TrackViewController';
         vm.currentTrack = null;
@@ -19,11 +19,14 @@
         vm.back = back;
         vm.updateMetadata = updateMetadata;
         vm.exportTrack = exportTrack;
+        vm.exportTrackToDevice = exportTrackToDevice;
         vm.importFromDevice = importFromDevice;
         vm.goToDrive = goToDrive;
         vm.importFromURL = importFromURL;
         vm.sendTrack = sendTrack;
         vm.sendTrackDelete = sendTrackDelete;
+        vm.showUrlPopup = showUrlPopup;
+        vm.discardChanges = discardChanges;
 
         activate();
 
@@ -51,7 +54,7 @@
         function goToDrive() {
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
-                Drive.readGPXAndKML().then(function(files) {
+                Drive.readGPXAndKML(null).then(function(files) {
                     console.log("FileRead: success.");
                     Drive.setFileList(files);
                     $state.go('app.drive');
@@ -71,6 +74,7 @@
 
         // todo event to service
         function importFromURL(url) {
+            console.log(url);
             importService.setImportURL(url);
             $rootScope.$emit('Import', url);
         }
@@ -138,6 +142,11 @@
             // upload media to drive [images, audio, video]
         }
 
+        function exportTrackToDevice() {
+            //@TODO
+            console.log('Export to device not yet implemented.');
+        }
+
         function back() {
             $ionicHistory.goBack();
         }
@@ -150,6 +159,10 @@
             //@todo should we go back?
         }
 
+        function discardChanges() {
+            vm.back();
+        }
+
         function sendTrack(track) {
             trackViewService.setTrackView(track);
         }
@@ -159,6 +172,37 @@
             trackService.deleteTrack(track);
             $rootScope.$emit("RemoveTrack", track)
             //utilityService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
+        }
+
+        function showUrlPopup() {
+            $scope.data = {};
+            var urlPopup = $ionicPopup.show({
+                template: '<input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
+                title: 'Enter a URL',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: 'Import',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.urlInput) {
+                                //prevent the popup from being submitted without a valid URL
+                                e.preventDefault();
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Invalid URL.',
+                                    template: 'Please enter a valid URL.'
+                                });
+                            }
+                            else {
+                                console.log('URL: ' + $scope.data.urlInput);
+                                vm.importFromURL($scope.data.urlInput);
+                            }
+                        }
+                    },
+                    { text: 'Cancel' }
+                ]
+            });
+            IonicClosePopupService.register(urlPopup);
         }
     }
 

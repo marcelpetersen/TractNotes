@@ -13,11 +13,11 @@ body {
 
 @font-face {
     font-family: 'icomoon';
-    src:    url('../lib/ionic/fonts/icomoon.eot?7aoxt');
-    src:    url('../lib/ionic/fonts/icomoon.eot?7aoxt#iefix') format('embedded-opentype'),
-        url('../lib/ionic/fonts/icomoon.ttf?7aoxt') format('truetype'),
-        url('../lib/ionic/fonts/icomoon.woff?7aoxt') format('woff'),
-        url('../lib/ionic/fonts/icomoon.svg?7aoxt#icomoon') format('svg');
+    src:    url('../fonts/icomoon.eot?fntkq7');
+    src:    url('../fonts/icomoon.eot?fntkq7#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon.ttf?fntkq7') format('truetype'),
+        url('../fonts/icomoon.woff?fntkq7') format('woff'),
+        url('../fonts/icomoon.svg?fntkq7#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -37,16 +37,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-file-text2:before {
-    content: "\e902";
-}
-.icon-map:before {
-    content: "\e903";
-}
-.icon-download:before {
+.icon-phone:before {
     content: "\e900";
 }
-.icon-upload:before {
+.icon-link:before {
     content: "\e901";
 }
 .icon-google-drive:before {

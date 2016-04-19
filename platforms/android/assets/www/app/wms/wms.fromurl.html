@@ -1,6 +1,6 @@
 <ion-view title="Add Map Service">
   <ion-content padding="true">
-  <div class="list card">
+    <div class="list card">
       <form novalidate name="wmsFromURL">
         <ion-item class="item item-divider">
           WMS Layer from URL
@@ -46,14 +46,6 @@
           </div>
         </div>
       </form>
-  </div>
-  <div class="list card">
-    <ion-item class="item item-divider">
-      Default WMS Layers
-    </ion-item>
-    <ion-toggle toggle-class="toggle-positive" ng-repeat="defaultWMS in vm.defaultWMSLayers" ng-model="defaultWMS.checked" ng-change="vm.toggleDefaultWMSLayer(defaultWMS)">
-      {{defaultWMS.name}}
-    </ion-toggle>
-  </div>
+    </div>
   </ion-content>
 </ion-view>

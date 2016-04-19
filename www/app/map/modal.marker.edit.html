@@ -1,0 +1,42 @@
+<div class="modal">
+  <ion-header-bar>
+    <h1 class="title">Edit Marker</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form novalidate>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Title</span>
+        <input type="text" placeholder='Marker title' ng-model="vm.input.marker.title">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Description</span>
+        <input type="text" placeholder='Marker description' ng-model="vm.input.marker.description">
+      </label>
+      <div class="item item-input-inset">
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="@TODO">
+            <i class="icon ion-images"></i> Image
+          </button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="@TODO">
+            <i class="icon ion-videocamera"></i> Video
+          </button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="@TODO">
+            <i class="icon ion-volume-medium"></i> Audio
+          </button>
+        </div>
+      </div>
+      <div class="item item-input-inset">
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="@TODO">Save</button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="@TODO">Discard</button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</div>

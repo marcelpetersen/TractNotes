@@ -135,7 +135,7 @@
             url: '/add_wms',
             views: {
                 'menuContent': {
-                    templateUrl: '/app/wms/wms.fromurl.html',
+                    templateUrl: 'app/wms/wms.fromurl.html',
                     controller: 'wmsUrlController',
                     controllerAs: 'vm'
                 }
@@ -146,7 +146,7 @@
             url: '/settings',
             views: {
                 'menuContent': {
-                    templateUrl: '/app/settings/settings.html',
+                    templateUrl: 'app/settings/settings.html',
                     controller: 'SettingsController',
                     controllerAs: 'vm'
                 }

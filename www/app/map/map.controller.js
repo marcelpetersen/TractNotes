@@ -21,7 +21,7 @@
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
-        vm.input = null;
+        vm.input = {marker: null, track: null};
 
         vm.autoDiscover = autoDiscover;
         vm.createMarker = createMarker;
@@ -87,6 +87,8 @@
                 var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
                 vm.currentTrack.track.addLayer(marker);
                 vm.currentTrack.markers.push(marker);
+                // @TODO add info submitted to marker
+                $scope.openMarkerModal();
             } else {
                 var currentPosition = locationService.locate();
                 currentPosition.then(function(val) {
@@ -127,6 +129,19 @@
 
                 vm.layercontrol.addOverlay(vm.currentTrack.track, vm.currentTrack.name, 'Tracks');
 
+                // Listener for clicks on layer elements
+                vm.currentTrack.track.on('click', function(e) {
+                    console.log(e)
+                    // I do not think this is an acceptable way to test if layer is marker
+                    // works in layer of just polyline + markers but is not elegant
+                    // @TODO improve
+                    if (e.layer._icon) {
+                        // @TODO add info submitted to marker
+                        $scope.openMarkerModal();
+                    }
+
+                });
+
                 locationService.start();
             } else {
                 vm.recording = !vm.recording;
@@ -135,7 +150,7 @@
                 } else {
                     locationService.stop();
                     vm.recording = false;
-                    $scope.openModal();
+                    $scope.openTrackModal();
                 }
             }
         }
@@ -203,15 +218,15 @@
 
         function saveTrack() {
             trackService.setCurrentTrack(vm.currentTrack);
-            trackService.setTrackMetadata(vm.input);
-            vm.input = null;
-            $scope.closeModal();
+            trackService.setTrackMetadata(vm.input.track);
+            vm.input.track = null;
+            $scope.closeTrackModal();
         }
 
         function discardTrack() {
             layerControlService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
             trackService.deleteTrack(vm.currentTrack.track);
-            $scope.closeModal();
+            $scope.closeTrackModal();
         }
 
         /**
@@ -304,23 +319,24 @@
             layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
         });
 
-        // @TODO refactor into service
-        $ionicModal.fromTemplateUrl('app/map/modal.track.save.html', {
+
+        $ionicModal.fromTemplateUrl('app/map/modal.marker.edit.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
-            $scope.modal = modal;
+            $scope.marker_edit_modal = modal;
         });
-        $scope.openModal = function() {
-            $scope.modal.show();
+        $scope.openMarkerModal = function() {
+            $scope.marker_edit_modal.show();
         };
-        $scope.closeModal = function() {
-            $scope.modal.hide();
+        $scope.closeMarkerModal = function() {
+            $scope.marker_edit_modal.hide();
         };
         //Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function() {
-            $scope.modal.remove();
+            $scope.marker_edit_modal.remove();
         });
+        /*
         // Execute action on hide modal
         $scope.$on('modal.hidden', function() {
             // Execute action
@@ -329,5 +345,33 @@
         $scope.$on('modal.removed', function() {
             // Execute action
         });
+        */
+
+        $ionicModal.fromTemplateUrl('app/map/modal.track.save.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.track_save_modal = modal;
+        });
+        $scope.openTrackModal = function() {
+            $scope.track_save_modal.show();
+        };
+        $scope.closeTrackModal = function() {
+            $scope.track_save_modal.hide();
+        };
+        //Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function() {
+            $scope.track_save_modal.remove();
+        });
+        /*
+        // Execute action on hide modal
+        $scope.$on('modal.hidden', function() {
+            // Execute action
+        });
+        // Execute action on remove modal
+        $scope.$on('modal.removed', function() {
+            // Execute action
+        });
+        */
     }
 })();

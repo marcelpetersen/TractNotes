@@ -1,6 +1,12 @@
 <ion-view view-title="Import from Google Drive">
   <ion-content class="has-header">
     <ion-list>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Search" ng-model="fileSearch" ng-change="vm.onSearchChange(fileSearch)">
+        </label>
+      </div>
       <ion-item ng-repeat="file in vm.files" class="item item-icon-right" ng-click="vm.importFromDrive(file)">
         {{file.name}}
       </ion-item>

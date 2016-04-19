@@ -109,12 +109,12 @@
             }
         })
 
-        .state('app.cteco_list', {
-            url: '/cteco_list',
+        .state('app.wms_list', {
+            url: '/wms_list',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/cteco/cteco.list.html',
-                    controller: 'CTECOListController',
+                    templateUrl: 'app/wms/wms.list.html',
+                    controller: 'WMSListController',
                     controllerAs: 'vm'
                 }
             }
@@ -131,11 +131,11 @@
             }
         })
 
-        .state('app.wms', {
-            url: '/wms',
+        .state('app.add_wms', {
+            url: '/add_wms',
             views: {
                 'menuContent': {
-                    templateUrl: '/app/wms/wms.fromurl.html',
+                    templateUrl: 'app/wms/wms.fromurl.html',
                     controller: 'wmsUrlController',
                     controllerAs: 'vm'
                 }
@@ -146,7 +146,7 @@
             url: '/settings',
             views: {
                 'menuContent': {
-                    templateUrl: '/app/settings/settings.html',
+                    templateUrl: 'app/settings/settings.html',
                     controller: 'SettingsController',
                     controllerAs: 'vm'
                 }
