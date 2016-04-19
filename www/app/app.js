@@ -48,7 +48,7 @@
             views: {
                 'menuContent': {
                     templateUrl: 'app/layers/layers.html',
-                    controller: 'LayerListController',
+                    controller: 'LayerController',
                     controllerAs: 'vm'
                 }
             }
@@ -69,8 +69,8 @@
             url: '/layers/:wmsName',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/layers/wms.view.html',
-                    controller: 'WMSViewController',
+                    templateUrl: 'app/layers/layer.view.html',
+                    controller: 'LayerViewController',
                     controllerAs: 'vm'
                 }
             }
@@ -135,8 +135,8 @@
             url: '/add_wms',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/wms/wms.fromurl.html',
-                    controller: 'wmsUrlController',
+                    templateUrl: 'app/wms/wms.url.html',
+                    controller: 'WMSUrlController',
                     controllerAs: 'vm'
                 }
             }

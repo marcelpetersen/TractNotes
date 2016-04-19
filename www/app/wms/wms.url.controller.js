@@ -3,14 +3,14 @@
 
     angular
         .module('TractNotes')
-        .controller('wmsUrlController', wmsUrlController);
+        .controller('WMSUrlController', WMSUrlController);
 
-    wmsUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$ionicPopup'];
+    WMSUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$ionicPopup'];
 
     /* @ngInject */
-    function wmsUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $ionicPopup) {
+    function WMSUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $ionicPopup) {
         var vm = this;
-        vm.title = 'wmsUrlController';
+        vm.title = 'WMSUrlController';
 
         vm.back = back;
         vm.setWMSLayer = setWMSLayer;

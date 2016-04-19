@@ -3,12 +3,12 @@
 
     angular
         .module('TractNotes')
-        .controller('LayerListController', LayerListController);
+        .controller('LayerController', LayerController);
 
-    LayerListController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsUrlService'];
+    LayerController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsUrlService'];
 
     /* @ngInject */
-    function LayerListController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsUrlService) {
+    function LayerController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsUrlService) {
         var vm = this;
         vm.title = 'TrackController';
 
