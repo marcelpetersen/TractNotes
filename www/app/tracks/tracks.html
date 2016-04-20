@@ -24,20 +24,21 @@
     </div>
     <div class="list card">
       <ion-item class="item-icon-left" ng-show="vm.tracks.length">
-        <i class="icon ion-ios-minus-outline" ng-click="vm.showDelete = !vm.showDelete"></i>
-        Edit
+        <i class="icon ion-ios-minus-outline" ng-click="vm.showDelete = !vm.showDelete"></i> Edit tracks
       </ion-item>
       <ion-list show-delete="vm.showDelete">
-        <ion-item class="item item-divider">
-          Tracks
-        </ion-item>
-        <ion-item ng-show="!vm.tracks.length">
-          No tracks.
-        </ion-item>
-        <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/tracks/{{track.name}}" class="item-remove-animate">
-          <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
-          {{track.name}} ({{track.metadata.date}})
-        </ion-item>
+        <div class="list list-inset">
+          <ion-item class="item item-divider">
+            Tracks
+          </ion-item>
+          <ion-item ng-show="!vm.tracks.length">
+            No tracks.
+          </ion-item>
+          <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/tracks/{{track.name}}" class="item-remove-animate">
+            <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
+            {{track.name}} ({{track.metadata.date}})
+          </ion-item>
+        </div>
       </ion-list>
     </div>
   </ion-content>
