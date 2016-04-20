@@ -63,7 +63,7 @@
                     controllerAs: 'vm'
                 }
             }
-        })  
+        })
 
         .state('app.track_layer', {
             url: '/tracks/:trackName',
@@ -129,7 +129,7 @@
                     controllerAs: 'vm'
                 }
             }
-        })           
+        })
 
         .state('app.settings', {
             url: '/settings',

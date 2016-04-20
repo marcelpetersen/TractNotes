@@ -319,7 +319,7 @@
             layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
         });
 
-
+        // move to view model
         $ionicModal.fromTemplateUrl('app/map/modal.marker.edit.html', {
             scope: $scope,
             animation: 'slide-in-up'
