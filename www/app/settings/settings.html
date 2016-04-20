@@ -1,6 +1,6 @@
 <ion-view title="Settings">
   <ion-content>
-    <div class="list card">
+    <div class="list card list-inset">
       <div class="list list-inset">
         <ion-item class="item-divider">
           Controls
@@ -30,9 +30,11 @@
               <button class="button button-block button-positive" ng-click="">Clear</button>
             </div>
           </div>
+        </ion-item>
         <ion-item class="item-divider">
           Google
         </ion-item>
+        <div class="item item-input-inset">
           <!-- @TODO: login/logout/other Google settings -->
           <div class="col">
             <button class="button button-block button-positive" ng-click="vm.login()">Login</button>
@@ -40,6 +42,7 @@
           <div class="col">
             <button class="button button-block button-positive" ng-click="vm.logout()">Logout</button>
           </div>
+        </div>
       </div>
   </ion-content>
 </ion-view>
