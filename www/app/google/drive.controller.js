@@ -12,7 +12,7 @@
         var vm = this;
         vm.title = 'DriveController';
 
-        vm.files = [];
+        vm.files = []; /**@param name, id, url, mimeType, isDirectory **/
         vm.importFromDrive = importFromDrive;
         vm.onSearchChange = onSearchChange;
 

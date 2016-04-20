@@ -231,7 +231,9 @@ angular.module('TractNotes')
                             read_files.push({
                                 name: file.title,
                                 id: file.id,
-                                url: file.webContentLink
+                                url: file.webContentLink,
+                                mimeType: file.mimeType,
+                                isDirectory: file.mimeType == "application/vnd.google-apps.folder"
                             });
                         }
                         deffer.resolve(read_files);
