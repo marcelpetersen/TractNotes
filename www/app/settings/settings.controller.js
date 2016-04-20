@@ -60,20 +60,20 @@
                             var token = response.access_token;
 
                             gapi.auth.setToken(response);
+                            /** Obtain user data from id_token **/
                             // window.alert("hi");
                             // var id = JSON.stringify(response.id_token);
-                            var id = response.id_token;
-                            var parts = id.split('.');
-                            var headerBuf = window.atob(parts[0]); //decode from base64
-                            var bodyBuf = window.atob(parts[1]);
-                            var header = JSON.parse(headerBuf.toString());
-                            var body = JSON.parse(bodyBuf.toString());
-                            window.alert("hello");
-                            window.alert(headerBuf.toString());
-                            window.alert(bodyBuf.toString());
-                            vm.profilePic = body.picture;
-                            vm.userName = body.name;
-                            vm.emailAddress = body.email;
+                            // var id = response.id_token;
+                            // var parts = id.split('.');
+                            // var headerBuf = window.atob(parts[0]); //decode from base64
+                            // var bodyBuf = window.atob(parts[1]);
+                            // var header = JSON.parse(headerBuf.toString());
+                            // var body = JSON.parse(bodyBuf.toString());
+                            // window.alert(headerBuf.toString());
+                            // window.alert(bodyBuf.toString());
+                            // vm.profilePic = body.picture;
+                            // vm.userName = body.name;
+                            // vm.emailAddress = body.email;
                             // $state.go('app.drive');
                         }
                     },

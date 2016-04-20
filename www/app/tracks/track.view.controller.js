@@ -19,9 +19,11 @@
         vm.back = back;
         vm.updateMetadata = updateMetadata;
         vm.exportTrack = exportTrack;
+        vm.uploadToDrive = uploadToDrive;
         vm.exportTrackToDevice = exportTrackToDevice;
         vm.importFromDevice = importFromDevice;
         vm.goToDrive = goToDrive;
+        vm.getDriveFiles = getDriveFiles;
         vm.importFromURL = importFromURL;
         vm.sendTrack = sendTrack;
         vm.sendTrackDelete = sendTrackDelete;
@@ -54,13 +56,24 @@
         function goToDrive() {
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
-                Drive.readGPXAndKML(null).then(function(files) {
-                    console.log("FileRead: success.");
-                    Drive.setFileList(files);
-                    $state.go('app.drive');
-                }, function() {
-                    console.log("FileRead: error.");
-                });
+                getDriveFiles();
+            }
+            else {
+                var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
+                var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
+
+                Drive.authenticate(client_id, scopes, {
+                    redirect_uri: 'http://localhost/callback/'
+                })
+                    .then(function(response) { //authenticate
+                            if (response) {
+                                gapi.auth.setToken(response);
+                                getDriveFiles();
+                            }
+                        },
+                        function(error) {
+                            console.log("" + error);
+                        });
             }
 
             //Google Picker API
@@ -70,6 +83,16 @@
             //     }, function() {
             //         console.log("FileSelection: error.");
             //         });
+        }
+
+        function getDriveFiles() {
+            Drive.readGPXAndKML(null).then(function(files) {
+                console.log("FileRead: success.");
+                Drive.setFileList(files);
+                $state.go('app.drive');
+            }, function() {
+                console.log("FileRead: error.");
+            });
         }
 
         // todo event to service
@@ -83,60 +106,77 @@
         function exportTrack() {
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
-                var toExport = {
-                    "type": "FeatureCollection",
-                    "features": []
-                }
-
-                toExport.features.push(vm.currentTrack.polyline.toGeoJSON());
-
-                for (var i = 0; i < vm.currentTrack.markers.length; i++) {
-                    toExport.features.push(vm.currentTrack.markers[i].toGeoJSON());
-                }
-
-                var gpx = togpx(toExport, {
-                    metadata: vm.currentTrack.metadata
-                });
-
-                var kml = tokml(toExport);
-
-                console.log("GPX file:");
-                console.log(gpx);
-                console.log("KML file:");
-                console.log(kml);
-
-                /** Export GPX */
-                var name = vm.currentTrack.metadata.name + ".gpx";
-                var metadata = {
-                  'title': name,
-                  'mimeType': 'application/gpx+xml'
-                  // "description": vm.currentTrack.metadata.desc
-                };
-                Drive.saveFile(metadata, gpx).then(function(files) {
-                    console.log("FileSave: success.");
-                    // window.alert("file uploaded");
-                }, function() {
-                    console.log("FileSave: error.");
-                });
-
-                /** Export KML */
-                name = vm.currentTrack.metadata.name + ".kml";
-                metadata = {
-                  'title': name,
-                  'mimeType': 'application/vnd.google-earth.kml+xml'
-                  // "description": vm.currentTrack.metadata.desc
-                };
-                Drive.saveFile(metadata, kml).then(function(files) {
-                    console.log("FileSave: success.");
-                    // window.alert("file uploaded");
-                }, function() {
-                    console.log("FileSave: error.");
-                });
+                uploadToDrive();
             }
             else {
-                /** @todo add redirect to authentication */
-                console.log("Must authenticate to Drive");
+                var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
+                var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
+
+                Drive.authenticate(client_id, scopes, {
+                    redirect_uri: 'http://localhost/callback/'
+                })
+                    .then(function(response) { //authenticate
+                            if (response) {
+                                gapi.auth.setToken(response);
+                                uploadToDrive();
+                            }
+                        },
+                        function(error) {
+                            console.log("" + error);
+                        });
             }
+        }
+
+        function uploadToDrive() {
+            var toExport = {
+                "type": "FeatureCollection",
+                "features": []
+            }
+
+            toExport.features.push(vm.currentTrack.polyline.toGeoJSON());
+
+            for (var i = 0; i < vm.currentTrack.markers.length; i++) {
+                toExport.features.push(vm.currentTrack.markers[i].toGeoJSON());
+            }
+
+            var gpx = togpx(toExport, {
+                metadata: vm.currentTrack.metadata
+            });
+
+            var kml = tokml(toExport);
+
+            console.log("GPX file:");
+            console.log(gpx);
+            console.log("KML file:");
+            console.log(kml);
+
+            /** Export GPX */
+            var name = vm.currentTrack.metadata.name + ".gpx";
+            var metadata = {
+              'title': name,
+              'mimeType': 'application/gpx+xml'
+              // "description": vm.currentTrack.metadata.desc
+            };
+            Drive.saveFile(metadata, gpx).then(function(files) {
+                console.log("FileSave: success.");
+                // window.alert("file uploaded");
+            }, function() {
+                console.log("FileSave: error.");
+            });
+
+            /** Export KML */
+            name = vm.currentTrack.metadata.name + ".kml";
+            metadata = {
+              'title': name,
+              'mimeType': 'application/vnd.google-earth.kml+xml'
+              // "description": vm.currentTrack.metadata.desc
+            };
+            Drive.saveFile(metadata, kml).then(function(files) {
+                console.log("FileSave: success.");
+                // window.alert("file uploaded");
+            }, function() {
+                console.log("FileSave: error.");
+            });
             // create file
             // upload to drive
             // upload media to drive [images, audio, video]
