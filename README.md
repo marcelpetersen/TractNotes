@@ -1,5 +1,7 @@
 # TractNotes
-A land trust property monitoring mobile application: 2015-2016 Senior Design project at the University of Connecticut sponsored by David Dickson of the UConn Extension program and advised by Professor Chun-Hsi Huang.
+A land trust property monitoring mobile application.
+
+2015-2016 Senior Design project at the University of Connecticut sponsored by David Dickson of the UConn Extension program and advised by Professor Chun-Hsi Huang.
 
 ## The Team
 
@@ -29,63 +31,6 @@ The application architecture was designed using the model-view-controller (MVC) 
 @TODO
 
 ## Documentation
-
-###### Application Structure
-
-```
-app/
-    app.js
-    google/
-        drive.controller.js
-        drive.html
-        form.controller.js
-        form.html
-        gauth.controller.js
-        login.html
-    layers/
-        layer.view.controller.js
-        layer.view.html
-        layers.controller.js
-        layers.html
-    map/
-        map.controller.js
-        map.html
-        modal.marker.edit.html
-        modal.track.save.html
-    menu/
-        menu.controller.js
-        menu.html
-    services/
-        control.factory.js
-        cteco.data.factory.js
-        cteco.view.factory.js
-        drawnItems.factory.js
-        drive.js
-        import.factory.js
-        layer.view.factory.js
-        layerControl.factory.js
-        location.factory.js
-        popup.factory.js
-        settings.factory.js
-        track.factory.js
-        track.view.factory.js
-        wms.factory.js
-    settings/
-        settings.controller.js
-        settings.html
-    tracks/
-        track.view.controller.js
-        track.view.html
-        tracks.controller.js
-        tracks.html
-    wms/
-        cteco.layers.controller.js
-        cteco.layers.html
-        wms.list.controller.js
-        wms.list.html
-        wms.url.controller.js
-        wms.url.html
-```
 
 @TODO - This will soon be available in the wiki.
 
