@@ -5,10 +5,10 @@
         .module('TractNotes')
         .factory('drawnItemsService', drawnItemsService);
 
-    drawnItemsService.$inject = [];
+    drawnItemsService.$inject = ['locationService'];
 
     /* @ngInject */
-    function drawnItemsService() {
+    function drawnItemsService(locationService) {
         var drawnItems = new L.FeatureGroup();
 
         var service = {
