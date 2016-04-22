@@ -44,6 +44,7 @@
             {
                 wmsUrlService.deleteLayer(selectedLayer);
             }
+            selectedLayer.checked = false;
         }
     }
 })();
