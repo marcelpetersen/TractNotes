@@ -39,7 +39,7 @@
         function activate() {
             L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
 
-            vm.map = L.mapbox.map('map');
+            vm.map = L.mapbox.map('map', null, {zoomControl: false});
 
             vm.baseMaps = {
                 'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
@@ -270,6 +270,15 @@
         });
         /** @listens $rootScope.RemoveSearch */
         $rootScope.$on('RemoveSearch', function(event, data) {
+            data.control.removeFrom(vm.map);
+        });
+
+        /** @listens $rootScope.AddZoom */
+        $rootScope.$on('AddZoom', function(event, data) {
+            data.control.addTo(vm.map);
+        });
+        /** @listens $rootScope.RemoveZoom */
+        $rootScope.$on('RemoveZoom', function(event, data) {
             data.control.removeFrom(vm.map);
         });
 

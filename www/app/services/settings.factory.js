@@ -37,13 +37,22 @@
             control: L.Control.geocoder()
         };
 
+        var zoomControl = {
+            text: 'Zoom Control',
+            checked: false,
+            position: 'topleft',
+            control: L.control.zoomslider()
+        };
+
         var service = {
             getDrawControl: getDrawControl,
             getScaleControl: getScaleControl,
             getSearchControl: getSearchControl,
+            getZoomControl: getZoomControl,
             sendDrawControl: sendDrawControl,
             sendScaleControl: sendScaleControl,
             sendSearchControl: sendSearchControl,
+            sendZoomControl: sendZoomControl
         };
         return service;
 
@@ -59,6 +68,10 @@
 
         function getSearchControl() {
             return searchControl;
+        }
+
+        function getZoomControl() {
+            return zoomControl;
         }
 
         function sendDrawControl(checked) {
@@ -85,6 +98,15 @@
                 $rootScope.$emit('AddSearch', searchControl);
             } else {
                 $rootScope.$emit('RemoveSearch', searchControl);
+            }
+        }
+
+        function sendZoomControl(checked) {
+            zoomControl.checked = checked;
+            if (checked) {
+                $rootScope.$emit('AddZoom', zoomControl);
+            } else {
+                $rootScope.$emit('RemoveZoom', zoomControl);
             }
         }
     }

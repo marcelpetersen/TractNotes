@@ -15,6 +15,7 @@
         vm.drawControl = null;
         vm.scaleControl = null;
         vm.searchControl = null;
+        vm.zoomControl = null;
         vm.controls = [];
 
         vm.setControl = setControl;
@@ -32,7 +33,8 @@
             vm.drawControl = settingsService.getDrawControl();
             vm.scaleControl = settingsService.getScaleControl();
             vm.searchControl = settingsService.getSearchControl();
-            vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl];
+            vm.zoomControl = settingsService.getZoomControl();
+            vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl, vm.zoomControl];
         }
 
         function setControl(control) {
@@ -42,6 +44,8 @@
                 settingsService.sendScaleControl(control.checked);
             } else if (control.text === 'Search Control') {
                 settingsService.sendSearchControl(control.checked);
+            } else if (control.text == 'Zoom Control') {
+                settingsService.sendZoomControl(control.checked);
             } else {
                 console.log('error in setting control');
             }
