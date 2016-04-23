@@ -34,6 +34,9 @@
         vm.saveTrack = saveTrack;
         vm.discardTrack = discardTrack;
 
+        vm.saveMarkerModal = saveMarkerModal;
+        vm.closeMarkerModal = closeMarkerModal;
+
         activate();
 
         ////////////////
@@ -86,12 +89,8 @@
          */
         function createMarker() {
             if (vm.recording) {
-                var pos = locationService.getLastPos();
-                var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
-                vm.currentTrack.track.addLayer(marker);
-                vm.currentTrack.markers.push(marker);
-                // @TODO add info submitted to marker
-                $scope.openMarkerModal();
+                //might want to find position here and pass value along
+                $scope.openMarkerModal(); //goes to either saveMarkerModal or closeMarkerModal
             } else {
                 var currentPosition = locationService.locate();
                 currentPosition.then(function(val) {
@@ -140,7 +139,7 @@
                     // @TODO improve
                     if (e.layer._icon) {
                         // @TODO add info submitted to marker
-                        $scope.openMarkerModal();
+                        // $scope.openMarkerModal();
                     }
 
                 });
@@ -313,12 +312,45 @@
         }).then(function(modal) {
             $scope.marker_edit_modal = modal;
         });
+        
         $scope.openMarkerModal = function() {
             $scope.marker_edit_modal.show();
         };
-        $scope.closeMarkerModal = function() {
+
+        function closeMarkerModal() {
             $scope.marker_edit_modal.hide();
         };
+
+        function saveMarkerModal() {
+            var pos = locationService.getLastPos();
+            var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
+            vm.currentTrack.track.addLayer(marker);
+            vm.currentTrack.markers.push(marker);
+
+            //marker popup information
+            var content;
+            var name = vm.input.marker.title;
+            var desc = vm.input.marker.description;
+            if (name !== undefined) {
+                content = '<h2>' + name + '</h2>';
+                if (desc !== undefined) {
+                    content += '<p>' + desc + '</p>';
+                }
+            } else if (desc !== undefined) {
+                content = '<h2>' + desc + '</h2>';
+            }
+
+            //@todo image import
+            var image = "https://avatars3.githubusercontent.com/u/1202528?v=3&s=400"
+            if(image) {
+                content +='<img width=100% src="' 
+                        + image
+                        + '" />';
+            }
+            marker.bindPopup(content).openPopup();
+            $scope.marker_edit_modal.hide();
+        };
+
         //Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function() {
             $scope.marker_edit_modal.remove();
