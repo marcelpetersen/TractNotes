@@ -265,53 +265,22 @@
             }
         });
 
+        /** @listens $rootScope.AddLayer */
+        $rootScope.$on('AddLayer', function(event, data) {
+            data.layer.addTo(vm.map);
+            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
+        });
+        /** @listens $rootScope.RemoveLayer */
+        $rootScope.$on('RemoveLayer', function(event, data) {
+            data.layer.removeFrom(vm.map);
+            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
+        });
+
 
         /** @listens $rootScope.Import */
         $rootScope.$on('Import', function(event, data) {
             vm.xmldata(data);
         });
-
-        /** @listens $rootScope.AddCTECO */
-        $rootScope.$on('AddCTECO', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-        });
-        /** @listens $rootScope.RemoveCTECO */
-        $rootScope.$on('RemoveCTECO', function(event, data) {
-            data.layer.removeFrom(vm.map);
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
-        });
-
-        /** @listens $rootScope.AddOrtho */
-        $rootScope.$on('AddOrtho', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-        });
-        /** @listens $rootScope.RemoveOrtho */
-        $rootScope.$on('RemoveOrtho', function(event, data) {
-            data.layer.removeFrom(vm.map);
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
-        });
-
-        /** @listens $rootScope.WMSFromURL */
-        $rootScope.$on('AddWMSFromURL', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
-        });
-
-        /** @listens $rootScope.AddWMSFromDefault */
-        $rootScope.$on('AddWMSFromDefault', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
-        });
-
-        /** @listens $rootScope.RemoveWMSFromDefault */
-        $rootScope.$on('RemoveWMSFromDefault', function(event, data) {
-            console.log(data.layer);
-            vm.map.removeLayer(data.layer);
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
-        });
-
         // @todo remove once track.list.controller is refactored
         $rootScope.$on('RemoveTrack', function(event, data) {
             layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
