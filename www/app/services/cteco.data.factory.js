@@ -1092,12 +1092,12 @@
             if (cteco.checked) {
                 console.log('send addcteco event')
                 activeCTECOLayers.push(cteco);
-                $rootScope.$emit('AddCTECO', cteco);
+                $rootScope.$emit('AddLayer', cteco);
             } else {
                 console.log('send removecteco event')
                 // remove cteco from activeCTECOLayers
                 removeFromActiveCTECO(cteco);
-                $rootScope.$emit('RemoveCTECO', cteco);
+                $rootScope.$emit('RemoveLayer', cteco);
             }
         }
 
