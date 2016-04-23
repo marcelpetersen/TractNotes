@@ -268,11 +268,31 @@
         /** @listens $rootScope.AddLayer */
         $rootScope.$on('AddLayer', function(event, data) {
             data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
+            if (data.layerType == 'cteco') {
+                vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
+            }
+            else if (data.layerType == 'ortho') {
+                vm.layercontrol.addOverlay(data.layer, data.name, 'Orthophoto');
+            }
+            else if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' 
+                || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' 
+                || data.layerType == 'Tile Layer') {
+                vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
+            }
+            else {
+                console.log('Error: layer type not CTECO, ortho, or WMS')
+            }
         });
         /** @listens $rootScope.RemoveLayer */
         $rootScope.$on('RemoveLayer', function(event, data) {
-            data.layer.removeFrom(vm.map);
+            if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' 
+                || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' 
+                || data.layerType == 'Tile Layer') {
+                vm.map.removeLayer(data.layer);
+            }
+            else {
+                data.layer.removeFrom(vm.map);
+            }
             layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
         });
 
