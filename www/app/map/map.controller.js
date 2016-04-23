@@ -179,11 +179,16 @@
                     var layer = importService.importFromText(text);
                     console.log(layer)
                     addLayer(layer);
+                    var name = p.substring(p.lastIndexOf('/') + 1)
+                    vm.layercontrol.addOverlay(layer, name, 'Tracks');
+
                 });
             } else {
                 var layerResult = importService.importFromURL(p);
                 layerResult.then(function(layer) {
                     addLayer(layer);
+                    var name = p.substring(p.lastIndexOf('/') + 1)
+                    vm.layercontrol.addOverlay(layer, name, 'Tracks');
                 });
             }
 
@@ -260,7 +265,7 @@
             }
         });
 
-        
+
         /** @listens $rootScope.Import */
         $rootScope.$on('Import', function(event, data) {
             vm.xmldata(data);
