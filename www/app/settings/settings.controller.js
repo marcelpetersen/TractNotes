@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('SettingsController', SettingsController);
 
-    SettingsController.$inject = ['settingsService', 'Drive'];
+    SettingsController.$inject = ['settingsService', '$rootScope', 'Drive'];
 
     /* @ngInject */
-    function SettingsController(settingsService, Drive) {
+    function SettingsController(settingsService, $rootScope, Drive) {
         var vm = this;
         vm.title = 'SettingsController';
 
@@ -38,16 +38,10 @@
         }
 
         function setControl(control) {
-            if (control.text === 'Draw Control') {
-                settingsService.sendDrawControl(control.checked);
-            } else if (control.text === 'Scale Control') {
-                settingsService.sendScaleControl(control.checked);
-            } else if (control.text === 'Search Control') {
-                settingsService.sendSearchControl(control.checked);
-            } else if (control.text == 'Zoom Control') {
-                settingsService.sendZoomControl(control.checked);
+            if (control.checked) {
+                $rootScope.$emit('AddControl', control);
             } else {
-                console.log('error in setting control');
+                $rootScope.$emit('RemoveControl', control);
             }
         }
 

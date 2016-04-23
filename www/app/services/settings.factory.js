@@ -49,10 +49,6 @@
             getScaleControl: getScaleControl,
             getSearchControl: getSearchControl,
             getZoomControl: getZoomControl,
-            sendDrawControl: sendDrawControl,
-            sendScaleControl: sendScaleControl,
-            sendSearchControl: sendSearchControl,
-            sendZoomControl: sendZoomControl
         };
         return service;
 
@@ -72,42 +68,6 @@
 
         function getZoomControl() {
             return zoomControl;
-        }
-
-        function sendDrawControl(checked) {
-            drawControl.checked = checked;
-            if (checked) {
-                $rootScope.$emit('AddDraw', drawControl);
-            } else {
-                $rootScope.$emit('RemoveDraw', drawControl);
-            }
-        }
-
-        function sendScaleControl(checked) {
-            scaleControl.checked = checked;
-            if (checked) {
-                $rootScope.$emit('AddScale', scaleControl);
-            } else {
-                $rootScope.$emit('RemoveScale', scaleControl);
-            }
-        }
-
-        function sendSearchControl(checked) {
-            searchControl.checked = checked;
-            if (checked) {
-                $rootScope.$emit('AddSearch', searchControl);
-            } else {
-                $rootScope.$emit('RemoveSearch', searchControl);
-            }
-        }
-
-        function sendZoomControl(checked) {
-            zoomControl.checked = checked;
-            if (checked) {
-                $rootScope.$emit('AddZoom', zoomControl);
-            } else {
-                $rootScope.$emit('RemoveZoom', zoomControl);
-            }
         }
     }
 })();

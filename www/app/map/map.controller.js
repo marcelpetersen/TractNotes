@@ -21,7 +21,10 @@
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
-        vm.input = {marker: null, track: null};
+        vm.input = {
+            marker: null,
+            track: null
+        };
 
         vm.autoDiscover = autoDiscover;
         vm.createMarker = createMarker;
@@ -238,50 +241,29 @@
 
         ////////////////
 
-        /** @listens $rootScope.Import */
-        $rootScope.$on('Import', function(event, data) {
-            vm.xmldata(data);
-        });
-        /** @listens $rootScope.AddDraw */
+        /** @listens $rootScope.AddControl */
         /** @todo force layer to be toggled while control is active */
-        $rootScope.$on('AddDraw', function(event, data) {
-            if (vm.drawnItems === null) {
+        $rootScope.$on('AddControl', function(event, data) {
+            if (data.text === 'Draw Control' && vm.drawnItems === null) {
                 vm.drawInit();
+            }
+            if (data.text === 'Zoom Control') {
+                vm.map.removeControl(vm.map.zoomControl);
             }
             data.control.addTo(vm.map);
         });
-        /** @listens $rootScope.RemoveDraw */
-        $rootScope.$on('RemoveDraw', function(event, data) {
+        /** @listens $rootScope.RemoveControl */
+        $rootScope.$on('RemoveControl', function(event, data) {
             data.control.removeFrom(vm.map);
+            if (data.text === 'Zoom Control') {
+                vm.map.addControl(vm.map.zoomControl);
+            }
         });
 
-        /** @listens $rootScope.AddScale */
-        $rootScope.$on('AddScale', function(event, data) {
-            data.control.addTo(vm.map);
-        });
-        /** @listens $rootScope.RemoveScale */
-        $rootScope.$on('RemoveScale', function(event, data) {
-            data.control.removeFrom(vm.map);
-        });
-
-        /** @listens $rootScope.AddSearch */
-        $rootScope.$on('AddSearch', function(event, data) {
-            data.control.addTo(vm.map);
-        });
-        /** @listens $rootScope.RemoveSearch */
-        $rootScope.$on('RemoveSearch', function(event, data) {
-            data.control.removeFrom(vm.map);
-        });
-
-        /** @listens $rootScope.AddZoom */
-        $rootScope.$on('AddZoom', function(event, data) {
-            vm.map.removeControl(vm.map.zoomControl);
-            data.control.addTo(vm.map);
-        });
-        /** @listens $rootScope.RemoveZoom */
-        $rootScope.$on('RemoveZoom', function(event, data) {
-            data.control.removeFrom(vm.map);
-            vm.map.addControl(vm.map.zoomControl);
+        
+        /** @listens $rootScope.Import */
+        $rootScope.$on('Import', function(event, data) {
+            vm.xmldata(data);
         });
 
         /** @listens $rootScope.AddCTECO */
