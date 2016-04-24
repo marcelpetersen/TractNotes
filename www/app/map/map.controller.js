@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', '$ionicPopup', 'IonicClosePopupService'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, $ionicPopup, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -22,7 +22,11 @@
         vm.currentPolyline = null;
         vm.drawnItems = null;
         vm.input = {
-            marker: null,
+            marker: {
+                     title:null,
+                     description:null,
+                     url:null
+                    },
             track: null
         };
 
@@ -36,6 +40,7 @@
 
         vm.saveMarkerModal = saveMarkerModal;
         vm.closeMarkerModal = closeMarkerModal;
+        vm.showUrlPopup = showUrlPopup;
 
         activate();
 
@@ -312,7 +317,7 @@
         }).then(function(modal) {
             $scope.marker_edit_modal = modal;
         });
-        
+
         $scope.openMarkerModal = function() {
             $scope.marker_edit_modal.show();
         };
@@ -328,20 +333,22 @@
             vm.currentTrack.markers.push(marker);
 
             //marker popup information
-            var content;
+            var content = "";
             var name = vm.input.marker.title;
             var desc = vm.input.marker.description;
-            if (name !== undefined) {
+            var image = vm.input.marker.url;
+
+            if (name) {
                 content = '<h2>' + name + '</h2>';
-                if (desc !== undefined) {
+                if (desc) {
                     content += '<p>' + desc + '</p>';
                 }
-            } else if (desc !== undefined) {
+            } else if (desc) {
                 content = '<h2>' + desc + '</h2>';
             }
 
             //@todo image import
-            var image = "https://avatars3.githubusercontent.com/u/1202528?v=3&s=400"
+            // var image = "https://avatars3.githubusercontent.com/u/1202528?v=3&s=400";
             if(image) {
                 content +='<img width=100% src="' 
                         + image
@@ -349,7 +356,40 @@
             }
             marker.bindPopup(content).openPopup();
             $scope.marker_edit_modal.hide();
+            vm.input.marker.title = null;
+            vm.input.marker.description = null;
+            vm.input.marker.url = null;
         };
+
+        function showUrlPopup() {
+            $scope.data = {};
+            var urlPopup = $ionicPopup.show({
+                template: '<div ng-show="data.invalidUrl" style="color:red">Invalid URL.</div><input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
+                title: 'Enter a URL',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: 'Import',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.urlInput) {
+                                //prevent the popup from being submitted without a valid URL
+                                e.preventDefault();
+                                $scope.data.invalidUrl = true;
+                            }
+                            else {
+                                console.log('URL: ' + $scope.data.urlInput);
+                                $scope.data.invalidUrl = false;
+                                vm.input.marker.url = $scope.data.urlInput;
+                            }
+                        }
+                    },
+                    { text: 'Cancel' }
+                ]
+            });
+            IonicClosePopupService.register(urlPopup);
+        }
+
 
         //Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function() {
