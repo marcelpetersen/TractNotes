@@ -25,7 +25,8 @@
             marker: {
                      title:null,
                      description:null,
-                     url:null
+                     url:null,
+                     deviceURI:null
                     },
             track: null
         };
@@ -41,6 +42,7 @@
         vm.saveMarkerModal = saveMarkerModal;
         vm.closeMarkerModal = closeMarkerModal;
         vm.showUrlPopup = showUrlPopup;
+        vm.importFromDevice = importFromDevice;
 
         activate();
 
@@ -336,7 +338,10 @@
             var content = "";
             var name = vm.input.marker.title;
             var desc = vm.input.marker.description;
-            var image = vm.input.marker.url;
+            /**@todo make following image variables into lists **/
+            var urlImage = vm.input.marker.url;
+            var driveImage = null; //placeholder
+            var deviceImage = vm.input.marker.deviceURI;
 
             if (name) {
                 content = '<h2>' + name + '</h2>';
@@ -349,16 +354,28 @@
 
             //@todo image import
             // var image = "https://avatars3.githubusercontent.com/u/1202528?v=3&s=400";
-            if(image) {
+            if(urlImage) {
                 content +='<img width=100% src="' 
-                        + image
+                        + urlImage
                         + '" />';
             }
+            if(driveImage) {
+                content +='<img width=100% src="' 
+                        + driveImage
+                        + '" />';
+            }
+            if(deviceImage) {
+                content +='<img width=100% src="' 
+                        + deviceImage
+                        + '" />';
+            }
+            console.log(content);
             marker.bindPopup(content).openPopup();
             $scope.marker_edit_modal.hide();
             vm.input.marker.title = null;
             vm.input.marker.description = null;
             vm.input.marker.url = null;
+            vm.input.marker.deviceURI = null;
         };
 
         function showUrlPopup() {
@@ -390,6 +407,22 @@
             IonicClosePopupService.register(urlPopup);
         }
 
+        function importFromDevice() {
+            var textResult = null;
+            fileChooser.open(function(uri) {
+                console.log(uri);
+                window.FilePath.resolveNativePath(uri, 
+                    function (result) {
+                                console.log("result: " + result);
+                                textResult = result;
+                                vm.input.marker.deviceURI = textResult;
+                                console.log("deviceURI = " + vm.input.marker.deviceURI);
+                            },
+                    function (error) {
+                                console.log("file path error");
+                            });
+            });
+        }
 
         //Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function() {
