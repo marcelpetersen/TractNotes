@@ -89,7 +89,7 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('AddWMSFromURL', wmsInput);
+                $rootScope.$emit('AddLayer', wmsInput);
             } else if (wmsInput.layerType == 'ESRI Image Map Layer') {
                 console.log('image layer');
                 imageLayer = L.esri.imageMapLayer({
@@ -100,7 +100,7 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('AddWMSFromURL', wmsInput);
+                $rootScope.$emit('AddLayer', wmsInput);
             } else if (wmsInput.layerType == 'Dynamic Map Layer') {
                 console.log('dynamic layer');
                 dynamicLayer = L.esri.dynamicMapLayer({
@@ -111,7 +111,7 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('AddWMSFromURL', wmsInput);
+                $rootScope.$emit('AddLayer', wmsInput);
             } else if (wmsInput.layerType == 'Tile Layer') {
                 console.log('tile layer');
                 tileLayer = L.tileLayer(wmsInput.url, {
@@ -121,9 +121,9 @@
 
                 activeWMSLayers.push(wmsInput);
 
-                $rootScope.$emit('AddWMSFromURL', wmsInput);
+                $rootScope.$emit('AddLayer', wmsInput);
             } else {
-                console.log('We might have a problem here.');
+                console.log('error');
             }
         }
 
@@ -144,7 +144,7 @@
 
                 console.log(activeWMSLayers);
 
-                $rootScope.$emit('AddWMSFromDefault', defaultWMS);
+                $rootScope.$emit('AddLayer', defaultWMS);
             }
             else if (defaultWMS.checked == false) {
                 console.log('Removing default WMS layer from map');
@@ -152,7 +152,7 @@
                 removeFromActiveWMS(defaultWMS);
                 console.log(activeWMSLayers);
                 console.log(defaultWMS);
-                $rootScope.$emit('RemoveWMSFromDefault', defaultWMS);
+                $rootScope.$emit('AddLayer', defaultWMS);
             }
             else {
                 console.log('Error: WMS Layer is neither checked nor unchecked...');
@@ -170,7 +170,7 @@
         function deleteLayer(wms) {
             removeFromActiveWMS(wms);
             console.log('Send remove wms event');
-            $rootScope.$emit('RemoveWMSFromDefault', wms);
+            $rootScope.$emit('RemoveLayer', wms);
         }
     }
 })();

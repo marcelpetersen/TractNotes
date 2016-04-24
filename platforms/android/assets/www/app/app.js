@@ -32,23 +32,34 @@
             }
         })
 
-        .state('app.tracks', {
-            url: '/tracks',
+        .state('app.form', {
+            url: '/form',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/tracks/tracks.html',
-                    controller: 'TrackViewController',
+                    templateUrl: 'app/google/form.html',
+                    controller: 'FormController',
                     controllerAs: 'vm'
                 }
             }
         })
 
-        .state('app.layers', {
-            url: '/layers',
+        .state('app.tracks', {
+            url: '/tracks',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/layers/layers.html',
-                    controller: 'LayerListController',
+                    templateUrl: 'app/tracks/tracks.html',
+                    controller: 'TrackController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.drive', {
+            url: '/drive',
+            views: {
+                'menuContent': {
+                    templateUrl: 'app/google/drive.html',
+                    controller: 'DriveController',
                     controllerAs: 'vm'
                 }
             }
@@ -65,45 +76,12 @@
             }
         })
 
-        .state('app.wms_layer', {
-            url: '/layers/:wmsName',
+        .state('app.layers', {
+            url: '/layers',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/layers/wms.view.html',
-                    controller: 'WMSViewController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.login', {
-            url: '/login',
-            views: {
-                'menuContent': {
-                    templateUrl: 'app/google/login.html',
-                    controller: 'GAuthController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.form', {
-            url: '/form',
-            views: {
-                'menuContent': {
-                    templateUrl: 'app/google/form.html',
-                    controller: 'FormController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
-
-        .state('app.drive', {
-            url: '/drive',
-            views: {
-                'menuContent': {
-                    templateUrl: 'app/google/drive.html',
-                    controller: 'DriveController',
+                    templateUrl: 'app/layers/layers.html',
+                    controller: 'LayerController',
                     controllerAs: 'vm'
                 }
             }
@@ -124,7 +102,7 @@
             url: '/cteco_list/:ctecoName',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/cteco/cteco.layers.html',
+                    templateUrl: 'app/wms/cteco.layers.html',
                     controller: 'CTECOLayersController',
                     controllerAs: 'vm'
                 }
@@ -135,8 +113,19 @@
             url: '/add_wms',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/wms/wms.fromurl.html',
-                    controller: 'wmsUrlController',
+                    templateUrl: 'app/wms/wms.url.html',
+                    controller: 'WMSUrlController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.wms_layer', {
+            url: '/layers/:wmsName',
+            views: {
+                'menuContent': {
+                    templateUrl: 'app/layers/layer.view.html',
+                    controller: 'LayerViewController',
                     controllerAs: 'vm'
                 }
             }
@@ -148,6 +137,17 @@
                 'menuContent': {
                     templateUrl: 'app/settings/settings.html',
                     controller: 'SettingsController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+
+        .state('app.login', {
+            url: '/login',
+            views: {
+                'menuContent': {
+                    templateUrl: 'app/google/login.html',
+                    controller: 'GAuthController',
                     controllerAs: 'vm'
                 }
             }

@@ -24,7 +24,6 @@
         }
 
         function setCTECOLayer(ctecoLayer) {
-            console.log(ctecoLayer)
             ctecoDataService.sendCTECOLayer(ctecoLayer);
         }
     }

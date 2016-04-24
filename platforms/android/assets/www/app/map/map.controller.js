@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', '$ionicPopup', 'IonicClosePopupService'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, $ionicPopup, IonicClosePopupService) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -21,7 +21,15 @@
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
-        vm.input = null;
+        vm.input = {
+            marker: {
+                     title:null,
+                     description:null,
+                     url:null,
+                     deviceURI:null
+                    },
+            track: null
+        };
 
         vm.autoDiscover = autoDiscover;
         vm.createMarker = createMarker;
@@ -30,6 +38,11 @@
         vm.xmldata = xmldata;
         vm.saveTrack = saveTrack;
         vm.discardTrack = discardTrack;
+
+        vm.saveMarkerModal = saveMarkerModal;
+        vm.closeMarkerModal = closeMarkerModal;
+        vm.showUrlPopup = showUrlPopup;
+        vm.importFromDevice = importFromDevice;
 
         activate();
 
@@ -83,10 +96,8 @@
          */
         function createMarker() {
             if (vm.recording) {
-                var pos = locationService.getLastPos();
-                var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
-                vm.currentTrack.track.addLayer(marker);
-                vm.currentTrack.markers.push(marker);
+                //might want to find position here and pass value along
+                $scope.openMarkerModal(); //goes to either saveMarkerModal or closeMarkerModal
             } else {
                 var currentPosition = locationService.locate();
                 currentPosition.then(function(val) {
@@ -127,6 +138,19 @@
 
                 vm.layercontrol.addOverlay(vm.currentTrack.track, vm.currentTrack.name, 'Tracks');
 
+                // Listener for clicks on layer elements
+                vm.currentTrack.track.on('click', function(e) {
+                    console.log(e)
+                    // I do not think this is an acceptable way to test if layer is marker
+                    // works in layer of just polyline + markers but is not elegant
+                    // @TODO improve
+                    if (e.layer._icon) {
+                        // @TODO add info submitted to marker
+                        // $scope.openMarkerModal();
+                    }
+
+                });
+
                 locationService.start();
             } else {
                 vm.recording = !vm.recording;
@@ -135,7 +159,7 @@
                 } else {
                     locationService.stop();
                     vm.recording = false;
-                    $scope.openModal();
+                    $scope.openTrackModal();
                 }
             }
         }
@@ -161,11 +185,16 @@
                     var layer = importService.importFromText(text);
                     console.log(layer)
                     addLayer(layer);
+                    var name = p.substring(p.lastIndexOf('/') + 1)
+                    vm.layercontrol.addOverlay(layer, name, 'Tracks');
+
                 });
             } else {
                 var layerResult = importService.importFromURL(p);
                 layerResult.then(function(layer) {
                     addLayer(layer);
+                    var name = p.substring(p.lastIndexOf('/') + 1)
+                    vm.layercontrol.addOverlay(layer, name, 'Tracks');
                 });
             }
 
@@ -203,15 +232,15 @@
 
         function saveTrack() {
             trackService.setCurrentTrack(vm.currentTrack);
-            trackService.setTrackMetadata(vm.input);
-            vm.input = null;
-            $scope.closeModal();
+            trackService.setTrackMetadata(vm.input.track);
+            vm.input.track = null;
+            $scope.closeTrackModal();
         }
 
         function discardTrack() {
             layerControlService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
             trackService.deleteTrack(vm.currentTrack.track);
-            $scope.closeModal();
+            $scope.closeTrackModal();
         }
 
         /**
@@ -223,104 +252,183 @@
 
         ////////////////
 
+        /** @listens $rootScope.AddControl */
+        /** @todo force layer to be toggled while control is active */
+        $rootScope.$on('AddControl', function(event, data) {
+            if (data.text === 'Draw Control' && vm.drawnItems === null) {
+                vm.drawInit();
+            }
+            if (data.text === 'Zoom Control') {
+                vm.map.removeControl(vm.map.zoomControl);
+            }
+            data.control.addTo(vm.map);
+        });
+        /** @listens $rootScope.RemoveControl */
+        $rootScope.$on('RemoveControl', function(event, data) {
+            data.control.removeFrom(vm.map);
+            if (data.text === 'Zoom Control') {
+                vm.map.addControl(vm.map.zoomControl);
+            }
+        });
+
+        /** @listens $rootScope.AddLayer */
+        $rootScope.$on('AddLayer', function(event, data) {
+            data.layer.addTo(vm.map);
+            if (data.layerType == 'cteco') {
+                vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
+            }
+            else if (data.layerType == 'ortho') {
+                vm.layercontrol.addOverlay(data.layer, data.name, 'Orthophoto');
+            }
+            else if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' 
+                || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' 
+                || data.layerType == 'Tile Layer') {
+                vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
+            }
+            else {
+                console.log('Error: layer type not CTECO, ortho, or WMS')
+            }
+        });
+        /** @listens $rootScope.RemoveLayer */
+        $rootScope.$on('RemoveLayer', function(event, data) {
+            if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' 
+                || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' 
+                || data.layerType == 'Tile Layer') {
+                vm.map.removeLayer(data.layer);
+            }
+            else {
+                data.layer.removeFrom(vm.map);
+            }
+            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
+        });
+
+
         /** @listens $rootScope.Import */
         $rootScope.$on('Import', function(event, data) {
             vm.xmldata(data);
         });
-        /** @listens $rootScope.AddDraw */
-        /** @todo force layer to be toggled while control is active */
-        $rootScope.$on('AddDraw', function(event, data) {
-            if (vm.drawnItems === null) {
-                vm.drawInit();
-            }
-            data.control.addTo(vm.map);
-        });
-        /** @listens $rootScope.RemoveDraw */
-        $rootScope.$on('RemoveDraw', function(event, data) {
-            data.control.removeFrom(vm.map);
-        });
-
-        /** @listens $rootScope.AddScale */
-        $rootScope.$on('AddScale', function(event, data) {
-            data.control.addTo(vm.map);
-        });
-        /** @listens $rootScope.RemoveScale */
-        $rootScope.$on('RemoveScale', function(event, data) {
-            data.control.removeFrom(vm.map);
-        });
-
-        /** @listens $rootScope.AddSearch */
-        $rootScope.$on('AddSearch', function(event, data) {
-            data.control.addTo(vm.map);
-        });
-        /** @listens $rootScope.RemoveSearch */
-        $rootScope.$on('RemoveSearch', function(event, data) {
-            data.control.removeFrom(vm.map);
-        });
-
-        /** @listens $rootScope.AddCTECO */
-        $rootScope.$on('AddCTECO', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-        });
-        /** @listens $rootScope.RemoveCTECO */
-        $rootScope.$on('RemoveCTECO', function(event, data) {
-            data.layer.removeFrom(vm.map);
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
-        });
-
-        /** @listens $rootScope.AddOrtho */
-        $rootScope.$on('AddOrtho', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-        });
-        /** @listens $rootScope.RemoveOrtho */
-        $rootScope.$on('RemoveOrtho', function(event, data) {
-            data.layer.removeFrom(vm.map);
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
-        });
-
-        /** @listens $rootScope.WMSFromURL */
-        $rootScope.$on('AddWMSFromURL', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
-        });
-
-        /** @listens $rootScope.AddWMSFromDefault */
-        $rootScope.$on('AddWMSFromDefault', function(event, data) {
-            data.layer.addTo(vm.map);
-            vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
-        });
-
-        /** @listens $rootScope.RemoveWMSFromDefault */
-        $rootScope.$on('RemoveWMSFromDefault', function(event, data) {
-            console.log(data.layer);
-            vm.map.removeLayer(data.layer);
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
-        });
-
         // @todo remove once track.list.controller is refactored
         $rootScope.$on('RemoveTrack', function(event, data) {
             layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
         });
 
-        // @TODO refactor into service
-        $ionicModal.fromTemplateUrl('app/map/modal.track.save.html', {
+        // move to view model
+        $ionicModal.fromTemplateUrl('app/map/modal.marker.edit.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
-            $scope.modal = modal;
+            $scope.marker_edit_modal = modal;
         });
-        $scope.openModal = function() {
-            $scope.modal.show();
+
+        $scope.openMarkerModal = function() {
+            $scope.marker_edit_modal.show();
         };
-        $scope.closeModal = function() {
-            $scope.modal.hide();
+
+        function closeMarkerModal() {
+            $scope.marker_edit_modal.hide();
         };
+
+        function saveMarkerModal() {
+            var pos = locationService.getLastPos();
+            var marker = L.marker([pos.lat, pos.long], 15).addTo(vm.map);
+            vm.currentTrack.track.addLayer(marker);
+            vm.currentTrack.markers.push(marker);
+
+            //marker popup information
+            var content = "";
+            var name = vm.input.marker.title;
+            var desc = vm.input.marker.description;
+            /**@todo make following image variables into lists **/
+            var urlImage = vm.input.marker.url;
+            var driveImage = null; //placeholder
+            var deviceImage = vm.input.marker.deviceURI;
+
+            if (name) {
+                content = '<h2>' + name + '</h2>';
+                if (desc) {
+                    content += '<p>' + desc + '</p>';
+                }
+            } else if (desc) {
+                content = '<h2>' + desc + '</h2>';
+            }
+
+            //@todo image import
+            // var image = "https://avatars3.githubusercontent.com/u/1202528?v=3&s=400";
+            if(urlImage) {
+                content +='<img width=100% src="' 
+                        + urlImage
+                        + '" />';
+            }
+            if(driveImage) {
+                content +='<img width=100% src="' 
+                        + driveImage
+                        + '" />';
+            }
+            if(deviceImage) {
+                content +='<img width=100% src="' 
+                        + deviceImage
+                        + '" />';
+            }
+            console.log(content);
+            marker.bindPopup(content).openPopup();
+            $scope.marker_edit_modal.hide();
+            vm.input.marker.title = null;
+            vm.input.marker.description = null;
+            vm.input.marker.url = null;
+            vm.input.marker.deviceURI = null;
+        };
+
+        function showUrlPopup() {
+            $scope.data = {};
+            var urlPopup = $ionicPopup.show({
+                template: '<div ng-show="data.invalidUrl" style="color:red">Invalid URL.</div><input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
+                title: 'Enter a URL',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: 'Import',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.urlInput) {
+                                //prevent the popup from being submitted without a valid URL
+                                e.preventDefault();
+                                $scope.data.invalidUrl = true;
+                            }
+                            else {
+                                console.log('URL: ' + $scope.data.urlInput);
+                                $scope.data.invalidUrl = false;
+                                vm.input.marker.url = $scope.data.urlInput;
+                            }
+                        }
+                    },
+                    { text: 'Cancel' }
+                ]
+            });
+            IonicClosePopupService.register(urlPopup);
+        }
+
+        function importFromDevice() {
+            var textResult = null;
+            fileChooser.open(function(uri) {
+                console.log(uri);
+                window.FilePath.resolveNativePath(uri, 
+                    function (result) {
+                                console.log("result: " + result);
+                                textResult = result;
+                                vm.input.marker.deviceURI = textResult;
+                                console.log("deviceURI = " + vm.input.marker.deviceURI);
+                            },
+                    function (error) {
+                                console.log("file path error");
+                            });
+            });
+        }
+
         //Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function() {
-            $scope.modal.remove();
+            $scope.marker_edit_modal.remove();
         });
+        /*
         // Execute action on hide modal
         $scope.$on('modal.hidden', function() {
             // Execute action
@@ -329,5 +437,33 @@
         $scope.$on('modal.removed', function() {
             // Execute action
         });
+        */
+
+        $ionicModal.fromTemplateUrl('app/map/modal.track.save.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.track_save_modal = modal;
+        });
+        $scope.openTrackModal = function() {
+            $scope.track_save_modal.show();
+        };
+        $scope.closeTrackModal = function() {
+            $scope.track_save_modal.hide();
+        };
+        //Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function() {
+            $scope.track_save_modal.remove();
+        });
+        /*
+        // Execute action on hide modal
+        $scope.$on('modal.hidden', function() {
+            // Execute action
+        });
+        // Execute action on remove modal
+        $scope.$on('modal.removed', function() {
+            // Execute action
+        });
+        */
     }
 })();

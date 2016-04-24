@@ -5,16 +5,17 @@
         .module('TractNotes')
         .controller('SettingsController', SettingsController);
 
-    SettingsController.$inject = ['settingsService', 'Drive'];
+    SettingsController.$inject = ['settingsService', '$rootScope', 'Drive'];
 
     /* @ngInject */
-    function SettingsController(settingsService, Drive) {
+    function SettingsController(settingsService, $rootScope, Drive) {
         var vm = this;
         vm.title = 'SettingsController';
 
         vm.drawControl = null;
         vm.scaleControl = null;
         vm.searchControl = null;
+        vm.zoomControl = null;
         vm.controls = [];
 
         vm.setControl = setControl;
@@ -32,18 +33,15 @@
             vm.drawControl = settingsService.getDrawControl();
             vm.scaleControl = settingsService.getScaleControl();
             vm.searchControl = settingsService.getSearchControl();
-            vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl];
+            vm.zoomControl = settingsService.getZoomControl();
+            vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl, vm.zoomControl];
         }
 
         function setControl(control) {
-            if (control.text === 'Draw Control') {
-                settingsService.sendDrawControl(control.checked);
-            } else if (control.text === 'Scale Control') {
-                settingsService.sendScaleControl(control.checked);
-            } else if (control.text === 'Search Control') {
-                settingsService.sendSearchControl(control.checked);
+            if (control.checked) {
+                $rootScope.$emit('AddControl', control);
             } else {
-                console.log('error in setting control');
+                $rootScope.$emit('RemoveControl', control);
             }
         }
 
@@ -60,20 +58,20 @@
                             var token = response.access_token;
 
                             gapi.auth.setToken(response);
+                            /** Obtain user data from id_token **/
                             // window.alert("hi");
                             // var id = JSON.stringify(response.id_token);
-                            var id = response.id_token;
-                            var parts = id.split('.');
-                            var headerBuf = window.atob(parts[0]); //decode from base64
-                            var bodyBuf = window.atob(parts[1]);
-                            var header = JSON.parse(headerBuf.toString());
-                            var body = JSON.parse(bodyBuf.toString());
-                            window.alert("hello");
-                            window.alert(headerBuf.toString());
-                            window.alert(bodyBuf.toString());
-                            vm.profilePic = body.picture;
-                            vm.userName = body.name;
-                            vm.emailAddress = body.email;
+                            // var id = response.id_token;
+                            // var parts = id.split('.');
+                            // var headerBuf = window.atob(parts[0]); //decode from base64
+                            // var bodyBuf = window.atob(parts[1]);
+                            // var header = JSON.parse(headerBuf.toString());
+                            // var body = JSON.parse(bodyBuf.toString());
+                            // window.alert(headerBuf.toString());
+                            // window.alert(bodyBuf.toString());
+                            // vm.profilePic = body.picture;
+                            // vm.userName = body.name;
+                            // vm.emailAddress = body.email;
                             // $state.go('app.drive');
                         }
                     },

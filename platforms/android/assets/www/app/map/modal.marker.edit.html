@@ -1,0 +1,42 @@
+<div class="modal">
+  <ion-header-bar>
+    <h1 class="title">Edit Marker</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form novalidate>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Title</span>
+        <input type="text" placeholder='Marker title' ng-model="vm.input.marker.title">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Description</span>
+        <input type="text" placeholder='Marker description' ng-model="vm.input.marker.description">
+      </label>
+      <div class="item item-input-inset">
+        <div class="col">
+          <button class="button button-block button-positive" ng-model="vm.input.marker.deviceURI" ng-click="vm.importFromDevice()">
+            <i class="icon icon-phone"></i> Device
+          </button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="vm.goToDrive()">
+            <i class="icon icon-google-drive"></i> Drive
+          </button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-model="vm.input.marker.url" ng-click="vm.showUrlPopup()">
+            <i class="icon icon-link"></i> URL
+          </button>
+        </div>
+      </div>
+      <div class="item item-input-inset">
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="vm.saveMarkerModal()">Save</button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-positive" ng-click="vm.closeMarkerModal()">Discard</button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</div>

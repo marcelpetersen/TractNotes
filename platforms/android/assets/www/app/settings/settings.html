@@ -1,36 +1,49 @@
 <ion-view title="Settings">
   <ion-content>
-    <div class="list card">
-      <ion-item class="item-divider">
-        Controls
-      </ion-item>
-      <ion-toggle toggle-class="toggle-positive" ng-repeat="control in vm.controls" ng-model="control.checked" ng-click="vm.setControl(control)">
-        {{control.text}}
-      </ion-toggle>
-      <ion-item class="item-divider">
-        Tools
-      </ion-item>
-      <ion-item>
-        <!-- @TODO: tools settings here -->
-      </ion-item>
-      <ion-item class="item-divider">
-        Cache
-      </ion-item>
-      <ion-item>
-        <!-- @TODO: cache settings here -->
-      </ion-item>
-      <ion-item class="item-divider">
-        Google
-      </ion-item>
-      <div class="item item-input-inset">
-        <!-- @TODO: login/logout/other Google settings -->
-        <div class="col">
-          <button class="button button-block button-positive" ng-click="vm.login()">Login</button>
-        </div>
-        <div class="col">
-          <button class="button button-block button-positive" ng-click="">Logout</button>
+    <div class="list card list-inset">
+      <div class="list list-inset">
+        <ion-item class="item-divider">
+          Controls
+        </ion-item>
+        <ion-toggle toggle-class="toggle-positive" ng-repeat="control in vm.controls" ng-model="control.checked" ng-click="vm.setControl(control)">
+          {{control.text}}
+        </ion-toggle>
+        <ion-item class="item-divider">
+          Tools
+        </ion-item>
+        <ion-item>
+          <!-- @TODO: tools settings here -->
+        </ion-item>
+        <ion-item class="item-divider">
+          Cache
+        </ion-item>
+          <ion-toggle toggle-class="toggle-positive">
+            Offline Mode
+          </ion-toggle>
+          <!-- @TODO ng-model and ng-value for cache options -->
+          <ion-radio>Cache nearby</ion-radio>
+          <ion-radio>Cache passively</ion-radio>
+          <div class="item item-input-inset">
+            <div class="col">
+              Disk Usage: 0 bytes
+            </div>
+            <div class="col">
+              <button class="button button-block button-positive" ng-click="">Clear</button>
+            </div>
+          </div>
+        </ion-item>
+        <ion-item class="item-divider">
+          Google
+        </ion-item>
+        <div class="item item-input-inset">
+          <!-- @TODO: login/logout/other Google settings -->
+          <div class="col">
+            <button class="button button-block button-positive" ng-click="vm.login()">Login</button>
+          </div>
+          <div class="col">
+            <button class="button button-block button-positive" ng-click="vm.logout()">Logout</button>
+          </div>
         </div>
       </div>
-    </div>
   </ion-content>
 </ion-view>

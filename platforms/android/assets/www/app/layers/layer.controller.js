@@ -3,12 +3,12 @@
 
     angular
         .module('TractNotes')
-        .controller('LayerListController', LayerListController);
+        .controller('LayerController', LayerController);
 
-    LayerListController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsUrlService'];
+    LayerController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsUrlService'];
 
     /* @ngInject */
-    function LayerListController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsUrlService) {
+    function LayerController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsUrlService) {
         var vm = this;
         vm.title = 'TrackController';
 
@@ -40,10 +40,13 @@
             {
                 ctecoDataService.deleteLayer(selectedLayer);
             }
-            else if (selectedLayer.layerType == 'wmsTile')
+            else if (selectedLayer.layerType == 'wmsTile' || selectedLayer.layerType == 'Dynamic Map Layer' ||
+                selectedLayer.layerType == 'ESRI Image Map Layer' || selectedLayer.layerType == 'ESRI Feature Layer' ||
+                selectedLayer.layerType == 'Tile Layer')
             {
                 wmsUrlService.deleteLayer(selectedLayer);
             }
+            selectedLayer.checked = false;
         }
     }
 })();

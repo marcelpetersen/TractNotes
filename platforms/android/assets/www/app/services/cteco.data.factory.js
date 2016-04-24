@@ -1092,26 +1092,28 @@
             if (cteco.checked) {
                 console.log('send addcteco event')
                 activeCTECOLayers.push(cteco);
-                $rootScope.$emit('AddCTECO', cteco);
+                $rootScope.$emit('AddLayer', cteco);
             } else {
                 console.log('send removecteco event')
                 // remove cteco from activeCTECOLayers
                 removeFromActiveCTECO(cteco);
-                $rootScope.$emit('RemoveCTECO', cteco);
+                $rootScope.$emit('RemoveLayer', cteco);
             }
         }
 
         function sendOrthoLayer(ortho) {
             if (ortho.checked)
             {
+                console.log('send ortho event')
                 activeOrthoLayers.push(ortho);
-                $rootScope.$emit('AddOrtho', ortho);
+                $rootScope.$emit('AddLayer', ortho);
             }
             else
             {
+                console.log('send removeortho event')
                 // remove ortho from activeOrthoLayers
                 removeFromActiveOrtho(ortho);
-                $rootScope.$emit('RemoveOrtho', ortho);
+                $rootScope.$emit('RemoveLayer', ortho);
             }
         }
 
@@ -1123,19 +1125,16 @@
             activeOrthoLayers.splice(activeOrthoLayers.indexOf(ortho), 1);
         }
 
-        function deleteLayer(layerToDelete) {
-            if (layerToDelete.layerType == 'cteco')
+        function deleteLayer(layer) {
+            if (layer.layerType == 'cteco')
             {
-                removeFromActiveCTECO(layerToDelete);
-                console.log('Send remove cteco event');
-                $rootScope.$emit('RemoveCTECO', layerToDelete);
+                removeFromActiveCTECO(layer);
             }
-            else if (layerToDelete.layerType == 'ortho')
+            else if (layer.layerType == 'ortho')
             {
-                removeFromActiveOrtho(layerToDelete);
-                console.log('Send remove ortho event');
-                $rootScope.$emit('RemoveOrtho', layerToDelete);
+                removeFromActiveOrtho(layer);
             }
+            $rootScope.$emit('RemoveLayer', layer);
         }
 
 

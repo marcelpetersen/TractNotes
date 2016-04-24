@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="lib/leaflet-extensions/leaflet.groupedlayercontrol/leaflet.groupedlayercontrol.css" />
   <link rel="stylesheet" href="lib/leaflet-extensions/leaflet.measurecontrol/leaflet.measurecontrol.css" />
   <link rel="stylesheet" href="lib/leaflet-extensions/leaflet-control-geocoder/Control.Geocoder.css" />
+  <link rel="stylesheet" href="lib/leaflet-extensions/leaflet.zoomslider/L.Control.Zoomslider.css" />
   <link rel="stylesheet" href="css/style.css" />
 
   <!-- Ionic -->
@@ -35,6 +36,7 @@
   <script src="lib/leaflet-extensions/leaflet.groupedlayercontrol/leaflet.groupedlayercontrol.min.js"></script>
   <script src="lib/leaflet-extensions/leaflet.measurecontrol/leaflet.measurecontrol.js"></script>
   <script src="lib/leaflet-extensions/leaflet-control-geocoder/Control.Geocoder.js"></script>
+  <script src="lib/leaflet-extensions/leaflet.zoomslider/L.Control.Zoomslider.js"></script>
   <script src="lib/leaflet-extensions/esri-leaflet.js"></script>
   <script src="lib/leaflet-extensions/leaflet-geodesy.js"></script>
   <script src="lib/leaflet-extensions/leaflet-omnivore.min.js"></script>
@@ -50,14 +52,14 @@
   <script src="app/app.js"></script>
 
   <!-- Controllers -->
-  <script src="app/layers/layer.list.controller.js"></script>
+  <script src="app/layers/layer.controller.js"></script>
+  <script src="app/tracks/track.controller.js"></script>
   <script src="app/settings/settings.controller.js"></script>
   <script src="app/wms/wms.list.controller.js"></script>
-  <script src="app/cteco/cteco.layers.controller.js"></script>
+  <script src="app/wms/cteco.layers.controller.js"></script>
 
   <script src="app/tracks/track.view.controller.js"></script>
-  <script src="app/layers/wms.view.controller.js"></script>
-  <script src="app/import/import.controller.js"></script>
+  <script src="app/layers/layer.view.controller.js"></script>
   <script src="app/map/map.controller.js"></script>
   <script src="app/google/gauth.controller.js"></script>
   <script src="app/google/drive.controller.js"></script>
@@ -71,7 +73,6 @@
   <script src="app/services/track.view.factory.js"></script>
   <script src="app/services/layer.view.factory.js"></script>
   <script src="app/services/drawnItems.factory.js"></script>
-  <script src="app/services/control.factory.js"></script>
   <script src="app/services/settings.factory.js"></script>
   <script src="app/services/cteco.data.factory.js"></script>
   <script src="app/services/cteco.view.factory.js"></script>

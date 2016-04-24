@@ -48,7 +48,7 @@
             views: {
                 'menuContent': {
                     templateUrl: 'app/tracks/tracks.html',
-                    controller: 'TrackViewController',
+                    controller: 'TrackController',
                     controllerAs: 'vm'
                 }
             }

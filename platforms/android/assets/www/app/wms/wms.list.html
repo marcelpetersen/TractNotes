@@ -1,31 +1,27 @@
 <ion-view title="WMS Layers">
   <ion-content>
     <ion-list>
-      <ion-item class="item item-divider">
-        CT ECO Layers
-      </ion-item>
-      <ion-item ng-repeat="category in vm.ctecoCategories" class="item item-thumbnail-left" ng-click="vm.sendCategory(category)" href="#/app/cteco_list/{{category.name}}">
-        <img ng-src="{{category.image}}" style="border:1px solid black">
-        <div class="item-text-center">{{category.name}}</div>
-      </ion-item>
-      <ion-item class="item item-divider">
-        Orthophoto Layers
-      </ion-item>
-      <!-- 
-      <ion-item ng-repeat="ortho in vm.orthoLayers" class="item item-thumbnail-left" ng-click="vm.sendCategory(ortho)" href="#/app/single_cteco">
-        <img ng-src="{{ortho.image}}" style="border:1px solid black">
-        <div class="item-text-center">{{ortho.name}}</div>
-      </ion-item> 
-      -->
-      <ion-toggle toggle-class="toggle-positive" ng-repeat="ortho in vm.orthoLayers" ng-model="ortho.checked" ng-change="vm.setOrthoLayer(ortho)">
-        {{ortho.name}}
-      </ion-toggle>
-      <ion-item class="item item-divider">
-        Other WMS Layers
-      </ion-item>
-      <ion-toggle toggle-class="toggle-positive" ng-repeat="defaultWMS in vm.defaultWMSLayers" ng-model="defaultWMS.checked" ng-change="vm.toggleDefaultWMSLayer(defaultWMS)">
-        {{defaultWMS.name}}
-      </ion-toggle>
+      <div class="list list-inset">
+        <ion-item class="item item-divider">
+          CT ECO Layers
+        </ion-item>
+        <ion-item ng-repeat="category in vm.ctecoCategories" class="item item-thumbnail-left" ng-click="vm.sendCategory(category)" href="#/app/cteco_list/{{category.name}}">
+          <img ng-src="{{category.image}}" style="border:1px solid black">
+          <div class="item-text-center">{{category.name}}</div>
+        </ion-item>
+        <ion-item class="item item-divider">
+          Orthophoto Layers
+        </ion-item>
+        <ion-toggle toggle-class="toggle-positive" ng-repeat="ortho in vm.orthoLayers" ng-model="ortho.checked" ng-change="vm.setOrthoLayer(ortho)">
+          {{ortho.name}}
+        </ion-toggle>
+        <ion-item class="item item-divider">
+          Other WMS Layers
+        </ion-item>
+        <ion-toggle toggle-class="toggle-positive" ng-repeat="defaultWMS in vm.defaultWMSLayers" ng-model="defaultWMS.checked" ng-change="vm.toggleDefaultWMSLayer(defaultWMS)">
+          {{defaultWMS.name}}
+        </ion-toggle>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>

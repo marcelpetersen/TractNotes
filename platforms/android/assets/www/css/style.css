@@ -78,3 +78,13 @@ body {
 .input-symbol input{
   text-indent: 2em; /* adjust as appropriate */
 }
+.leaflet-control-zoomslider-knob { width:14px; height:6px; }
+.leaflet-container .leaflet-control-zoomslider-body {
+  -webkit-box-sizing:content-box;
+     -moz-box-sizing:content-box;
+          box-sizing:content-box;
+}
+
+a {
+  text-decoration: none;
+}
