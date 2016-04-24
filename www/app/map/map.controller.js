@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', '$ionicPopup', 'IonicClosePopupService'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', '$ionicPopup', 'IonicClosePopupService', 'Drive'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, $ionicPopup, IonicClosePopupService) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, $ionicPopup, IonicClosePopupService, Drive) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -21,12 +21,14 @@
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
+        vm.files = null;
         vm.input = {
             marker: {
                      title:null,
                      description:null,
                      url:null,
-                     deviceURI:null
+                     deviceURI:null,
+                     driveURL:null
                     },
             track: null
         };
@@ -42,7 +44,9 @@
         vm.saveMarkerModal = saveMarkerModal;
         vm.closeMarkerModal = closeMarkerModal;
         vm.showUrlPopup = showUrlPopup;
+        vm.goToDrive = goToDrive;
         vm.importFromDevice = importFromDevice;
+        vm.importFromDrive = importFromDrive;
 
         activate();
 
@@ -340,7 +344,7 @@
             var desc = vm.input.marker.description;
             /**@todo make following image variables into lists **/
             var urlImage = vm.input.marker.url;
-            var driveImage = null; //placeholder
+            var driveImage = vm.input.marker.driveURL;
             var deviceImage = vm.input.marker.deviceURI;
 
             if (name) {
@@ -375,6 +379,7 @@
             vm.input.marker.title = null;
             vm.input.marker.description = null;
             vm.input.marker.url = null;
+            vm.input.marker.driveURL = null;
             vm.input.marker.deviceURI = null;
         };
 
@@ -424,6 +429,35 @@
             });
         }
 
+        function goToDrive() {
+            var auth_token = gapi.auth.getToken();
+            if (auth_token) {
+                $scope.openDriveModal();
+            }
+            else {
+                var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
+                var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
+
+                Drive.authenticate(client_id, scopes, {
+                    redirect_uri: 'http://localhost/callback/'
+                })
+                    .then(function(response) { //authenticate
+                            if (response) {
+                                gapi.auth.setToken(response);
+                                $scope.openDriveModal();
+                            }
+                        },
+                        function(error) {
+                            console.log("" + error);
+                        });
+            }
+        }
+
+        function importFromDrive(url) {
+            vm.input.marker.driveURL = url;
+            $scope.closeDriveModal();
+        }
+
         //Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function() {
             $scope.marker_edit_modal.remove();
@@ -438,6 +472,40 @@
             // Execute action
         });
         */
+
+        $ionicModal.fromTemplateUrl('app/map/modal.marker.drive.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.marker_drive_modal = modal;
+        });
+        $scope.openDriveModal = function() {
+            Drive.readImages().then(function(files) {
+                console.log("FileRead: success.");
+                vm.files = files;
+            }, function() {
+                console.log("FileRead: error.");
+            });
+            $scope.marker_drive_modal.show();
+        };
+        $scope.closeDriveModal = function() {
+            $scope.marker_drive_modal.hide();
+        };
+        //Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function() {
+            $scope.marker_drive_modal.remove();
+        });
+        /*
+        // Execute action on hide modal
+        $scope.$on('modal.hidden', function() {
+            // Execute action
+        });
+        // Execute action on remove modal
+        $scope.$on('modal.removed', function() {
+            // Execute action
+        });
+        */
+
 
         $ionicModal.fromTemplateUrl('app/map/modal.track.save.html', {
             scope: $scope,
