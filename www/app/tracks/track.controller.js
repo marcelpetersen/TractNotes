@@ -96,9 +96,27 @@
 
         // @todo refactor to modify layer control in service, remove listener in map controller
         function sendTrackDelete(track) {
-            trackService.deleteTrack(track);
-            $rootScope.$emit("RemoveTrack", track)
-            //utilityService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
+            // confirmation popup for track deletion
+            var confirmPopup = $ionicPopup.show({
+                title: 'Confirm Track Deletion',
+                template: 'Are you sure you want to delete this track (' + track.name + ')?',
+                buttons: [
+                    {
+                        text: 'Delete',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            console.log('Track deletion (' + track.name + ') confirmed');
+                            trackService.deleteTrack(track);
+                            $rootScope.$emit("RemoveTrack", track)                            
+                        }
+                    },
+                    {
+                        text: 'Cancel',
+                        onTap: function(e) {
+                            console.log('Track deletion (' + track.name + ') canceled');
+                        }}
+                ]
+            });
         }
 
         function showUrlPopup() {
