@@ -22,13 +22,11 @@
         vm.currentPolyline = null;
         vm.drawnItems = null;
         vm.files = null;
+        vm.urlList = [];
         vm.input = {
             marker: {
                      title:null,
-                     description:null,
-                     url:null,
-                     deviceURI:null,
-                     driveURL:null
+                     description:null
                     },
             track: null
         };
@@ -330,6 +328,9 @@
 
         function closeMarkerModal() {
             $scope.marker_edit_modal.hide();
+            vm.input.marker.title = null;
+            vm.input.marker.description = null;
+            vm.urlList = [];
         };
 
         function saveMarkerModal() {
@@ -342,10 +343,6 @@
             var content = "";
             var name = vm.input.marker.title;
             var desc = vm.input.marker.description;
-            /**@todo make following image variables into lists **/
-            var urlImage = vm.input.marker.url;
-            var driveImage = vm.input.marker.driveURL;
-            var deviceImage = vm.input.marker.deviceURI;
 
             if (name) {
                 content = '<h2>' + name + '</h2>';
@@ -356,31 +353,18 @@
                 content = '<h2>' + desc + '</h2>';
             }
 
-            //@todo image import
-            // var image = "https://avatars3.githubusercontent.com/u/1202528?v=3&s=400";
-            if(urlImage) {
-                content +='<img width=100% src="' 
-                        + urlImage
-                        + '" />';
-            }
-            if(driveImage) {
-                content +='<img width=100% src="' 
-                        + driveImage
-                        + '" />';
-            }
-            if(deviceImage) {
-                content +='<img width=100% src="' 
-                        + deviceImage
-                        + '" />';
+            //add imported images
+            if(vm.urlList.length > 0) {
+                var url;
+                for(url in vm.urlList) {
+                    content +='<img width=100% src="' 
+                            + vm.urlList[url]
+                            + '" />';
+                }   
             }
             console.log(content);
             marker.bindPopup(content).openPopup();
-            $scope.marker_edit_modal.hide();
-            vm.input.marker.title = null;
-            vm.input.marker.description = null;
-            vm.input.marker.url = null;
-            vm.input.marker.driveURL = null;
-            vm.input.marker.deviceURI = null;
+            closeMarkerModal();
         };
 
         function showUrlPopup() {
@@ -402,7 +386,7 @@
                             else {
                                 console.log('URL: ' + $scope.data.urlInput);
                                 $scope.data.invalidUrl = false;
-                                vm.input.marker.url = $scope.data.urlInput;
+                                vm.urlList.push($scope.data.urlInput);
                             }
                         }
                     },
@@ -419,9 +403,7 @@
                 window.FilePath.resolveNativePath(uri, 
                     function (result) {
                                 console.log("result: " + result);
-                                textResult = result;
-                                vm.input.marker.deviceURI = textResult;
-                                console.log("deviceURI = " + vm.input.marker.deviceURI);
+                                vm.urlList.push(result);
                             },
                     function (error) {
                                 console.log("file path error");
@@ -454,7 +436,7 @@
         }
 
         function importFromDrive(url) {
-            vm.input.marker.driveURL = url;
+            vm.urlList.push(url);
             $scope.closeDriveModal();
         }
 
