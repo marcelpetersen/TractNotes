@@ -18,6 +18,8 @@
 
     /* @ngInject */
     function settingsService($rootScope, drawnItemsService) {
+        var currentDiskUsage = 0;
+
         /**
          * @memberof settingsService
          * @member {object}
@@ -90,6 +92,8 @@
             getScaleControl: getScaleControl,
             getSearchControl: getSearchControl,
             getZoomControl: getZoomControl,
+            getCurrentDiskUsage: getCurrentDiskUsage,
+            setCurrentDiskUsage: setCurrentDiskUsage
         };
         return service;
 
@@ -129,6 +133,14 @@
          */
         function getZoomControl() {
             return zoomControl;
+        }
+
+        function getCurrentDiskUsage(){
+            return currentDiskUsage;
+        }
+
+        function setCurrentDiskUsage(n){
+            currentDiskUsage = n;
         }
     }
 })();

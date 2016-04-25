@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', '$ionicPopup', 'IonicClosePopupService', 'Drive'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', 'settingsService', '$ionicModal', 'popupService', 'IonicClosePopupService', 'Drive'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, $ionicPopup, IonicClosePopupService, Drive) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, settingsService, $ionicModal, popupService, IonicClosePopupService, Drive) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -25,9 +25,9 @@
         vm.urlList = [];
         vm.input = {
             marker: {
-                     title:null,
-                     description:null
-                    },
+                title: null,
+                description: null
+            },
             track: null
         };
 
@@ -53,13 +53,31 @@
         // @TODO refactor layers into service
         function activate() {
             L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
-
+            var streetsTiles = 'http://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken;
+            var satelliteTiles = 'http://api.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken;
+            var testlayer = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             vm.map = L.mapbox.map('map');
 
+            vm.streets = L.tileLayerCordova(testlayer, {
+                'minzoom': 0,
+                'maxzoom': 18,
+                folder: 'TractNotes',
+                name: 'streets',
+                debug: true
+            })
+            
+
+            vm.satellite = L.tileLayer(satelliteTiles, {
+                'minzoom': 0,
+                'maxzoom': 18
+            })
+
             vm.baseMaps = {
-                'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(vm.map),
-                'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite')
+                'Mapbox Streets': vm.streets.addTo(vm.map),
+                'Mapbox Satellite': vm.satellite
             };
+
+
             vm.overlayMaps = {
                 'Imported': {},
                 'CTECO': {},
@@ -278,27 +296,19 @@
             data.layer.addTo(vm.map);
             if (data.layerType == 'cteco') {
                 vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-            }
-            else if (data.layerType == 'ortho') {
+            } else if (data.layerType == 'ortho') {
                 vm.layercontrol.addOverlay(data.layer, data.name, 'Orthophoto');
-            }
-            else if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' 
-                || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' 
-                || data.layerType == 'Tile Layer') {
+            } else if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' || data.layerType == 'Tile Layer') {
                 vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
-            }
-            else {
+            } else {
                 console.log('Error: layer type not CTECO, ortho, or WMS')
             }
         });
         /** @listens $rootScope.RemoveLayer */
         $rootScope.$on('RemoveLayer', function(event, data) {
-            if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' 
-                || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' 
-                || data.layerType == 'Tile Layer') {
+            if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' || data.layerType == 'Tile Layer') {
                 vm.map.removeLayer(data.layer);
-            }
-            else {
+            } else {
                 data.layer.removeFrom(vm.map);
             }
             layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
@@ -313,6 +323,29 @@
         $rootScope.$on('RemoveTrack', function(event, data) {
             layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
         });
+
+        $rootScope.$on('ChangeMapStatus', function(event, data) {
+            if (data === true) {
+                console.log('going offline')
+                vm.streets.goOffline();
+            } else if (data === false) {
+                console.log('going online')
+
+                vm.streets.goOnline();
+            }
+        })
+        $rootScope.$on('CacheBounds', function(event, data) {
+            console.log('trying to cache')
+            var tile_list = vm.streets.calculateXYZListFromBounds(vm.map.getBounds(), vm.map.getZoom(), 18)
+            vm.streets.downloadXYZList(tile_list, false, function() {}, function() {
+                vm.streets.getDiskUsage(function(filecount, bytes) {
+                    console.log(bytes)
+                    settingsService.setCurrentDiskUsage(bytes)
+                    vm.streets.goOffline();
+                });
+            }, function() {})
+
+        })
 
         // move to view model
         $ionicModal.fromTemplateUrl('app/map/modal.marker.edit.html', {
@@ -354,13 +387,11 @@
             }
 
             //add imported images
-            if(vm.urlList.length > 0) {
+            if (vm.urlList.length > 0) {
                 var url;
-                for(url in vm.urlList) {
-                    content +='<img width=100% src="' 
-                            + vm.urlList[url]
-                            + '" />';
-                }   
+                for (url in vm.urlList) {
+                    content += '<img width=100% src="' + vm.urlList[url] + '" />';
+                }
             }
             console.log(content);
             marker.bindPopup(content).openPopup();
@@ -369,45 +400,31 @@
 
         function showUrlPopup() {
             $scope.data = {};
-            var urlPopup = $ionicPopup.show({
-                template: '<div ng-show="data.invalidUrl" style="color:red">Invalid URL.</div><input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
-                title: 'Enter a URL',
-                scope: $scope,
-                buttons: [
-                    {
-                        text: 'Import',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                            if (!$scope.data.urlInput) {
-                                //prevent the popup from being submitted without a valid URL
-                                e.preventDefault();
-                                $scope.data.invalidUrl = true;
-                            }
-                            else {
-                                console.log('URL: ' + $scope.data.urlInput);
-                                $scope.data.invalidUrl = false;
-                                vm.urlList.push($scope.data.urlInput);
-                            }
-                        }
-                    },
-                    { text: 'Cancel' }
-                ]
+            var waypointUrlPopup = popupService.getUrlPopup($scope);
+            waypointUrlPopup.then(function(res) {
+                if (res) {
+                    console.log('Import to waypoint from URL confirmed');
+                    vm.urlList.push($scope.data.urlInput);
+                } else {
+                    console.log('Import to waypoint from URL cancelled');
+                }
             });
-            IonicClosePopupService.register(urlPopup);
+            // tapping to close popup seems to not work when popup is on top of a modal (like this one)
+            IonicClosePopupService.register(waypointUrlPopup);
         }
 
         function importFromDevice() {
             var textResult = null;
             fileChooser.open(function(uri) {
                 console.log(uri);
-                window.FilePath.resolveNativePath(uri, 
-                    function (result) {
-                                console.log("result: " + result);
-                                vm.urlList.push(result);
-                            },
-                    function (error) {
-                                console.log("file path error");
-                            });
+                window.FilePath.resolveNativePath(uri,
+                    function(result) {
+                        console.log("result: " + result);
+                        vm.urlList.push(result);
+                    },
+                    function(error) {
+                        console.log("file path error");
+                    });
             });
         }
 
@@ -415,8 +432,7 @@
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
                 $scope.openDriveModal();
-            }
-            else {
+            } else {
                 var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
                 var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
 

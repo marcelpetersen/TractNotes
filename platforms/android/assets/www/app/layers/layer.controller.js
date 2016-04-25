@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('LayerController', LayerController);
 
-    LayerController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsUrlService', '$ionicPopup'];
+    LayerController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsService', 'popupService', 'IonicClosePopupService'];
 
     /* @ngInject */
-    function LayerController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsUrlService, $ionicPopup) {
+    function LayerController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsService, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'TrackController';
 
@@ -27,45 +27,37 @@
         function activate() {
             vm.ctecoLayers = ctecoDataService.getActiveCTECOLayers();
             vm.orthoLayers = ctecoDataService.getActiveOrthoLayers();
-            vm.wmsLayers = wmsUrlService.getActiveWMSLayers();
+            vm.wmsLayers = wmsService.getActiveWMSLayers();
         }
 
         function sendLayer(layer) {
             layerViewService.setLayerView(layer);
         }
 
-        function sendLayerDelete(selectedLayer) {
-            console.log('Layer type: ' + selectedLayer.layerType);
+        function sendLayerDelete(layer) {
+            console.log('Layer type: ' + layer.layerType);
             // confirmation popup for layer deletion
-            var confirmPopup = $ionicPopup.show({
-                title: 'Confirm Layer Deletion',
-                template: 'Are you sure you want to delete this layer (' + selectedLayer.name + ')?',
-                buttons: [
+            var layerDeletePopup = popupService.getDeletePopup(layer, 'Layer');
+            layerDeletePopup.then(function(res) {
+                if(res) {
+                    console.log('Layer deletion (' + layer.name + ') confirmed');
+                    if (layer.layerType == 'cteco' || layer.layerType == 'ortho') 
                     {
-                        text: 'Delete',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                            console.log('Layer deletion (' + selectedLayer.name + ') confirmed');
-                            if (selectedLayer.layerType == 'cteco' || selectedLayer.layerType == 'ortho') 
-                            {
-                                ctecoDataService.deleteLayer(selectedLayer);
-                            }
-                            else if (selectedLayer.layerType == 'wmsTile' || selectedLayer.layerType == 'Dynamic Map Layer' ||
-                                selectedLayer.layerType == 'ESRI Image Map Layer' || selectedLayer.layerType == 'ESRI Feature Layer' ||
-                                selectedLayer.layerType == 'Tile Layer')
-                            {
-                                wmsUrlService.deleteLayer(selectedLayer);
-                            }
-                            selectedLayer.checked = false;                            
-                        }
-                    },
+                        ctecoDataService.deleteLayer(layer);
+                    }
+                    else if (layer.layerType == 'wmsTile' || layer.layerType == 'Dynamic Map Layer' ||
+                        layer.layerType == 'ESRI Image Map Layer' || layer.layerType == 'ESRI Feature Layer' ||
+                        layer.layerType == 'Tile Layer')
                     {
-                        text: 'Cancel',
-                        onTap: function(e) {
-                            console.log('Layer deletion (' + selectedLayer.name + ') canceled');
-                        }}
-                ]
+                        wmsService.deleteLayer(layer);
+                    }
+                    layer.checked = false; 
+                }
+                else {
+                    console.log('Layer deletion (' + layer.name + ') cancelled');
+                }
             });
+            IonicClosePopupService.register(layerDeletePopup);
         }
     }
 })();

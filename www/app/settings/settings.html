@@ -17,15 +17,13 @@
         <ion-item class="item-divider">
           Cache
         </ion-item>
-          <ion-toggle toggle-class="toggle-positive">
+          <ion-toggle toggle-class="toggle-positive" ng-model="vm.offlineMode" ng-checked="vm.offlineMode" ng-click="vm.changeMapStatus()">
             Offline Mode
           </ion-toggle>
-          <!-- @TODO ng-model and ng-value for cache options -->
-          <ion-radio>Cache nearby</ion-radio>
-          <ion-radio>Cache passively</ion-radio>
+          <button class="button button-block button-positive" ng-click="vm.cacheCurrentBounds()">Cache current bounds</button>
           <div class="item item-input-inset">
             <div class="col">
-              Disk Usage: 0 bytes
+              Disk Usage: {{vm.diskUsage}}
             </div>
             <div class="col">
               <button class="button button-block button-positive" ng-click="">Clear</button>

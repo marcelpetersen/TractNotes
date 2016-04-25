@@ -3,12 +3,12 @@
 
     angular
         .module('TractNotes')
-        .factory('wmsUrlService', wmsUrlService);
+        .factory('wmsService', wmsService);
 
-    wmsUrlService.$inject = ['$rootScope'];
+    wmsService.$inject = ['$rootScope'];
 
     /* @ngInject */
-    function wmsUrlService($rootScope) {
+    function wmsService($rootScope) {
         var service = {
             sendUrlLayerData: sendUrlLayerData,
             sendDefaultLayerData: sendDefaultLayerData,
