@@ -19,6 +19,7 @@
     /* @ngInject */
     function settingsService($rootScope, drawnItemsService) {
         var currentDiskUsage = 0;
+        var offlineMode = {checked: false};
 
         /**
          * @memberof settingsService
@@ -93,7 +94,8 @@
             getSearchControl: getSearchControl,
             getZoomControl: getZoomControl,
             getCurrentDiskUsage: getCurrentDiskUsage,
-            setCurrentDiskUsage: setCurrentDiskUsage
+            setCurrentDiskUsage: setCurrentDiskUsage,
+             getOfflineMode: getOfflineMode
         };
         return service;
 
@@ -135,11 +137,15 @@
             return zoomControl;
         }
 
-        function getCurrentDiskUsage(){
+        function getCurrentDiskUsage() {
             return currentDiskUsage;
         }
 
-        function setCurrentDiskUsage(n){
+        function getOfflineMode() {
+            return offlineMode;
+        }
+
+        function setCurrentDiskUsage(n) {
             currentDiskUsage = n;
         }
     }

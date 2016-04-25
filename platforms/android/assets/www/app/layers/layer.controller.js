@@ -45,9 +45,7 @@
                     {
                         ctecoDataService.deleteLayer(layer);
                     }
-                    else if (layer.layerType == 'wmsTile' || layer.layerType == 'Dynamic Map Layer' ||
-                        layer.layerType == 'ESRI Image Map Layer' || layer.layerType == 'ESRI Feature Layer' ||
-                        layer.layerType == 'Tile Layer')
+                    else if (layer.layerType == 'wms')
                     {
                         wmsService.deleteLayer(layer);
                     }

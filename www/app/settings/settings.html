@@ -17,7 +17,7 @@
         <ion-item class="item-divider">
           Cache
         </ion-item>
-          <ion-toggle toggle-class="toggle-positive" ng-model="vm.offlineMode" ng-checked="vm.offlineMode" ng-click="vm.changeMapStatus()">
+          <ion-toggle toggle-class="toggle-positive" ng-model="vm.offlineMode.checked" ng-click="vm.changeMapStatus()">
             Offline Mode
           </ion-toggle>
           <button class="button button-block button-positive" ng-click="vm.cacheCurrentBounds()">Cache current bounds</button>
@@ -26,7 +26,7 @@
               Disk Usage: {{vm.diskUsage}}
             </div>
             <div class="col">
-              <button class="button button-block button-positive" ng-click="">Clear</button>
+              <button class="button button-block button-positive" ng-click="vm.emptyCurrentCache()">Clear</button>
             </div>
           </div>
         </ion-item>

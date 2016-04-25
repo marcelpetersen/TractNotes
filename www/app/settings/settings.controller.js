@@ -23,6 +23,7 @@
         vm.setControl = setControl;
         vm.changeMapStatus = changeMapStatus;
         vm.cacheCurrentBounds = cacheCurrentBounds;
+        vm.emptyCurrentCache = emptyCurrentCache;
 
         vm.login = login;
         vm.profilePic = "";
@@ -38,10 +39,11 @@
             vm.scaleControl = settingsService.getScaleControl();
             vm.searchControl = settingsService.getSearchControl();
             vm.zoomControl = settingsService.getZoomControl();
+            vm.offlineMode = settingsService.getOfflineMode();
             vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl, vm.zoomControl];
 
-            vm.offlineMode = false;
             vm.diskUsage = settingsService.getCurrentDiskUsage();
+            vm.offlineMode = settingsService.getOfflineMode();
         }
 
         function setControl(control) {
@@ -53,13 +55,17 @@
         }
 
         function changeMapStatus(){
-            console.log(vm.offlineMode)
-            $rootScope.$emit('ChangeMapStatus', vm.offlineMode);
+            console.log(vm.offlineMode.checked)
+            $rootScope.$emit('ChangeMapStatus', vm.offlineMode.checked);
         }
 
         function cacheCurrentBounds() {
             console.log('cachecurrentbounds')
-             $rootScope.$emit('CacheBounds', true);
+             $rootScope.$emit('CacheByBounds', true);
+        }
+
+        function emptyCurrentCache(){
+            $rootScope.$emit('EmptyCache', true);
         }
 
         function login() {

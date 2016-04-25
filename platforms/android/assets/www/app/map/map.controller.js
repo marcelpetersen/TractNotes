@@ -18,6 +18,7 @@
         vm.layercontrol = null;
         vm.hiThere = null;
         vm.recording = false;
+        vm.caching = false;
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
@@ -55,17 +56,18 @@
             L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
             var streetsTiles = 'http://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken;
             var satelliteTiles = 'http://api.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken;
-            var testlayer = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+
             vm.map = L.mapbox.map('map');
 
-            vm.streets = L.tileLayerCordova(testlayer, {
+            vm.streets = L.tileLayerCordova(streetsTiles, {
                 'minzoom': 0,
                 'maxzoom': 18,
                 folder: 'TractNotes',
                 name: 'streets',
                 debug: true
             })
-            
+
+
 
             vm.satellite = L.tileLayer(satelliteTiles, {
                 'minzoom': 0,
@@ -99,9 +101,9 @@
             currentPosition.then(function(val) {
                 if (typeof(val.error) === 'undefined') {
                     var lat = val.position.coords.latitude;
-                    var long = val.position.coords.longitude;
+                    var lng = val.position.coords.longitude;
                     var zoom = val.zoom;
-                    vm.map.setView([lat, long], zoom);
+                    vm.map.setView([lat, lng], zoom);
                 } else {
                     console.log(val.error.message);
                     vm.map.setView([41.6, -72.7], 10);
@@ -123,14 +125,16 @@
                 currentPosition.then(function(val) {
                     if (typeof(val.error) === 'undefined') {
                         var lat = val.position.coords.latitude;
-                        var long = val.position.coords.longitude;
+                        var lng = val.position.coords.longitude;
                         var zoom = val.zoom;
                         if (vm.hiThere === null) {
-                            vm.hiThere = L.marker([lat, long], zoom);
+                            vm.hiThere = L.marker([lat, lng], zoom);
                             vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
+                            vm.map.setView(new L.LatLng(lat, lng), zoom)
                         } else {
-                            vm.hiThere.setLatLng([lat, long], zoom);
+                            vm.hiThere.setLatLng([lat, lng], zoom);
                             vm.hiThere.addTo(vm.map).bindPopup("Hi there!").openPopup();
+                            vm.map.setView([lat, lng], zoom)
                         }
                     } else {
                         console.log(val.error.message);
@@ -222,13 +226,13 @@
             function addLayer(layer) {
                 $scope.$apply(function() {
                     var finalLayer = layer.on('ready', function() {
-                        if (layer._leaflet_id == true) {
+                        if (layer._leaflet_id) {
                             vm.map.fitBounds(layer.getBounds());
                             layer.eachLayer(function(layer) {
                                 var content;
                                 var name = layer.feature.properties.name;
                                 var desc = layer.feature.properties.desc;
-
+                                console.log(name + desc)
                                 if (name !== undefined) {
                                     content = '<h2>' + name + '</h2>';
                                     if (desc !== undefined) {
@@ -292,28 +296,20 @@
         });
 
         /** @listens $rootScope.AddLayer */
+                /** @listens $rootScope.AddLayer */
         $rootScope.$on('AddLayer', function(event, data) {
             data.layer.addTo(vm.map);
-            if (data.layerType == 'cteco') {
-                vm.layercontrol.addOverlay(data.layer, data.name, 'CTECO');
-            } else if (data.layerType == 'ortho') {
-                vm.layercontrol.addOverlay(data.layer, data.name, 'Orthophoto');
-            } else if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' || data.layerType == 'Tile Layer') {
-                vm.layercontrol.addOverlay(data.layer, data.name, 'WMS');
-            } else {
-                console.log('Error: layer type not CTECO, ortho, or WMS')
-            }
+            vm.layercontrol.addOverlay(data.layer, data.name, data.layerType.toUpperCase());
         });
         /** @listens $rootScope.RemoveLayer */
         $rootScope.$on('RemoveLayer', function(event, data) {
-            if (data.layerType == 'wmsTile' || data.layerType == 'Dynamic Map Layer' || data.layerType == 'ESRI Image Map Layer' || data.layerType == 'ESRI Feature Layer' || data.layerType == 'Tile Layer') {
+            if (data.layerType == 'wms') {
                 vm.map.removeLayer(data.layer);
             } else {
                 data.layer.removeFrom(vm.map);
             }
             layerControlService.removeLayerInGroup(vm.layercontrol, data.layer);
         });
-
 
         /** @listens $rootScope.Import */
         $rootScope.$on('Import', function(event, data) {
@@ -334,18 +330,34 @@
                 vm.streets.goOnline();
             }
         })
-        $rootScope.$on('CacheBounds', function(event, data) {
+        $rootScope.$on('CacheByBounds', function(event, data) {
             console.log('trying to cache')
+            vm.caching = true;
             var tile_list = vm.streets.calculateXYZListFromBounds(vm.map.getBounds(), vm.map.getZoom(), 18)
-            vm.streets.downloadXYZList(tile_list, false, function() {}, function() {
+            vm.streets.downloadXYZList(tile_list, false, function(done, total) {
+                var percent = Math.round(100 * done / total);
+                console.log(done + " / " + total + " = " + percent + "%"); // @Todo inject this into innerhtml
+            }, function() {
                 vm.streets.getDiskUsage(function(filecount, bytes) {
                     console.log(bytes)
-                    settingsService.setCurrentDiskUsage(bytes)
-                    vm.streets.goOffline();
+                    settingsService.setCurrentDiskUsage(bytes);
                 });
             }, function() {})
+            setTimeout(function() {
+                vm.caching = false;
+            }, 20000);
 
         })
+        $rootScope.$on('EmptyCache', function(event, data) {
+                vm.streets.emptyCache(function(success, error) {
+                        console.log(success)
+                        console.log(error)
+                        settingsService.setCurrentDiskUsage(0);
+                    }
+
+                )
+        })
+
 
         // move to view model
         $ionicModal.fromTemplateUrl('app/map/modal.marker.edit.html', {

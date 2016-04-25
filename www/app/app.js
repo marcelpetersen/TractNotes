@@ -181,24 +181,21 @@
                 var confirmPopup = $ionicPopup.show({
                     title: 'Confirm Exit',
                     template: 'Are you sure you want to exit?',
-                    buttons: [
-                        {
-                            text: 'Exit',
-                            type: 'button-positive',
-                            onTap: function(e) {
-                                console.log('Exiting app');
-                                // there is no back view, so close the app instead
-                                ionic.Platform.exitApp();                       
-                            }
-                        },
-                        {
-                            text: 'Cancel',
-                            onTap: function(e) {
-                                // otherwise do nothing
-                                console.log('User cancelled exit');
-                            }
+                    buttons: [{
+                        text: 'Exit',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            console.log('Exiting app');
+                            // there is no back view, so close the app instead
+                            ionic.Platform.exitApp();
                         }
-                    ]
+                    }, {
+                        text: 'Cancel',
+                        onTap: function(e) {
+                            // otherwise do nothing
+                            console.log('User cancelled exit');
+                        }
+                    }]
                 });
             }
 

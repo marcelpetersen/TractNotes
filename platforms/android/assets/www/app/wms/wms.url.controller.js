@@ -37,7 +37,8 @@
         ////////////////
 
         function activate() {
-            vm.input.layerType = 'Dynamic Map Layer';
+            vm.input.wmsLayerType = 'Dynamic Map Layer';
+            vm.input.layerType = 'wms';
             vm.input.opacity = '50';
             vm.placeholderNameText = vm.namePlaceholder.dynamic;
             vm.placeholderURLText = vm.urlPlaceholder.dynamic;
@@ -48,7 +49,8 @@
         }
 
         function setWMSLayer(wmsInput) {
-            console.log('Layer type: ' + wmsInput.layerType);
+            console.log('WMS layer type: ' + wmsInput.wmsLayerType);
+            console.log('Control layer type: ' + wmsInput.layerType);
             if (!wmsInput.name || !wmsInput.url) {
                 var wmsAlertPopup = popupService.getAlertPopup(wmsInput.name, wmsInput.url);
             }
@@ -58,8 +60,8 @@
             }
         }
 
-        function updatePlaceholder(layerType) {
-            switch (layerType) {
+        function updatePlaceholder(wmsLayerType) {
+            switch (wmsLayerType) {
                 case 'Dynamic Map Layer':
                     vm.placeholderNameText = vm.namePlaceholder.dynamic;
                     vm.placeholderURLText = vm.urlPlaceholder.dynamic;
