@@ -25,42 +25,43 @@
             name: 'OpenStreetMap Mapnik',
             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             opacity: '1.0',
-            layerType: 'wmsTile'
+            layerType: 'wms'
         };
 
         var thunderforestOutdoors = {
             name: 'Thunderforest Outdoors',
             url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
             opacity: '1.0',
-            layerType: 'wmsTile'
+            layerType: 'wms'
         };
 
         var stamenToner = {
             name: 'Stamen Toner',
             url: 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
             opacity: '1.0',
-            layerType: 'wmsTile'
+            layerType: 'wms'
         };
 
         var esriWorldImagery = {
             name: 'ESRI World Imagery',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             opacity: '1.0',
-            layerType: 'wmsTile'
+            wmsLayerType: 'wmsTile',
+            layerType: 'wms',
         };
 
         var esriOceanBasemap = {
             name: 'ESRI Ocean Basemap',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}',
             opacity: '1.0',
-            layerType: 'wmsTile'
+            layerType: 'wms'
         };
 
         var esriWorldTopoMap = {
             name: 'ESRI World Topo Map',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
             opacity: '1.0',
-            layerType: 'wmsTile'
+            layerType: 'wms'
         };
 
 
@@ -78,8 +79,9 @@
         ////////////////
 
         function sendUrlLayerData(wmsInput) {
+            console.log(wmsInput);
             var featureLayer, imageLayer, dynamicLayer, tileLayer = null;
-            if (wmsInput.layerType == 'ESRI Feature Layer') {
+            if (wmsInput.wmsLayerType == 'ESRI Feature Layer') {
                 console.log('feature layer');
                 featureLayer = L.esri.featureLayer({
                     url: wmsInput.url,
@@ -90,7 +92,7 @@
                 activeWMSLayers.push(wmsInput);
 
                 $rootScope.$emit('AddLayer', wmsInput);
-            } else if (wmsInput.layerType == 'ESRI Image Map Layer') {
+            } else if (wmsInput.wmsLayerType == 'ESRI Image Map Layer') {
                 console.log('image layer');
                 imageLayer = L.esri.imageMapLayer({
                     url: wmsInput.url,
@@ -101,7 +103,7 @@
                 activeWMSLayers.push(wmsInput);
 
                 $rootScope.$emit('AddLayer', wmsInput);
-            } else if (wmsInput.layerType == 'Dynamic Map Layer') {
+            } else if (wmsInput.wmsLayerType == 'Dynamic Map Layer') {
                 console.log('dynamic layer');
                 dynamicLayer = L.esri.dynamicMapLayer({
                     url: wmsInput.url,
@@ -112,7 +114,7 @@
                 activeWMSLayers.push(wmsInput);
 
                 $rootScope.$emit('AddLayer', wmsInput);
-            } else if (wmsInput.layerType == 'Tile Layer') {
+            } else if (wmsInput.wmsLayerType == 'Tile Layer') {
                 console.log('tile layer');
                 tileLayer = L.tileLayer(wmsInput.url, {
                     opacity: wmsInput.opacity / 100
