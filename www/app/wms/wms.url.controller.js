@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('WMSUrlController', WMSUrlController);
 
-    WMSUrlController.$inject = ['wmsUrlService', '$scope', '$rootScope', '$ionicHistory', '$ionicPopup'];
+    WMSUrlController.$inject = ['wmsService', '$scope', '$rootScope', '$ionicHistory', 'popupService'];
 
     /* @ngInject */
-    function WMSUrlController(wmsUrlService, $scope, $rootScope, $ionicHistory, $ionicPopup) {
+    function WMSUrlController(wmsService, $scope, $rootScope, $ionicHistory, popupService) {
         var vm = this;
         vm.title = 'WMSUrlController';
 
@@ -49,30 +49,12 @@
 
         function setWMSLayer(wmsInput) {
             console.log('Layer type: ' + wmsInput.layerType);
-            if (wmsInput.name == null && wmsInput.url == null) {
-                console.log('Layer name and URL required.');
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Form is incomplete.',
-                    template: 'Please enter a valid layer name and URL.'
-                });
-            }
-            else if (wmsInput.name == null) {
-                console.log('Layer name required.');
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Form is incomplete.',
-                    template: 'Please enter a valid layer name.'
-                });
-            }
-            else if (wmsInput.url == null) {
-                console.log('Layer URL required.');
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Form is incomplete.',
-                    template: 'Please enter a valid layer URL.'
-                });
+            if (!wmsInput.name || !wmsInput.url) {
+                var wmsAlertPopup = popupService.getAlertPopup(wmsInput.name, wmsInput.url);
             }
             else {
                 console.log('Name: ' + wmsInput.name + ', URL: ' + wmsInput.url);
-                wmsUrlService.sendUrlLayerData(wmsInput);
+                wmsService.sendUrlLayerData(wmsInput);
             }
         }
 

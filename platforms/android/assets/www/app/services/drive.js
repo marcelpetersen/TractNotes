@@ -277,6 +277,37 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
+            this.readImages = function() {
+                /*
+                 * Return list of forms
+                 **/
+
+                var deffer = $q.defer();
+                var request = gapi.client.drive.files.list({
+                    q: "mimeType contains 'image/'"
+                });
+                request.execute(function(resp) {
+                    var files = resp.items;
+                    var read_files = [];
+                    if (files && files.length > 0) {
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            read_files.push({
+                                name: file.title,
+                                id: file.id,
+                                url: file.webContentLink
+                            });
+                        }
+                        deffer.resolve(read_files);
+                    } else {
+                        deffer.reject("No files found");
+                        //appendPre('No files found.');
+                        console.log("No files found");
+                    }
+                });
+                return deffer.promise;
+            };
+
             /**
              * Load a file from Drive. Fetches both the metadata & content in parallel.
              *

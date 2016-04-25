@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('TrackController', TrackController);
 
-    TrackController.$inject = ['$scope', '$rootScope', 'importService', 'trackService', 'trackViewService', 'Drive', '$ionicPopup', 'IonicClosePopupService', '$state'];
+    TrackController.$inject = ['$scope', '$rootScope', 'importService', 'trackService', 'trackViewService', 'Drive', 'popupService', '$state'];
 
     /* @ngInject */
-    function TrackController($scope, $rootScope, importService, trackService, trackViewService, Drive, $ionicPopup, IonicClosePopupService, $state) {
+    function TrackController($scope, $rootScope, importService, trackService, trackViewService, Drive, popupService, $state) {
         var vm = this;
         vm.title = 'TrackController';
         vm.showDelete = false;
@@ -20,7 +20,7 @@
         vm.importFromURL = importFromURL;
         vm.sendTrack = sendTrack;
         vm.sendTrackDelete = sendTrackDelete;
-        vm.showUrlPopup = showUrlPopup;
+        vm.getUrlInput = getUrlInput;
 
         activate();
 
@@ -85,7 +85,7 @@
 
         // todo event to service
         function importFromURL(url) {
-            console.log(url);
+            console.log('URL: ' + url);
             importService.setImportURL(url);
             $rootScope.$emit('Import', url);
         }
@@ -97,55 +97,28 @@
         // @todo refactor to modify layer control in service, remove listener in map controller
         function sendTrackDelete(track) {
             // confirmation popup for track deletion
-            var confirmPopup = $ionicPopup.show({
-                title: 'Confirm Track Deletion',
-                template: 'Are you sure you want to delete this track (' + track.name + ')?',
-                buttons: [
-                    {
-                        text: 'Delete',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                            console.log('Track deletion (' + track.name + ') confirmed');
-                            trackService.deleteTrack(track);
-                            $rootScope.$emit("RemoveTrack", track)                            
-                        }
-                    },
-                    {
-                        text: 'Cancel',
-                        onTap: function(e) {
-                            console.log('Track deletion (' + track.name + ') canceled');
-                        }}
-                ]
+            var trackDeletePopup = popupService.getDeletePopup(track, 'Track');
+            trackDeletePopup.then(function(res) {
+                if(res) {
+                    console.log('Track deletion (' + track.name + ') confirmed');
+                    trackService.deleteTrack(track);
+                    $rootScope.$emit("RemoveTrack", track)
+                }
+                else {
+                    console.log('Track deletion (' + track.name + ') cancelled');
+                }
             });
         }
 
-        function showUrlPopup() {
+        function getUrlInput() {
+            // gets URL input from user and passes it to vm.inportFromURL
             $scope.data = {};
-            var urlPopup = $ionicPopup.show({
-                template: '<div ng-show="data.invalidUrl" style="color:red">Invalid URL.</div><input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
-                title: 'Enter a URL',
-                scope: $scope,
-                buttons: [
-                    {
-                        text: 'Import',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                            if (!$scope.data.urlInput) {
-                                //prevent the popup from being submitted without a valid URL
-                                e.preventDefault();
-                                $scope.data.invalidUrl = true;
-                            }
-                            else {
-                                console.log('URL: ' + $scope.data.urlInput);
-                                $scope.data.invalidUrl = false;
-                                vm.importFromURL($scope.data.urlInput);
-                            }
-                        }
-                    },
-                    { text: 'Cancel' }
-                ]
+            var trackUrlPopup = popupService.getUrlPopup($scope);
+            trackUrlPopup.then(function(res) {
+                if(res) {
+                    vm.importFromURL($scope.data.urlInput);
+                }
             });
-            IonicClosePopupService.register(urlPopup);
         }
     }
 

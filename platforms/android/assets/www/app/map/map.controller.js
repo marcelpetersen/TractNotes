@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', '$ionicPopup', 'IonicClosePopupService'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', '$ionicPopup', 'IonicClosePopupService', 'Drive'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, $ionicPopup, IonicClosePopupService) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, $ionicPopup, IonicClosePopupService, Drive) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -21,12 +21,12 @@
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
+        vm.files = null;
+        vm.urlList = [];
         vm.input = {
             marker: {
                      title:null,
-                     description:null,
-                     url:null,
-                     deviceURI:null
+                     description:null
                     },
             track: null
         };
@@ -42,7 +42,9 @@
         vm.saveMarkerModal = saveMarkerModal;
         vm.closeMarkerModal = closeMarkerModal;
         vm.showUrlPopup = showUrlPopup;
+        vm.goToDrive = goToDrive;
         vm.importFromDevice = importFromDevice;
+        vm.importFromDrive = importFromDrive;
 
         activate();
 
@@ -326,6 +328,9 @@
 
         function closeMarkerModal() {
             $scope.marker_edit_modal.hide();
+            vm.input.marker.title = null;
+            vm.input.marker.description = null;
+            vm.urlList = [];
         };
 
         function saveMarkerModal() {
@@ -338,10 +343,6 @@
             var content = "";
             var name = vm.input.marker.title;
             var desc = vm.input.marker.description;
-            /**@todo make following image variables into lists **/
-            var urlImage = vm.input.marker.url;
-            var driveImage = null; //placeholder
-            var deviceImage = vm.input.marker.deviceURI;
 
             if (name) {
                 content = '<h2>' + name + '</h2>';
@@ -352,30 +353,18 @@
                 content = '<h2>' + desc + '</h2>';
             }
 
-            //@todo image import
-            // var image = "https://avatars3.githubusercontent.com/u/1202528?v=3&s=400";
-            if(urlImage) {
-                content +='<img width=100% src="' 
-                        + urlImage
-                        + '" />';
-            }
-            if(driveImage) {
-                content +='<img width=100% src="' 
-                        + driveImage
-                        + '" />';
-            }
-            if(deviceImage) {
-                content +='<img width=100% src="' 
-                        + deviceImage
-                        + '" />';
+            //add imported images
+            if(vm.urlList.length > 0) {
+                var url;
+                for(url in vm.urlList) {
+                    content +='<img width=100% src="' 
+                            + vm.urlList[url]
+                            + '" />';
+                }   
             }
             console.log(content);
             marker.bindPopup(content).openPopup();
-            $scope.marker_edit_modal.hide();
-            vm.input.marker.title = null;
-            vm.input.marker.description = null;
-            vm.input.marker.url = null;
-            vm.input.marker.deviceURI = null;
+            closeMarkerModal();
         };
 
         function showUrlPopup() {
@@ -397,7 +386,7 @@
                             else {
                                 console.log('URL: ' + $scope.data.urlInput);
                                 $scope.data.invalidUrl = false;
-                                vm.input.marker.url = $scope.data.urlInput;
+                                vm.urlList.push($scope.data.urlInput);
                             }
                         }
                     },
@@ -414,14 +403,41 @@
                 window.FilePath.resolveNativePath(uri, 
                     function (result) {
                                 console.log("result: " + result);
-                                textResult = result;
-                                vm.input.marker.deviceURI = textResult;
-                                console.log("deviceURI = " + vm.input.marker.deviceURI);
+                                vm.urlList.push(result);
                             },
                     function (error) {
                                 console.log("file path error");
                             });
             });
+        }
+
+        function goToDrive() {
+            var auth_token = gapi.auth.getToken();
+            if (auth_token) {
+                $scope.openDriveModal();
+            }
+            else {
+                var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
+                var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
+
+                Drive.authenticate(client_id, scopes, {
+                    redirect_uri: 'http://localhost/callback/'
+                })
+                    .then(function(response) { //authenticate
+                            if (response) {
+                                gapi.auth.setToken(response);
+                                $scope.openDriveModal();
+                            }
+                        },
+                        function(error) {
+                            console.log("" + error);
+                        });
+            }
+        }
+
+        function importFromDrive(url) {
+            vm.urlList.push(url);
+            $scope.closeDriveModal();
         }
 
         //Cleanup the modal when we're done with it!
@@ -438,6 +454,40 @@
             // Execute action
         });
         */
+
+        $ionicModal.fromTemplateUrl('app/map/modal.marker.drive.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.marker_drive_modal = modal;
+        });
+        $scope.openDriveModal = function() {
+            Drive.readImages().then(function(files) {
+                console.log("FileRead: success.");
+                vm.files = files;
+            }, function() {
+                console.log("FileRead: error.");
+            });
+            $scope.marker_drive_modal.show();
+        };
+        $scope.closeDriveModal = function() {
+            $scope.marker_drive_modal.hide();
+        };
+        //Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function() {
+            $scope.marker_drive_modal.remove();
+        });
+        /*
+        // Execute action on hide modal
+        $scope.$on('modal.hidden', function() {
+            // Execute action
+        });
+        // Execute action on remove modal
+        $scope.$on('modal.removed', function() {
+            // Execute action
+        });
+        */
+
 
         $ionicModal.fromTemplateUrl('app/map/modal.track.save.html', {
             scope: $scope,
