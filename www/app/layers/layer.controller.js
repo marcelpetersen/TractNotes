@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('LayerController', LayerController);
 
-    LayerController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsService', 'popupService'];
+    LayerController.$inject = ['$rootScope', 'layerControlService', 'layerViewService', 'ctecoDataService', 'wmsService', 'popupService', 'IonicClosePopupService'];
 
     /* @ngInject */
-    function LayerController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsService, popupService) {
+    function LayerController($rootScope, layerControlService, layerViewService, ctecoDataService, wmsService, popupService, IonicClosePopupService) {
         var vm = this;
         vm.title = 'TrackController';
 
@@ -57,6 +57,7 @@
                     console.log('Layer deletion (' + layer.name + ') cancelled');
                 }
             });
+            IonicClosePopupService.register(layerDeletePopup);
         }
     }
 })();

@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', 'popupService', 'Drive'];
+    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', '$ionicModal', 'popupService', 'IonicClosePopupService', 'Drive'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, popupService, Drive) {
+    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, $ionicModal, popupService, IonicClosePopupService, Drive) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -372,9 +372,15 @@
             var waypointUrlPopup = popupService.getUrlPopup($scope);
             waypointUrlPopup.then(function(res) {
                 if(res) {
+                    console.log('Import to waypoint from URL confirmed');
                     vm.urlList.push($scope.data.urlInput);
                 }
+                else {
+                    console.log('Import to waypoint from URL cancelled');
+                }
             });
+            // tapping to close popup seems to not work when popup is on top of a modal (like this one)
+            IonicClosePopupService.register(waypointUrlPopup);
         }
 
         function importFromDevice() {

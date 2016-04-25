@@ -5,10 +5,10 @@
         .module('TractNotes')
         .factory('popupService', popupService);
 
-    popupService.$inject = ['$ionicPopup', 'IonicClosePopupService'];
+    popupService.$inject = ['$ionicPopup'];
 
     /* @ngInject */
-    function popupService($ionicPopup, IonicClosePopupService) {
+    function popupService($ionicPopup) {
         var service = {
             getDeletePopup: getDeletePopup,
             getUrlPopup: getUrlPopup,
@@ -62,8 +62,6 @@
                     {text: 'Cancel'}
                 ]
             });
-            // I don't think the popup can be closed by clicking outside of its bounds because of e.preventDefault
-            IonicClosePopupService.register(urlPopup);
         }
 
         // alert popup for adding wms from url

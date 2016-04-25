@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('TrackController', TrackController);
 
-    TrackController.$inject = ['$scope', '$rootScope', 'importService', 'trackService', 'trackViewService', 'Drive', 'popupService', '$state'];
+    TrackController.$inject = ['$scope', '$rootScope', 'importService', 'trackService', 'trackViewService', 'Drive', 'popupService', 'IonicClosePopupService', '$state'];
 
     /* @ngInject */
-    function TrackController($scope, $rootScope, importService, trackService, trackViewService, Drive, popupService, $state) {
+    function TrackController($scope, $rootScope, importService, trackService, trackViewService, Drive, popupService, IonicClosePopupService, $state) {
         var vm = this;
         vm.title = 'TrackController';
         vm.showDelete = false;
@@ -108,17 +108,23 @@
                     console.log('Track deletion (' + track.name + ') cancelled');
                 }
             });
+            IonicClosePopupService.register(trackDeletePopup);
         }
 
         function getUrlInput() {
-            // gets URL input from user and passes it to vm.inportFromURL
+            // gets URL input from user and passes it to vm.importFromURL
             $scope.data = {};
             var trackUrlPopup = popupService.getUrlPopup($scope);
             trackUrlPopup.then(function(res) {
                 if(res) {
+                    console.log('Import track from URL confirmed');
                     vm.importFromURL($scope.data.urlInput);
                 }
+                else {
+                    console.log('Import track from URL cancelled');
+                }
             });
+            IonicClosePopupService.register(trackUrlPopup);
         }
     }
 
