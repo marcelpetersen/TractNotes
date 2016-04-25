@@ -60,14 +60,14 @@
 
             vm.map = L.mapbox.map('map');
 
-            vm.streets = L.tileLayerCordova(streetsTiles, {
+            /*vm.streets = L.tileLayerCordova(streetsTiles, {
                 'minzoom': 0,
                 'maxzoom': 18,
                 attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 folder: 'TractNotes',
                 name: 'streets',
                 debug: true
-            })
+            })*/
 
 
 
@@ -78,7 +78,7 @@
             })
 
             vm.baseMaps = {
-                'Mapbox Streets': vm.streets.addTo(vm.map),
+                //'Mapbox Streets': vm.streets.addTo(vm.map),
                 'Mapbox Satellite': vm.satellite
             };
 
@@ -210,9 +210,8 @@
                 var textResult = importService.getFileText(p);
                 textResult.then(function(text) {
                     var layer = importService.importFromText(text);
-                    console.log(layer)
                     addLayer(layer);
-                    var name = p.substring(p.lastIndexOf('/') + 1)
+                    var name = p.substring(p.lastIndexOf('/') + 1);
                     vm.layercontrol.addOverlay(layer, name, 'Tracks');
 
                 });
@@ -220,8 +219,9 @@
                 var layerResult = importService.importFromURL(p);
                 layerResult.then(function(layer) {
                     addLayer(layer);
-                    var name = p.substring(p.lastIndexOf('/') + 1)
+                    var name = p.substring(p.lastIndexOf('/') + 1);
                     vm.layercontrol.addOverlay(layer, name, 'Tracks');
+                    trackService.addToImportedTracks(layer, name);
                 });
             }
 
