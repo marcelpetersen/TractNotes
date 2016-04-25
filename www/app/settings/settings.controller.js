@@ -48,7 +48,16 @@
 
         function setControl(control) {
             if (control.checked) {
-                $rootScope.$emit('AddControl', control);
+                if (control.text == 'Zoom Slider Control' && vm.drawControl.checked) {
+                    // checks to see if draw control has been added already; if so it removes it from the map,
+                    // adds the zoom slider control, then adds the draw control back to the map
+                    $rootScope.$emit('RemoveControl', vm.drawControl);
+                    $rootScope.$emit('AddControl', control);
+                    $rootScope.$emit('AddControl', vm.drawControl);
+                }
+                else {
+                    $rootScope.$emit('AddControl', control);
+                }
             } else {
                 $rootScope.$emit('RemoveControl', control);
             }

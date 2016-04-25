@@ -282,7 +282,7 @@
             if (data.text === 'Draw Control' && vm.drawnItems === null) {
                 vm.drawInit();
             }
-            if (data.text === 'Zoom Control') {
+            if (data.text === 'Zoom Slider Control') {
                 vm.map.removeControl(vm.map.zoomControl);
             }
             data.control.addTo(vm.map);
@@ -290,7 +290,7 @@
         /** @listens $rootScope.RemoveControl */
         $rootScope.$on('RemoveControl', function(event, data) {
             data.control.removeFrom(vm.map);
-            if (data.text === 'Zoom Control') {
+            if (data.text === 'Zoom Slider Control') {
                 vm.map.addControl(vm.map.zoomControl);
             }
         });

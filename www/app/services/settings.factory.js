@@ -82,7 +82,7 @@
          * @property {zoomControl.control} Initialized L.Control.zoomslider()
          */
         var zoomControl = {
-            text: 'Zoom Control',
+            text: 'Zoom Slider Control',
             checked: false,
             position: 'topleft',
             control: L.control.zoomslider()
