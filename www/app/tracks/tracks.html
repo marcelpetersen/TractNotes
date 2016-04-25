@@ -46,7 +46,7 @@
           </ion-item>
           <ion-item ng-repeat="track in vm.importedTracks" ng-click="vm.sendTrack(track)" href="#/app/tracks/{{track.name}}" class="item-remove-animate">
             <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
-            {{track.name}} ({{track.metadata.date}})
+            {{track.name}}
           </ion-item>
         </div>
       </ion-list>

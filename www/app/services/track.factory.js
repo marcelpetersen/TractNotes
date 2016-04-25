@@ -110,7 +110,9 @@
         }
 
         function addToImportedTracks(track, name) {
+            track.metadata = {};
             track.name = name;
+            track.metadata.name = name;
             importedTracks.push(track);
             console.log(importedTracks);
         }

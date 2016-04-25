@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('MapController', MapController);
 
-    MapController.$inject = ['$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', 'settingsService', '$ionicModal', 'popupService', 'IonicClosePopupService', 'Drive'];
+    MapController.$inject = ['$state', '$rootScope', '$scope', '$stateParams', 'layerControlService', 'locationService', 'trackService', 'drawnItemsService', 'importService', 'ctecoDataService', 'settingsService', '$ionicModal', 'popupService', 'IonicClosePopupService', 'Drive'];
 
     /* @ngInject */
-    function MapController($rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, settingsService, $ionicModal, popupService, IonicClosePopupService, Drive) {
+    function MapController($state, $rootScope, $scope, $stateParams, layerControlService, locationService, trackService, drawnItemsService, importService, ctecoDataService, settingsService, $ionicModal, popupService, IonicClosePopupService, Drive) {
         var vm = this;
         vm.title = 'MapController';
 
@@ -213,7 +213,7 @@
                     addLayer(layer);
                     var name = p.substring(p.lastIndexOf('/') + 1);
                     vm.layercontrol.addOverlay(layer, name, 'Tracks');
-
+                    trackService.addToImportedTracks(layer, name);
                 });
             } else {
                 var layerResult = importService.importFromURL(p);
@@ -224,6 +224,8 @@
                     trackService.addToImportedTracks(layer, name);
                 });
             }
+
+            $state.go($state.current, $stateParams, {reload: true, inherit: false});
 
             //@todo should move to VM, better yet, move to map factory
             function addLayer(layer) {
