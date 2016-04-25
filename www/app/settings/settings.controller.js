@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('SettingsController', SettingsController);
 
-    SettingsController.$inject = ['settingsService', '$rootScope', 'Drive'];
+    SettingsController.$inject = ['settingsService', '$rootScope', 'Drive', 'drawnItemsService', 'trackService'];
 
     /* @ngInject */
-    function SettingsController(settingsService, $rootScope, Drive) {
+    function SettingsController(settingsService, $rootScope, Drive, drawnItemsService, trackService) {
         var vm = this;
         vm.title = 'SettingsController';
 
@@ -19,6 +19,10 @@
         vm.controls = [];
         vm.offlineMode = null;
         vm.diskUsage = 0;
+        vm.trackColor = 'Blue';
+        vm.drawColor = 'Red';
+        vm.lineOpacity = 50;
+        vm.drawOpacity = 20;
 
         vm.setControl = setControl;
         vm.changeMapStatus = changeMapStatus;
@@ -29,6 +33,9 @@
         vm.profilePic = "";
         vm.userName = "";
         vm.emailAddress = "";
+
+        vm.updateTrackColor = updateTrackColor;
+        vm.updateDraw = updateDraw;
 
         activate();
 
@@ -110,6 +117,40 @@
                     function(error) {
                         console.log("" + error);
                     });
+        }
+
+        function updateTrackColor(color) {
+            // set the color of all current + future tracks to color parameter
+            // @ TODO: does not work yet
+            console.log(color);
+            var tracks = trackService.getTracks();
+            var importedTracks = trackService.getImportedTracks();
+            for (var track in tracks) {
+                track.setStyle({color: color});
+            }
+            for (var importedTrack in importedTracks) {
+                importedTrack.setStyle({color: color});
+            }
+        }
+
+        function updateDrawColor(color) {
+            // set the color of all current + future drawn items to color parameter
+            console.log(color);
+            drawnItems.setStyle({color: color});
+        }
+
+        function updateDrawOpacity(opacity) {
+            console.log(opacity);
+            drawnItems.setStyle({fillOpacity: opacity/100});
+        }
+
+        function updateDraw(color, lineOpacity, fillOpacity) {
+            var drawnItems = drawnItemsService.getDrawnItems();
+            drawnItems.setStyle({
+                color: color,
+                opacity: lineOpacity/100,
+                fillOpacity: fillOpacity/100
+            });
         }
     }
 })();

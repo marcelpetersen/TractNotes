@@ -11,9 +11,46 @@
         <ion-item class="item-divider">
           Tools
         </ion-item>
-        <ion-item>
-          <!-- @TODO: tools settings here -->
-        </ion-item>
+        <!-- @ TODO -->
+<!--         <label class="item item-input item-select">
+          <div class="input-label">
+            Track Color
+          </div>
+          <select ng-model="vm.trackColor" ng-change="vm.updateTrackColor(vm.trackColor)">
+            <option>Red</option>
+            <option>Orange</option>
+            <option>Yellow</option>
+            <option>Green</option>
+            <option>Blue</option>
+            <option>Purple</option>
+          </select>
+        </label> -->
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Draw Color
+          </div>
+          <select ng-model="vm.drawColor">
+            <option>Red</option>
+            <option>Orange</option>
+            <option>Yellow</option>
+            <option>Green</option>
+            <option>Blue</option>
+            <option>Purple</option>
+          </select>
+        </label>
+        <label class="item item-stacked-label">
+          <span>Draw Fill Opacity: {{vm.drawOpacity}}%</span>
+          <div class="range range-positive">
+            <input type="range" min="0" max="100" value="vm.drawOpacity" step="1" ng-model="vm.drawOpacity">
+          </div>
+        </label>
+        <label class="item item-stacked-label">
+          <span>Draw Line Opacity: {{vm.lineOpacity}}%</span>
+          <div class="range range-positive">
+            <input type="range" min="0" max="100" value="vm.lineOpacity" step="1" ng-model="vm.lineOpacity">
+          </div>
+        </label>
+        <button class="button button-block button-positive" ng-click="vm.updateDraw(vm.drawColor, vm.lineOpacity, vm.drawOpacity)">Update</button>
         <ion-item class="item-divider">
           Cache
         </ion-item>
