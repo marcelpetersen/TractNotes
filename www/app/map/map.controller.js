@@ -19,6 +19,7 @@
         vm.hiThere = null;
         vm.recording = false;
         vm.caching = false;
+        vm.cacheMessage = null;
         vm.currentTrack = null;
         vm.currentPolyline = null;
         vm.drawnItems = null;
@@ -62,6 +63,7 @@
             vm.streets = L.tileLayerCordova(streetsTiles, {
                 'minzoom': 0,
                 'maxzoom': 18,
+                attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 folder: 'TractNotes',
                 name: 'streets',
                 debug: true
@@ -71,7 +73,8 @@
 
             vm.satellite = L.tileLayer(satelliteTiles, {
                 'minzoom': 0,
-                'maxzoom': 18
+                'maxzoom': 18,
+                attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             })
 
             vm.baseMaps = {
@@ -296,7 +299,7 @@
         });
 
         /** @listens $rootScope.AddLayer */
-                /** @listens $rootScope.AddLayer */
+        /** @listens $rootScope.AddLayer */
         $rootScope.$on('AddLayer', function(event, data) {
             data.layer.addTo(vm.map);
             vm.layercontrol.addOverlay(data.layer, data.name, data.layerType.toUpperCase());
@@ -337,6 +340,9 @@
             vm.streets.downloadXYZList(tile_list, false, function(done, total) {
                 var percent = Math.round(100 * done / total);
                 console.log(done + " / " + total + " = " + percent + "%"); // @Todo inject this into innerhtml
+                $scope.$apply(function() {
+                    vm.cacheMessage = done + " / " + total + " = " + percent + "%";
+                });
             }, function() {
                 vm.streets.getDiskUsage(function(filecount, bytes) {
                     console.log(bytes)
@@ -349,13 +355,13 @@
 
         })
         $rootScope.$on('EmptyCache', function(event, data) {
-                vm.streets.emptyCache(function(success, error) {
-                        console.log(success)
-                        console.log(error)
-                        settingsService.setCurrentDiskUsage(0);
-                    }
+            vm.streets.emptyCache(function(success, error) {
+                    console.log(success)
+                    console.log(error)
+                    settingsService.setCurrentDiskUsage(0);
+                }
 
-                )
+            )
         })
 
 
