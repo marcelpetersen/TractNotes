@@ -11,8 +11,11 @@
         <ion-item class="item-divider">
           Tools
         </ion-item>
+        <ion-item class="item-divider">
+          Track Settings
+        </ion-item>
         <!-- @ TODO -->
-<!--         <label class="item item-input item-select">
+        <label class="item item-input item-select">
           <div class="input-label">
             Track Color
           </div>
@@ -24,10 +27,32 @@
             <option>Blue</option>
             <option>Purple</option>
           </select>
-        </label> -->
+        </label>
+        <ion-item class="item-divider">
+          Draw Settings
+        </ion-item>
+        <ion-toggle toggle-class="toggle-positive" ng-model="vm.drawStroke">
+          Stroke
+        </ion-toggle>
         <label class="item item-input item-select">
           <div class="input-label">
-            Draw Color
+            Stoke Width
+          </div>
+          <select ng-model="vm.drawWeight">
+            <option>Thin</option>
+            <option>Normal</option>
+            <option>Thick</option>
+          </select>
+        </label>
+        <label class="item item-stacked-label">
+          <span>Stroke Opacity: {{vm.lineOpacity}}%</span>
+          <div class="range range-positive">
+            <input type="range" min="0" max="100" value="vm.lineOpacity" step="1" ng-model="vm.lineOpacity">
+          </div>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Color
           </div>
           <select ng-model="vm.drawColor">
             <option>Red</option>
@@ -39,18 +64,12 @@
           </select>
         </label>
         <label class="item item-stacked-label">
-          <span>Draw Fill Opacity: {{vm.drawOpacity}}%</span>
+          <span>Fill Opacity: {{vm.drawOpacity}}%</span>
           <div class="range range-positive">
             <input type="range" min="0" max="100" value="vm.drawOpacity" step="1" ng-model="vm.drawOpacity">
           </div>
-        </label>
-        <label class="item item-stacked-label">
-          <span>Draw Line Opacity: {{vm.lineOpacity}}%</span>
-          <div class="range range-positive">
-            <input type="range" min="0" max="100" value="vm.lineOpacity" step="1" ng-model="vm.lineOpacity">
-          </div>
-        </label>
-        <button class="button button-block button-positive" ng-click="vm.updateDraw(vm.drawColor, vm.lineOpacity, vm.drawOpacity)">Update</button>
+        </label>        
+        <button class="button button-block button-positive" ng-click="vm.updateDraw(vm.drawStroke, vm.drawColor, vm.drawWeight, vm.lineOpacity, vm.drawOpacity)">Update Draw Settings</button>
         <ion-item class="item-divider">
           Cache
         </ion-item>

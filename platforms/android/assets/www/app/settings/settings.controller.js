@@ -5,10 +5,10 @@
         .module('TractNotes')
         .controller('SettingsController', SettingsController);
 
-    SettingsController.$inject = ['settingsService', '$rootScope', 'Drive'];
+    SettingsController.$inject = ['settingsService', '$rootScope', 'Drive', 'drawnItemsService', 'trackService'];
 
     /* @ngInject */
-    function SettingsController(settingsService, $rootScope, Drive) {
+    function SettingsController(settingsService, $rootScope, Drive, drawnItemsService, trackService) {
         var vm = this;
         vm.title = 'SettingsController';
 
@@ -19,6 +19,12 @@
         vm.controls = [];
         vm.offlineMode = null;
         vm.diskUsage = 0;
+        vm.drawStroke = true;
+        vm.drawWeight = 'Normal';
+        vm.trackColor = 'Blue';
+        vm.drawColor = 'Red';
+        vm.lineOpacity = 50;
+        vm.drawOpacity = 20;
 
         vm.setControl = setControl;
         vm.changeMapStatus = changeMapStatus;
@@ -29,6 +35,9 @@
         vm.profilePic = "";
         vm.userName = "";
         vm.emailAddress = "";
+
+        vm.updateTrackColor = updateTrackColor;
+        vm.updateDraw = updateDraw;
 
         activate();
 
@@ -48,7 +57,16 @@
 
         function setControl(control) {
             if (control.checked) {
-                $rootScope.$emit('AddControl', control);
+                if (control.text == 'Zoom Slider Control' && vm.drawControl.checked) {
+                    // checks to see if draw control has been added already; if so it removes it from the map,
+                    // adds the zoom slider control, then adds the draw control back to the map
+                    $rootScope.$emit('RemoveControl', vm.drawControl);
+                    $rootScope.$emit('AddControl', control);
+                    $rootScope.$emit('AddControl', vm.drawControl);
+                }
+                else {
+                    $rootScope.$emit('AddControl', control);
+                }
             } else {
                 $rootScope.$emit('RemoveControl', control);
             }
@@ -101,6 +119,61 @@
                     function(error) {
                         console.log("" + error);
                     });
+        }
+
+        function updateTrackColor(color) {
+            // set the color of all current + future tracks to color parameter
+            // @ TODO: does not work yet
+            // try to make tracks feature group like with drawnItems
+            console.log(color);
+            var tracks = trackService.getTracks();
+            var importedTracks = trackService.getImportedTracks();
+            /*for (var track in tracks) {
+                console.log(track);
+                track.polyline.setStyle({color: color});
+                console.log(track);
+            }
+            for (var importedTrack in importedTracks) {
+                importedTrack.polyline.setStyle({color: color});
+            }*/
+        }
+
+        /* not currently used, will be used if individual settings change options on click
+        function updateDrawColor(color) {
+            // set the color of all current + future drawn items to color parameter
+            console.log(color);
+            drawnItems.setStyle({color: color});
+        }
+
+        function updateDrawOpacity(opacity) {
+            console.log(opacity);
+            drawnItems.setStyle({fillOpacity: opacity/100});
+        }*/
+
+        // @TODO also set these in a factory and get them from the factory in activate so their values are preserved
+        // this should also allow new shapes to be drawn with these settings, which currently isn't happening
+        function updateDraw(stroke, color, weight, strokeOpacity, fillOpacity) {
+            var drawnItems = drawnItemsService.getDrawnItems();
+            console.log(drawnItems);
+            var weightNum;
+            switch(weight) {
+                case 'Thin':
+                    weightNum = 2;
+                    break;
+                case 'Normal':
+                    weightNum = 5;
+                    break;
+                case 'Thick':
+                    weightNum = 10;
+                    break;
+            }
+            drawnItems.setStyle({
+                stroke: stroke,
+                color: color,
+                weight: weightNum,
+                opacity: strokeOpacity/100,
+                fillOpacity: fillOpacity/100
+            });
         }
     }
 })();

@@ -13,6 +13,7 @@
         vm.title = 'TrackController';
         vm.showDelete = false;
         vm.tracks = [];
+        vm.importedTracks = [];
 
         vm.importFromDevice = importFromDevice;
         vm.goToDrive = goToDrive;
@@ -28,6 +29,7 @@
 
         function activate() {
             vm.tracks = trackService.getTracks();
+            vm.importedTracks = trackService.getImportedTracks();
         }
 
         // todo : event -> service, name -> importfromdevice

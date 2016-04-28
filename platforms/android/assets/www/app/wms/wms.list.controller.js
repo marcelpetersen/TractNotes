@@ -15,6 +15,8 @@
         vm.sendCategory = sendCategory;
         vm.setOrthoLayer = setOrthoLayer;
         vm.toggleDefaultWMSLayer = toggleDefaultWMSLayer;
+        vm.toggleGroup = toggleGroup;
+        vm.isGroupShown = isGroupShown;
 
         activate();
 
@@ -37,5 +39,21 @@
         function toggleDefaultWMSLayer(defaultWMS) {
             wmsService.sendDefaultLayerData(defaultWMS);
         }
+
+        /*
+         * if given group is the selected group, deselect it
+         * else, select the given group
+         */
+        function toggleGroup(group) {
+            if (vm.isGroupShown(group)) {
+                vm.shownGroup = null;
+            } else {
+                vm.shownGroup = group;
+            }
+        };
+
+        function isGroupShown(group) {
+            return vm.shownGroup === group;
+        };
     }
 })();

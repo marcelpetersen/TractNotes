@@ -10,6 +10,7 @@
     /* @ngInject */
     function trackService() {
         var tracks = [];
+        var importedTracks = [];
         var currentTrack = null;
         var currentPolyline = null;
 
@@ -26,7 +27,10 @@
             getCurrentPolyline: getCurrentPolyline,
 
             addToCurrentPolyline: addToCurrentPolyline,
-            deleteTrack: deleteTrack
+            deleteTrack: deleteTrack,
+
+            addToImportedTracks: addToImportedTracks,
+            getImportedTracks: getImportedTracks
         };
         return service;
 
@@ -103,6 +107,18 @@
 
         function deleteTrack(track) {
             tracks.splice(tracks.indexOf(track), 1);
+        }
+
+        function addToImportedTracks(track, name) {
+            track.metadata = {};
+            track.name = name;
+            track.metadata.name = name;
+            importedTracks.push(track);
+            console.log(importedTracks);
+        }
+
+        function getImportedTracks() {
+            return importedTracks;
         }
     }
 })();

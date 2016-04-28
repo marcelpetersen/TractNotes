@@ -2,24 +2,27 @@
   <ion-content>
     <ion-list>
       <div class="list list-inset">
-        <ion-item class="item item-divider">
+        <ion-item class="item-stable" ng-click="vm.toggleGroup(vm.ctecoCategories)" ng-class="{active: isGroupShown(vm.ctecoCategories)}">
+          <i class="icon" ng-class="vm.isGroupShown(vm.ctecoCategories) ? 'ion-minus' : 'ion-plus'"></i>
           CT ECO Layers
         </ion-item>
-        <ion-item ng-repeat="category in vm.ctecoCategories" class="item item-thumbnail-left" ng-click="vm.sendCategory(category)" href="#/app/cteco_list/{{category.name}}">
+        <ion-item class="item item-thumbnail-left" ng-repeat="category in vm.ctecoCategories" ng-show="vm.isGroupShown(vm.ctecoCategories)" ng-click="vm.sendCategory(category)" href="#/app/cteco_list/{{category.name}}">
           <img ng-src="{{category.image}}" style="border:1px solid black">
           <div class="item-text-center">{{category.name}}</div>
         </ion-item>
-        <ion-item class="item item-divider">
+        <ion-item class="item-stable" ng-click="vm.toggleGroup(vm.orthoLayers)" ng-class="{active: isGroupShown(vm.orthoLayers)}">
+          <i class="icon" ng-class="vm.isGroupShown(vm.orthoLayers) ? 'ion-minus' : 'ion-plus'"></i>
           Orthophoto Layers
         </ion-item>
-        <ion-toggle toggle-class="toggle-positive" ng-repeat="ortho in vm.orthoLayers" ng-model="ortho.checked" ng-change="vm.setOrthoLayer(ortho)">
+        <ion-toggle toggle-class="toggle-positive" ng-repeat="ortho in vm.orthoLayers" ng-show="vm.isGroupShown(vm.orthoLayers)" ng-model="ortho.checked" ng-change="vm.setOrthoLayer(ortho)">
           {{ortho.name}}
         </ion-toggle>
-        <ion-item class="item item-divider">
+        <ion-item class="item-stable" ng-click="vm.toggleGroup(vm.defaultWMSLayers)" ng-class="{active: isGroupShown(vm.defaultWMSLayers)}">
+          <i class="icon" ng-class="vm.isGroupShown(vm.defaultWMSLayers) ? 'ion-minus' : 'ion-plus'"></i>
           Other WMS Layers
         </ion-item>
-        <ion-toggle toggle-class="toggle-positive" ng-repeat="defaultWMS in vm.defaultWMSLayers" ng-model="defaultWMS.checked" ng-change="vm.toggleDefaultWMSLayer(defaultWMS)">
-          {{defaultWMS.name}}
+        <ion-toggle toggle-class="toggle-positive" ng-repeat="wms in vm.defaultWMSLayers" ng-show="vm.isGroupShown(vm.defaultWMSLayers)" ng-model="wms.checked" ng-change="vm.toggleDefaultWMSLayer(wms)">
+          {{wms.name}}
         </ion-toggle>
       </div>
     </ion-list>

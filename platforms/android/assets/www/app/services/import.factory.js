@@ -16,7 +16,7 @@
             setImportURL: setImportURL,
             setImportURI: setImportURI,
             getImportURL: getImportURL,
-            gtImportURI: getImportURI,
+            getImportURI: getImportURI,
             importFromURL: importFromURL,
             importFromText: importFromText,
             getFileText: getFileText

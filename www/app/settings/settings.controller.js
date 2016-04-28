@@ -19,6 +19,8 @@
         vm.controls = [];
         vm.offlineMode = null;
         vm.diskUsage = 0;
+        vm.drawStroke = true;
+        vm.drawWeight = 'Normal';
         vm.trackColor = 'Blue';
         vm.drawColor = 'Red';
         vm.lineOpacity = 50;
@@ -122,17 +124,21 @@
         function updateTrackColor(color) {
             // set the color of all current + future tracks to color parameter
             // @ TODO: does not work yet
+            // try to make tracks feature group like with drawnItems
             console.log(color);
             var tracks = trackService.getTracks();
             var importedTracks = trackService.getImportedTracks();
-            for (var track in tracks) {
-                track.setStyle({color: color});
+            /*for (var track in tracks) {
+                console.log(track);
+                track.polyline.setStyle({color: color});
+                console.log(track);
             }
             for (var importedTrack in importedTracks) {
-                importedTrack.setStyle({color: color});
-            }
+                importedTrack.polyline.setStyle({color: color});
+            }*/
         }
 
+        /* not currently used, will be used if individual settings change options on click
         function updateDrawColor(color) {
             // set the color of all current + future drawn items to color parameter
             console.log(color);
@@ -142,13 +148,30 @@
         function updateDrawOpacity(opacity) {
             console.log(opacity);
             drawnItems.setStyle({fillOpacity: opacity/100});
-        }
+        }*/
 
-        function updateDraw(color, lineOpacity, fillOpacity) {
+        // @TODO also set these in a factory and get them from the factory in activate so their values are preserved
+        // this should also allow new shapes to be drawn with these settings, which currently isn't happening
+        function updateDraw(stroke, color, weight, strokeOpacity, fillOpacity) {
             var drawnItems = drawnItemsService.getDrawnItems();
+            console.log(drawnItems);
+            var weightNum;
+            switch(weight) {
+                case 'Thin':
+                    weightNum = 2;
+                    break;
+                case 'Normal':
+                    weightNum = 5;
+                    break;
+                case 'Thick':
+                    weightNum = 10;
+                    break;
+            }
             drawnItems.setStyle({
+                stroke: stroke,
                 color: color,
-                opacity: lineOpacity/100,
+                weight: weightNum,
+                opacity: strokeOpacity/100,
                 fillOpacity: fillOpacity/100
             });
         }

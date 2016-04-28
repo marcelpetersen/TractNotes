@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="list card">
-      <ion-item class="item-icon-left" ng-show="vm.tracks.length">
+      <ion-item class="item-icon-left" ng-show="vm.tracks.length || vm.importedTracks.length">
         <i class="icon ion-ios-minus-outline" ng-click="vm.showDelete = !vm.showDelete"></i> Edit tracks
       </ion-item>
       <ion-list show-delete="vm.showDelete">
@@ -37,6 +37,16 @@
           <ion-item ng-repeat="track in vm.tracks" ng-click="vm.sendTrack(track)" href="#/app/tracks/{{track.name}}" class="item-remove-animate">
             <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
             {{track.name}} ({{track.metadata.date}})
+          </ion-item>
+          <ion-item class="item item-divider">
+            Imported Tracks
+          </ion-item>
+          <ion-item ng-show="!vm.importedTracks.length">
+            No imported tracks.
+          </ion-item>
+          <ion-item ng-repeat="track in vm.importedTracks" ng-click="vm.sendTrack(track)" href="#/app/tracks/{{track.name}}" class="item-remove-animate">
+            <ion-delete-button class="ion-ios-minus-outline" ng-click="vm.sendTrackDelete(track)"></ion-delete-button>
+            {{track.name}}
           </ion-item>
         </div>
       </ion-list>

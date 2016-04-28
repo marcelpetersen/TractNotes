@@ -27,7 +27,7 @@
         // todo event to service
         function importFromDrive(file) {
             importService.setImportURL(file.url);
-            $rootScope.$emit('Import', file.url);
+            $rootScope.$emit('Import', file.name);
         }
 
         function onSearchChange(fileSearch) {
