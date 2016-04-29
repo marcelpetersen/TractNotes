@@ -32,10 +32,12 @@
         vm.emptyCurrentCache = emptyCurrentCache;
 
         vm.login = login;
+        vm.logout = logout;
         vm.profilePic = "";
         vm.userName = "";
         vm.emailAddress = "";
 
+        vm.updateUnits = updateUnits;
         vm.updateTrackColor = updateTrackColor;
         vm.updateDraw = updateDraw;
 
@@ -48,11 +50,14 @@
             vm.scaleControl = settingsService.getScaleControl();
             vm.searchControl = settingsService.getSearchControl();
             vm.zoomControl = settingsService.getZoomControl();
+            vm.units = drawnItemsService.getUnitsInfo().units;
             vm.offlineMode = settingsService.getOfflineMode();
             vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl, vm.zoomControl];
 
             vm.diskUsage = settingsService.getCurrentDiskUsage();
             vm.offlineMode = settingsService.getOfflineMode();
+
+            getGoogleID();
         }
 
         function setControl(control) {
@@ -87,38 +92,62 @@
         }
 
         function login() {
-            var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
-            // var scopes = ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/userinfo.email'];
-            var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
-
-            Drive.authenticate(client_id, scopes, {
-                redirect_uri: 'http://localhost/callback/'
-            })
+            Drive.authenticate()
                 .then(function(response) { //authenticate
                         if (response) {
                             var token = response.access_token;
-
                             gapi.auth.setToken(response);
-                            /** Obtain user data from id_token **/
-                            // window.alert("hi");
-                            // var id = JSON.stringify(response.id_token);
-                            // var id = response.id_token;
-                            // var parts = id.split('.');
-                            // var headerBuf = window.atob(parts[0]); //decode from base64
-                            // var bodyBuf = window.atob(parts[1]);
-                            // var header = JSON.parse(headerBuf.toString());
-                            // var body = JSON.parse(bodyBuf.toString());
-                            // window.alert(headerBuf.toString());
-                            // window.alert(bodyBuf.toString());
-                            // vm.profilePic = body.picture;
-                            // vm.userName = body.name;
-                            // vm.emailAddress = body.email;
-                            // $state.go('app.drive');
+                            getGoogleID();
                         }
                     },
                     function(error) {
                         console.log("" + error);
                     });
+        }
+
+        function logout() {
+            gapi.auth.setToken(null);
+            vm.profilePic = "";
+            vm.userName = "";
+            vm.emailAddress = "";
+            console.log("logged out");
+        }
+
+        function getGoogleID() {
+            /** Obtain user data from id_token **/
+            var auth_token = gapi.auth.getToken();
+            if (auth_token) {
+                var id = Drive.getID();
+                var parts = id.split('.');
+                var headerBuf = window.atob(parts[0]); //decode from base64
+                var bodyBuf = window.atob(parts[1]);
+                var header = JSON.parse(headerBuf.toString());
+                var body = JSON.parse(bodyBuf.toString());
+                vm.profilePic = body.picture;
+                vm.userName = body.name;
+                vm.emailAddress = body.email;
+            }
+        }
+
+        function updateUnits(units) {
+            console.log(units);
+            switch(units) {
+                case 'Meters':
+                    drawnItemsService.setUnitsInfo('Meters', 'm', '0', '1');
+                    break;
+                case 'Kilometers':
+                    drawnItemsService.setUnitsInfo('Kilometers', 'km', '2', '1000');
+                    break;
+                case 'Miles':
+                    drawnItemsService.setUnitsInfo('Miles', 'mi', '2', '1609.34');
+                    break;
+                default:
+                    console.log('Error setting units');
+            }
+            var drawnItems = drawnItemsService.getDrawnItems();
+            drawnItems.eachLayer(function (layer) {
+                drawnItemsService.updatePopup(layer);
+            });
         }
 
         function updateTrackColor(color) {

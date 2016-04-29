@@ -39,12 +39,7 @@
                 uploadToDrive();
             }
             else {
-                var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
-                var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
-
-                Drive.authenticate(client_id, scopes, {
-                    redirect_uri: 'http://localhost/callback/'
-                })
+                Drive.authenticate()
                     .then(function(response) { //authenticate
                             if (response) {
                                 gapi.auth.setToken(response);
@@ -80,36 +75,50 @@
             console.log("KML file:");
             console.log(kml);
 
-            /** Export GPX */
-            var name = vm.currentTrack.metadata.name + ".gpx";
-            var metadata = {
-              'title': name,
-              'mimeType': 'application/gpx+xml'
-              // "description": vm.currentTrack.metadata.desc
-            };
-            Drive.saveFile(metadata, gpx).then(function(files) {
-                console.log("FileSave: success.");
-                // window.alert("file uploaded");
-            }, function() {
-                console.log("FileSave: error.");
-            });
+            //Ensure TractNotes Folder exists or create one
+            Drive.tractNotesFolder().then(function(tractNotesID) {                
+                //Make Folder for Track
+                Drive.trackFolder(vm.currentTrack.metadata.name, tractNotesID).then(function(folderID) {
+                    console.log("Track Folder: success.");
 
-            /** Export KML */
-            name = vm.currentTrack.metadata.name + ".kml";
-            metadata = {
-              'title': name,
-              'mimeType': 'application/vnd.google-earth.kml+xml'
-              // "description": vm.currentTrack.metadata.desc
-            };
-            Drive.saveFile(metadata, kml).then(function(files) {
-                console.log("FileSave: success.");
-                // window.alert("file uploaded");
-            }, function() {
-                console.log("FileSave: error.");
+                    /** Export GPX */
+                    var name = vm.currentTrack.metadata.name + ".gpx";
+                    var metadata = {
+                      'title': name,
+                      'mimeType': 'application/gpx+xml',
+                      'parents':[{"id":folderID}]
+                      // "description": vm.currentTrack.metadata.desc
+                    };
+                    Drive.saveFile(metadata, gpx).then(function(files) {
+                        console.log("FileSave: success.");
+                        // window.alert("file uploaded");
+                    }, function() {
+                        console.log("FileSave: error.");
+                    });
+
+                    /** Export KML */
+                    name = vm.currentTrack.metadata.name + ".kml";
+                    metadata = {
+                      'title': name,
+                      'mimeType': 'application/vnd.google-earth.kml+xml',
+                      'parents':[{"id":folderID}]
+                      // "description": vm.currentTrack.metadata.desc
+                    };
+                    Drive.saveFile(metadata, kml).then(function(files) {
+                        console.log("FileSave: success.");
+                        //@todo change alert to popup or view element
+                        window.alert("File uploaded:\nMyDrive/TractNotes/" + vm.currentTrack.metadata.name);
+                    }, function() {
+                        console.log("FileSave: error.");
+                    });
+                    // create file
+                    // upload to drive
+                    // upload media to drive [images, audio, video]
+                }, function() {
+                    console.log("Track Folder: error.");
+                });
+  
             });
-            // create file
-            // upload to drive
-            // upload media to drive [images, audio, video]
         }
 
         function exportTrackToDevice() {
@@ -126,7 +135,7 @@
             trackService.setTrackMetadata(vm.input);
             vm.input = angular.copy(trackViewService.getTrackView().metadata)
             vm.currentTrack = trackService.getCurrentTrack();
-            vm.back()
+            vm.back();
         }
 
         function discardChanges() {

@@ -322,7 +322,12 @@
         });
         // @todo remove once track.list.controller is refactored
         $rootScope.$on('RemoveTrack', function(event, data) {
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
+            if(data.imported) {
+                layerControlService.removeLayerInGroup(vm.layercontrol, data);
+            }
+            else { 
+                layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
+            }
         });
 
         $rootScope.$on('ChangeMapStatus', function(event, data) {
@@ -340,20 +345,20 @@
             vm.caching = true;
             var tile_list = vm.streets.calculateXYZListFromBounds(vm.map.getBounds(), vm.map.getZoom(), 18)
             vm.streets.downloadXYZList(tile_list, false, function(done, total) {
-                var percent = Math.round(100 * done / total);
+                var percent = Math.round((100 * (done + 1))/ total);
                 console.log(done + " / " + total + " = " + percent + "%"); // @Todo inject this into innerhtml
                 $scope.$apply(function() {
-                    vm.cacheMessage = done + " / " + total + " = " + percent + "%";
+                    vm.cacheMessage = (done + 1) + " / " + total + " = " + percent + "%";
                 });
+                if (percent == 100){
+                    vm.caching = false;
+                }
             }, function() {
                 vm.streets.getDiskUsage(function(filecount, bytes) {
                     console.log(bytes)
                     settingsService.setCurrentDiskUsage(bytes);
                 });
             }, function() {})
-            setTimeout(function() {
-                vm.caching = false;
-            }, 20000);
 
         })
         $rootScope.$on('EmptyCache', function(event, data) {
@@ -453,12 +458,7 @@
             if (auth_token) {
                 $scope.openDriveModal();
             } else {
-                var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
-                var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
-
-                Drive.authenticate(client_id, scopes, {
-                    redirect_uri: 'http://localhost/callback/'
-                })
+                Drive.authenticate()
                     .then(function(response) { //authenticate
                             if (response) {
                                 gapi.auth.setToken(response);

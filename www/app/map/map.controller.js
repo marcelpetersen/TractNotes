@@ -350,15 +350,15 @@
                 $scope.$apply(function() {
                     vm.cacheMessage = (done + 1) + " / " + total + " = " + percent + "%";
                 });
+                if (percent == 100){
+                    vm.caching = false;
+                }
             }, function() {
                 vm.streets.getDiskUsage(function(filecount, bytes) {
                     console.log(bytes)
                     settingsService.setCurrentDiskUsage(bytes);
                 });
             }, function() {})
-            setTimeout(function() {
-                vm.caching = false;
-            }, 2000);
 
         })
         $rootScope.$on('EmptyCache', function(event, data) {

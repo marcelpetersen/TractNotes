@@ -11,6 +11,16 @@
         <ion-item class="item-divider">
           Tools
         </ion-item>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Units
+          </div>
+          <select ng-model="vm.units" ng-change="vm.updateUnits(vm.units)">
+            <option>Meters</option>
+            <option>Kilometers</option>
+            <option>Miles</option>
+          </select>
+        </label>
         <ion-item class="item-divider">
           Track Settings
         </ion-item>
@@ -89,8 +99,12 @@
         <ion-item class="item-divider">
           Google
         </ion-item>
+        <div class="item item-avatar" ng-show="vm.emailAddress">
+          <!-- <img src=vm.profilePic> -->
+          <!-- <h2>{{vm.userName}}</h2> -->
+          <p>{{vm.emailAddress}}</p>
+        </div>
         <div class="item item-input-inset">
-          <!-- @TODO: login/logout/other Google settings -->
           <div class="col">
             <button class="button button-block button-positive" ng-click="vm.login()">Login</button>
           </div>

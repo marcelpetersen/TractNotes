@@ -13,7 +13,7 @@
         vm.title = 'DriveController';
 
         vm.files = []; /**@param name, id, url, mimeType, isDirectory **/
-        vm.importFromDrive = importFromDrive;
+        vm.onClick = onClick;
         vm.onSearchChange = onSearchChange;
 
         activate();
@@ -25,9 +25,20 @@
         }
 
         // todo event to service
-        function importFromDrive(file) {
-            importService.setImportURL(file.url);
-            $rootScope.$emit('Import', file.name);
+        function onClick(file) {
+            if(file.isDirectory) {
+                Drive.getChildren(file).then(function(files) {
+                        console.log("FileRead: success.");
+                        Drive.setFileList(files);
+                        vm.files = files;
+                    }, function() {
+                        console.log("FileRead: error.");
+                    });
+            }
+            else {
+                importService.setImportURL(file.url);
+                $rootScope.$emit('Import', file.name);
+            }
         }
 
         function onSearchChange(fileSearch) {

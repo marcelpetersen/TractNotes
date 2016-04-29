@@ -58,6 +58,7 @@ angular.module('TractNotes')
             var cache = $cacheFactory('files');
 
             var fileList = []; //list of files with chosen type shown in drive.html
+            var id_token;
 
             this.setFileList = function(list) {
                 fileList = list;
@@ -65,6 +66,10 @@ angular.module('TractNotes')
 
             this.getFileList = function() {
                 return fileList;
+            };
+
+            this.getID = function() {
+                return id_token;
             };
 
             /**
@@ -104,7 +109,7 @@ angular.module('TractNotes')
              * @return {Promise} promise that resolves on completion
              */
 
-            this.authenticate = function(clientId, appScope, options) {
+            this.authenticate = function() {
                 /*
                  * Sign into the Google service
                  *
@@ -113,6 +118,9 @@ angular.module('TractNotes')
                  * @param    object options
                  * @return   promise
                  */
+                var clientId = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com";
+                var appScope = ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/userinfo.email'];
+                var options = {redirect_uri: 'http://localhost/callback/'}
 
                 var deferred = $q.defer();
                 if (window.cordova) {
@@ -141,6 +149,7 @@ angular.module('TractNotes')
                                 parameterMap[responseParameters[i].split("=")[0]] = responseParameters[i].split("=")[1];
                             }
                             if (parameterMap.access_token !== undefined && parameterMap.access_token !== null) {
+                                id_token = parameterMap.id_token;
                                 deferred.resolve(parameterMap);
                                 //deferred.resolve({ state : parameterMap.state,error : parameterMap.error, access_token: parameterMap.access_token, token_type: parameterMap.token_type, expires_in: parameterMap.expires_in });
                             } else {
@@ -221,6 +230,40 @@ angular.module('TractNotes')
                     });
                 }
 
+
+                request.execute(function(resp) {
+                    var files = resp.items;
+                    var read_files = [];
+                    if (files && files.length > 0) {
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            read_files.push({
+                                name: file.title,
+                                id: file.id,
+                                url: file.webContentLink,
+                                mimeType: file.mimeType,
+                                isDirectory: file.mimeType == "application/vnd.google-apps.folder"
+                            });
+                        }
+                        deffer.resolve(read_files);
+                    } else {
+                        deffer.reject("No files found");
+                        //appendPre('No files found.');
+                        console.log("No files found");
+                    }
+                });
+                return deffer.promise;
+            };
+
+            this.getChildren = function(folder) {
+                /*
+                 * Return children of folder
+                 **/
+                var deffer = $q.defer();
+                var query = "'" + folder.id + "' in parents";
+                var request= gapi.client.drive.files.list({
+                        q: query
+                    });
 
                 request.execute(function(resp) {
                     var files = resp.items;
@@ -418,6 +461,76 @@ angular.module('TractNotes')
                 }).then(function(response) {
                     return combineAndStoreResults(response.result, content);
                 });
+            };
+
+            /**
+             * Create a new folder for the given track in the TractNotes folder
+             * @return {Promise} promise that resolves the Track folder's id
+             */
+            this.trackFolder = function(folderName, tractNotesID) {
+                var deffer = $q.defer();
+
+                googleApi.then(function(gapi) {
+                    var uploadRequest = gapi.client.request({
+                        'path': '/drive/v2/files/',
+                        'method': 'POST',
+                        'headers': {
+                            'Content-Type': 'application/json'
+                        },
+                        'body':{
+                            "title" : folderName,
+                            "mimeType" : "application/vnd.google-apps.folder",
+                            "parents":[{"id":tractNotesID}]
+                        }
+                    });
+                    uploadRequest.execute(function(resp) {
+                        console.log("id: " + resp.id);
+                        deffer.resolve(resp.id);
+                    });
+                });
+                return deffer.promise;
+            };
+
+            /**
+             * If the TractNotes folder exists
+             * Otherwise create the folder
+             * @return {Promise} promise that resolves the TractNotes folder's id
+             */
+            this.tractNotesFolder = function() {
+                var deffer = $q.defer();
+
+                googleApi.then(function(gapi) {
+                    var request = gapi.client.drive.files.list({
+                        q: "title='TractNotes' and mimeType='application/vnd.google-apps.folder'"
+                    });
+
+                    request.execute(function(resp) {
+                        var files = resp.items;
+                        if (files && files.length > 0) {
+                            //if a match is found, just pick first one. should change.
+                            console.log("TractNotes folder found");
+                            deffer.resolve(files[0].id);
+                        } else {
+                            //otherwise create TractNotes folder
+                            var uploadRequest = gapi.client.request({
+                                'path': '/drive/v2/files/',
+                                'method': 'POST',
+                                'headers': {
+                                    'Content-Type': 'application/json'
+                                },
+                                'body':{
+                                    "title" : "TractNotes",
+                                    "mimeType" : "application/vnd.google-apps.folder",
+                                }
+                            });
+                            uploadRequest.execute(function(resp) {
+                                console.log("TractNotes folder created");
+                                deffer.resolve(resp.id);
+                            });
+                        }
+                    });
+                });
+                return deffer.promise;
             };
 
             /**
