@@ -430,6 +430,76 @@ angular.module('TractNotes')
             };
 
             /**
+             * Create a new folder for the given track in the TractNotes folder
+             * @return {Promise} promise that resolves the Track folder's id
+             */
+            this.trackFolder = function(folderName, tractNotesID) {
+                var deffer = $q.defer();
+
+                googleApi.then(function(gapi) {
+                    var uploadRequest = gapi.client.request({
+                        'path': '/drive/v2/files/',
+                        'method': 'POST',
+                        'headers': {
+                            'Content-Type': 'application/json'
+                        },
+                        'body':{
+                            "title" : folderName,
+                            "mimeType" : "application/vnd.google-apps.folder",
+                            "parents":[{"id":tractNotesID}]
+                        }
+                    });
+                    uploadRequest.execute(function(resp) {
+                        console.log("id: " + resp.id);
+                        deffer.resolve(resp.id);
+                    });
+                });
+                return deffer.promise;
+            };
+
+            /**
+             * If the TractNotes folder exists
+             * Otherwise create the folder
+             * @return {Promise} promise that resolves the TractNotes folder's id
+             */
+            this.tractNotesFolder = function() {
+                var deffer = $q.defer();
+
+                googleApi.then(function(gapi) {
+                    var request = gapi.client.drive.files.list({
+                        q: "title='TractNotes' and mimeType='application/vnd.google-apps.folder'"
+                    });
+
+                    request.execute(function(resp) {
+                        var files = resp.items;
+                        if (files && files.length > 0) {
+                            //if a match is found, just pick first one. should change.
+                            console.log("TractNotes folder found");
+                            deffer.resolve(files[0].id);
+                        } else {
+                            //otherwise create TractNotes folder
+                            var uploadRequest = gapi.client.request({
+                                'path': '/drive/v2/files/',
+                                'method': 'POST',
+                                'headers': {
+                                    'Content-Type': 'application/json'
+                                },
+                                'body':{
+                                    "title" : "TractNotes",
+                                    "mimeType" : "application/vnd.google-apps.folder",
+                                }
+                            });
+                            uploadRequest.execute(function(resp) {
+                                console.log("TractNotes folder created");
+                                deffer.resolve(resp.id);
+                            });
+                        }
+                    });
+                });
+                return deffer.promise;
+            };
+
+            /**
              * Displays the Drive file picker configured for selecting text files
              *
              * @return {Promise} Promise that resolves with the ID of the selected file
