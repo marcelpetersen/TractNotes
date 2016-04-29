@@ -37,6 +37,7 @@
         vm.userName = "";
         vm.emailAddress = "";
 
+        vm.updateUnits = updateUnits;
         vm.updateTrackColor = updateTrackColor;
         vm.updateDraw = updateDraw;
 
@@ -49,6 +50,7 @@
             vm.scaleControl = settingsService.getScaleControl();
             vm.searchControl = settingsService.getSearchControl();
             vm.zoomControl = settingsService.getZoomControl();
+            vm.units = drawnItemsService.getUnitsInfo().units;
             vm.offlineMode = settingsService.getOfflineMode();
             vm.controls = [vm.drawControl, vm.scaleControl, vm.searchControl, vm.zoomControl];
 
@@ -125,6 +127,27 @@
                 vm.userName = body.name;
                 vm.emailAddress = body.email;
             }
+        }
+
+        function updateUnits(units) {
+            console.log(units);
+            switch(units) {
+                case 'Meters':
+                    drawnItemsService.setUnitsInfo('Meters', 'm', '0', '1');
+                    break;
+                case 'Kilometers':
+                    drawnItemsService.setUnitsInfo('Kilometers', 'km', '2', '1000');
+                    break;
+                case 'Miles':
+                    drawnItemsService.setUnitsInfo('Miles', 'mi', '2', '1609.34');
+                    break;
+                default:
+                    console.log('Error setting units');
+            }
+            var drawnItems = drawnItemsService.getDrawnItems();
+            drawnItems.eachLayer(function (layer) {
+                drawnItemsService.updatePopup(layer);
+            });
         }
 
         function updateTrackColor(color) {

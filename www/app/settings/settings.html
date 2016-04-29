@@ -11,6 +11,16 @@
         <ion-item class="item-divider">
           Tools
         </ion-item>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Units
+          </div>
+          <select ng-model="vm.units" ng-change="vm.updateUnits(vm.units)">
+            <option>Meters</option>
+            <option>Kilometers</option>
+            <option>Miles</option>
+          </select>
+        </label>
         <ion-item class="item-divider">
           Track Settings
         </ion-item>
