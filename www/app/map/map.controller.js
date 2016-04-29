@@ -453,12 +453,7 @@
             if (auth_token) {
                 $scope.openDriveModal();
             } else {
-                var client_id = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com"; //web-app
-                var scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file'];
-
-                Drive.authenticate(client_id, scopes, {
-                    redirect_uri: 'http://localhost/callback/'
-                })
+                Drive.authenticate()
                     .then(function(response) { //authenticate
                             if (response) {
                                 gapi.auth.setToken(response);

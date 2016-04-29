@@ -58,6 +58,7 @@ angular.module('TractNotes')
             var cache = $cacheFactory('files');
 
             var fileList = []; //list of files with chosen type shown in drive.html
+            var id_token;
 
             this.setFileList = function(list) {
                 fileList = list;
@@ -65,6 +66,10 @@ angular.module('TractNotes')
 
             this.getFileList = function() {
                 return fileList;
+            };
+
+            this.getID = function() {
+                return id_token;
             };
 
             /**
@@ -104,7 +109,7 @@ angular.module('TractNotes')
              * @return {Promise} promise that resolves on completion
              */
 
-            this.authenticate = function(clientId, appScope, options) {
+            this.authenticate = function() {
                 /*
                  * Sign into the Google service
                  *
@@ -113,6 +118,9 @@ angular.module('TractNotes')
                  * @param    object options
                  * @return   promise
                  */
+                var clientId = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com";
+                var appScope = ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/userinfo.email'];
+                var options = {redirect_uri: 'http://localhost/callback/'}
 
                 var deferred = $q.defer();
                 if (window.cordova) {
@@ -141,6 +149,7 @@ angular.module('TractNotes')
                                 parameterMap[responseParameters[i].split("=")[0]] = responseParameters[i].split("=")[1];
                             }
                             if (parameterMap.access_token !== undefined && parameterMap.access_token !== null) {
+                                id_token = parameterMap.id_token;
                                 deferred.resolve(parameterMap);
                                 //deferred.resolve({ state : parameterMap.state,error : parameterMap.error, access_token: parameterMap.access_token, token_type: parameterMap.token_type, expires_in: parameterMap.expires_in });
                             } else {
