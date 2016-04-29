@@ -345,10 +345,10 @@
             vm.caching = true;
             var tile_list = vm.streets.calculateXYZListFromBounds(vm.map.getBounds(), vm.map.getZoom(), 18)
             vm.streets.downloadXYZList(tile_list, false, function(done, total) {
-                var percent = Math.round(100 * done / total);
+                var percent = Math.round((100 * (done + 1))/ total);
                 console.log(done + " / " + total + " = " + percent + "%"); // @Todo inject this into innerhtml
                 $scope.$apply(function() {
-                    vm.cacheMessage = done + " / " + total + " = " + percent + "%";
+                    vm.cacheMessage = (done + 1) + " / " + total + " = " + percent + "%";
                 });
             }, function() {
                 vm.streets.getDiskUsage(function(filecount, bytes) {
@@ -358,7 +358,7 @@
             }, function() {})
             setTimeout(function() {
                 vm.caching = false;
-            }, 20000);
+            }, 2000);
 
         })
         $rootScope.$on('EmptyCache', function(event, data) {
