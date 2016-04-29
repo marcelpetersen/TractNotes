@@ -255,6 +255,40 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
+            this.getChildren = function(folder) {
+                /*
+                 * Return children of folder
+                 **/
+                var deffer = $q.defer();
+                var query = "'" + folder.id + "' in parents";
+                var request= gapi.client.drive.files.list({
+                        q: query
+                    });
+
+                request.execute(function(resp) {
+                    var files = resp.items;
+                    var read_files = [];
+                    if (files && files.length > 0) {
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            read_files.push({
+                                name: file.title,
+                                id: file.id,
+                                url: file.webContentLink,
+                                mimeType: file.mimeType,
+                                isDirectory: file.mimeType == "application/vnd.google-apps.folder"
+                            });
+                        }
+                        deffer.resolve(read_files);
+                    } else {
+                        deffer.reject("No files found");
+                        //appendPre('No files found.');
+                        console.log("No files found");
+                    }
+                });
+                return deffer.promise;
+            };
+
             this.readForms = function() {
                 /*
                  * Return list of forms
