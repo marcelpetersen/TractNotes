@@ -135,7 +135,7 @@
             trackService.setTrackMetadata(vm.input);
             vm.input = angular.copy(trackViewService.getTrackView().metadata)
             vm.currentTrack = trackService.getCurrentTrack();
-            vm.back()
+            vm.back();
         }
 
         function discardChanges() {

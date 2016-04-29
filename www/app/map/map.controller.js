@@ -322,7 +322,12 @@
         });
         // @todo remove once track.list.controller is refactored
         $rootScope.$on('RemoveTrack', function(event, data) {
-            layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
+            if(data.imported) {
+                layerControlService.removeLayerInGroup(vm.layercontrol, data);
+            }
+            else { 
+                layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
+            }
         });
 
         $rootScope.$on('ChangeMapStatus', function(event, data) {

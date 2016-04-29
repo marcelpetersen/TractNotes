@@ -106,13 +106,19 @@
         }
 
         function deleteTrack(track) {
-            tracks.splice(tracks.indexOf(track), 1);
+            if(track.imported) {
+                importedTracks.splice(importedTracks.indexOf(track), 1);
+            }
+            else {
+                tracks.splice(tracks.indexOf(track), 1);
+            }
         }
 
         function addToImportedTracks(track, name) {
             track.metadata = {};
             track.name = name;
             track.metadata.name = name;
+            track.imported = true;
             importedTracks.push(track);
             console.log(importedTracks);
         }
