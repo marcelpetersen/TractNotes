@@ -1,11 +1,11 @@
 (function() {
     'use strict';
 
-        /**
+    /**
      * @memberof TractNotes
      * @ngdoc controller
      * @name MapController
-     * @property {object} vm Variable binding inside controller.
+     * @property {object} vm ViewModel capture variable for *this*.
      * @desc This factory assists in dynamically rendering individual track views.
      */
 
@@ -48,7 +48,6 @@
         vm.xmldata = xmldata;
         vm.saveTrack = saveTrack;
         vm.discardTrack = discardTrack;
-
         vm.saveMarkerModal = saveMarkerModal;
         vm.closeMarkerModal = closeMarkerModal;
         vm.showUrlPopup = showUrlPopup;
@@ -60,7 +59,11 @@
 
         ////////////////
 
-        // @TODO refactor layers into service
+        /**
+         * Initialize a Mapbox map with a L.tileLayerCordova streets layer and satellite layer
+         * @memberof MapController
+         * @function activate
+         */
         function activate() {
             L.mapbox.accessToken = 'pk.eyJ1Ijoic2RlbXVyamlhbiIsImEiOiJjaWc4OXU4NjgwMmJydXlsejB4NTF0cXNjIn0.98fgJXziGw5FQ_b1Ibl3ZQ';
             var streetsTiles = 'http://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken;
@@ -103,8 +106,9 @@
         }
 
         /**
-         * Set map view to the user's current location.
-         * @function
+         * Set map view to user's current location on activate
+         * @memberof MapController
+         * @function autoDiscover
          */
         function autoDiscover() {
             var currentPosition = locationService.locate();
@@ -124,7 +128,8 @@
         /**
          * Create a marker at the user's current location.
          * During record mode, add the marker to the current Track.
-         * @function
+         * @memberOf MapController
+         * @function createMarker
          */
         function createMarker() {
             if (vm.recording) {
@@ -155,8 +160,8 @@
 
         /**
          * Start or stop recording a track based on vm.recording state.
-         * @function
-         * @todo Abstract into two functions, startRecording() and stopRecording()
+         * @memberOf MapController
+         * @function record
          */
         function record() {
             if (vm.recording === false) {
@@ -199,8 +204,9 @@
         }
 
         /**
-         * Initialize the drawnItems layer.
-         * @function
+         * Initialize the drawnItems layer
+         * @memberOf MapController
+         * @function drawInit
          */
         function drawInit() {
             vm.drawnItems = drawnItemsService.getDrawnItems();
@@ -210,6 +216,12 @@
             vm.map.on('draw:edited', drawnItemsService.showPolygonAreaEdited);
         }
 
+        /**
+         * Import GPX or KML files from device or URL to the map with all associated info
+         * @memberOf MapController
+         * @function xmldata
+         * @param {string} p Layer to input
+         */
         function xmldata(p) {
             // @todo layer should be object with source information + url
             // this check will change
@@ -269,6 +281,11 @@
             }
         }
 
+        /**
+         * Save track and metadata to trackService
+         * @memberOf MapController
+         * @function saveTrack
+         */
         function saveTrack() {
             trackService.setCurrentTrack(vm.currentTrack);
             trackService.setTrackMetadata(vm.input.track);
@@ -276,6 +293,11 @@
             $scope.closeTrackModal();
         }
 
+        /**
+         * Discard track and delete from trackService
+         * @memberOf MapController
+         * @function discardTrack
+         */
         function discardTrack() {
             layerControlService.removeLayerInGroup(vm.layercontrol, vm.currentTrack.track);
             trackService.deleteTrack(vm.currentTrack.track);
@@ -310,7 +332,6 @@
             }
         });
 
-        /** @listens $rootScope.AddLayer */
         /** @listens $rootScope.AddLayer */
         $rootScope.$on('AddLayer', function(event, data) {
             data.layer.addTo(vm.map);
