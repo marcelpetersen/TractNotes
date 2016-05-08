@@ -95,7 +95,7 @@ angular.module('TractNotes')
             /**
              * Set fileList
              * @memberof Drive
-             * @method setFileList
+             * @function setFileList
              * @param {list} list
              */
             this.setFileList = function(list) {
@@ -105,7 +105,7 @@ angular.module('TractNotes')
             /**
              * Get FileList
              * @memberof Drive
-             * @method getFileList
+             * @function getFileList
              * @returns {list} fileList
              */
             this.getFileList = function() {
@@ -115,7 +115,7 @@ angular.module('TractNotes')
             /**
              * Get id_token for currently authenticated user.
              * @memberof Drive
-             * @method getID
+             * @function getID
              * @returns {string} id_token
              */
             this.getID = function() {
@@ -127,7 +127,7 @@ angular.module('TractNotes')
              *
              * @param {Object} metadata File metadata
              * @param {String} content File content
-             * @method combineAndStoreResults
+             * @function combineAndStoreResults
              * @return {Object} combined object
              */
             var combineAndStoreResults = function(metadata, content) {
@@ -141,7 +141,7 @@ angular.module('TractNotes')
 
             /**
              * Sign into the Google service
-             * @method authenticate
+             * @function authenticate
              * @return {Promise} promise that resolves on completion
              */
             this.authenticate = function() {
@@ -200,7 +200,7 @@ angular.module('TractNotes')
             /**
              * Open form in inAppBrowser.
              * @memberof Drive
-             * @method openForm
+             * @function openForm
              * @param {file} file
              */
             this.openForm = function(file) {
@@ -211,7 +211,7 @@ angular.module('TractNotes')
             /**
              * Print files.
              * @memberof Drive
-             * @method readFiles
+             * @function readFiles
              * @return {Promise} promise that resolves on completion
              */
             this.readFiles = function() {
@@ -244,7 +244,7 @@ angular.module('TractNotes')
             /**
              * Get all GPX and KML files from user's Drive.
              * @memberof Drive
-             * @method readGPXAndKML
+             * @function readGPXAndKML
              * @return {Promise} promise that resolves to an object containing a list of files.
              */
             this.readGPXAndKML = function(fileName) {
@@ -291,7 +291,7 @@ angular.module('TractNotes')
             /**
              * Get children of folder.
              * @memberof Drive
-             * @method readGPXAndKML
+             * @function readGPXAndKML
              * @return {Promise} promise that resolves to an object containing the folder's children
              */
             this.getChildren = function(folder) {
@@ -328,7 +328,7 @@ angular.module('TractNotes')
             /**
              * Get list of forms.
              * @memberof Drive
-             * @method readForms
+             * @function readForms
              * @return {Promise} promise that resolves to an object containing a list of forms.
              */
             this.readForms = function() {
@@ -361,7 +361,7 @@ angular.module('TractNotes')
             /**
              * Get list of images.
              * @memberof Drive
-             * @method readImages
+             * @function readImages
              * @return {Promise} promise that resolves to an object containing a list of images.
              */
             this.readImages = function() {
@@ -394,7 +394,7 @@ angular.module('TractNotes')
              /**
               * Load a file from Drive. Fetches both the metadata & content in parallel.
               * @memberof Drive
-              * @method loadFile
+              * @function loadFile
               * @param {String} fileID ID of the file to load
               * @return {Promise} promise that resolves to an object containing the file metadata & content.
               */
@@ -421,7 +421,7 @@ angular.module('TractNotes')
             /**
              * Delete a file from Drive. Permanently deletes a file by ID. Skips the trash. The currently authenticated user must own the file.
              * @memberof Drive
-             * @method deleteFile
+             * @function deleteFile
              * @param {String} fileID ID of the file to delete
              * @return {Promise} promise that resolves to an object containing the file metadata & content
              */
@@ -444,7 +444,7 @@ angular.module('TractNotes')
             /**
              * Save a file to Drive using the multipart upload protocol.
              * @memberof Drive
-             * @method saveFile
+             * @function saveFile
              * @param {Object} metadata File metadata to save
              * @param {String} content File content
              * @return {Promise} promise that resolves to an object containing the current file metadata & content
@@ -488,7 +488,7 @@ angular.module('TractNotes')
             /**
              * Create a new folder for the given track in the TractNotes folder
              * @memberof Drive
-             * @method trackFolder
+             * @function trackFolder
              * @param {string} folderName
              * @param {string} tractNotesID
              * @return {Promise} promise that resolves the Track folder's id
@@ -520,7 +520,7 @@ angular.module('TractNotes')
             /**
              * Create a TractNotes folder if it does not exist.
              * @memberof Drive
-             * @method trackNotesFolder
+             * @function trackNotesFolder
              * @return {Promise} promise that resolves the TractNotes folder's id
              */
             this.tractNotesFolder = function() {

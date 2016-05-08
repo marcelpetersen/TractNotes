@@ -36,7 +36,7 @@
         /**
          * Authenticate if not already signed in, then initalize file list with files obtained from Google Drive.
          * @memberof DriveController
-         * @method activate
+         * @function activate
          */
         function activate() {
             var auth_token = gapi.auth.getToken();
@@ -61,7 +61,7 @@
         /**
          * Obtain all forms from Google Drive and save to file list.
          * @memberof FormController
-         * @method getForms
+         * @function getForms
          */
         function getForms() {
             Drive.readForms().then(function(files) {
@@ -75,7 +75,7 @@
         /**
          * Open a Google Form on click.
          * @memberof FormController
-         * @method openForm
+         * @function openForm
          * @param {Object} file
          */
         function openForm(file) {

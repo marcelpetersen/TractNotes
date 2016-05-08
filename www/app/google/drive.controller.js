@@ -36,7 +36,7 @@
         /**
          * Initialize file list with files obtained from Google Drive.
          * @memberof DriveController
-         * @method activate
+         * @function activate
          */
         function activate() {
             vm.files = Drive.getFileList();
@@ -45,7 +45,7 @@
         /**
          * Import files or traverse folders on click.
          * @memberof DriveController
-         * @method onClick
+         * @function onClick
          * @param {Object} file
          */
         // todo event to service
@@ -68,7 +68,7 @@
         /**
          * Obtains the search results on search change.
          * @memberof DriveController
-         * @method onSearchChange
+         * @function onSearchChange
          * @param {string} fileSearch - name of the file to be queried
          */
         function onSearchChange(fileSearch) {

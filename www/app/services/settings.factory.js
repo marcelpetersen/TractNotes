@@ -110,7 +110,7 @@
         /**
          * Accessor for draw control object
          * @memberof settingsService
-         * @method getDrawControl
+         * @function getDrawControl
          * @returns {L.control} Draw control initialized to the top left of map
          */
         function getDrawControl() {
@@ -120,7 +120,7 @@
         /**
          * Accessor for scale control object
          * @memberof settingsService
-         * @method getScaleControl
+         * @function getScaleControl
          * @returns {L.control} Scale control initialized to the bottom left of map
          */
         function getScaleControl() {
@@ -130,7 +130,7 @@
         /**
          * Accessor for search control object
          * @memberof settingsService
-         * @method getSearchControl
+         * @function getSearchControl
          * @returns {L.control} Geocoder control initialized to the top right of map
          */
         function getSearchControl() {
@@ -140,7 +140,7 @@
         /**
          * Accessor for zoom slider object
          * @memberof settingsService
-         * @method getZoomControl
+         * @function getZoomControl
          * @returns {L.control} Zoom slider control initialized to the top left of map
          */
         function getZoomControl() {
@@ -150,7 +150,7 @@
         /**
          * Accessor for current disk usage by cached tiles
          * @memberof settingsService
-         * @method getCurrentDiskUsage
+         * @function getCurrentDiskUsage
          * @returns {int} Number of bytes used by cached tiles
          */
         function getCurrentDiskUsage() {
@@ -160,7 +160,7 @@
         /**
          * Accessor for offline mode
          * @memberof settingsService
-         * @method getOfflineMode
+         * @function getOfflineMode
          * @returns {boolean} offlineMode status
          */
         function getOfflineMode() {
@@ -170,7 +170,7 @@
         /**
          * Set current disk usage
          * @memberof settingsService
-         * @method setCurrentDiskUsage
+         * @function setCurrentDiskUsage
          * @param {int} n disk usage
          */
         function setCurrentDiskUsage(n) {

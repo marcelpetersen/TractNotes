@@ -79,7 +79,7 @@
         /**
          * Create a new track (initialize polyline, markers, and metadata properties) and add to tracks list
          * @memberof trackService
-         * @method createTrack
+         * @function createTrack
          * @returns {object} Current track
          */
         function createTrack() {
@@ -104,7 +104,7 @@
         /**
          * Create a new Leaflet polyline
          * @memberof trackService
-         * @method createPolyline
+         * @function createPolyline
          * @returns {L.polyline} Current polyline
          */
         function createPolyline() {
@@ -116,7 +116,7 @@
         /**
          * Set the current track to a new track
          * @memberof trackService
-         * @method setCurrentTrack
+         * @function setCurrentTrack
          * @param {object} track new current track
          */
         function setCurrentTrack(track) {
@@ -126,7 +126,7 @@
         /**
          * Set the current polyline to a new polyline
          * @memberof trackService
-         * @method setCurrentPolyline
+         * @function setCurrentPolyline
          * @param {L.polyline} polyline new current polyline
          */
         function setCurrentPolyline(p) {
@@ -136,7 +136,7 @@
         /**
          * Set the current track's metadata
          * @memberof trackService
-         * @method setTrackMetadata
+         * @function setTrackMetadata
          * @param {object} track metadata
          */
         function setTrackMetadata(metadata) {
@@ -163,7 +163,7 @@
         /**
          * Accessor for tracks list
          * @memberof trackService
-         * @method getTracks
+         * @function getTracks
          * @returns {list} tracks
          */
         function getTracks() {
@@ -173,7 +173,7 @@
         /**
          * Accessor for currentTrack
          * @memberof trackService
-         * @method getCurrentTrack
+         * @function getCurrentTrack
          * @returns {object} currentTrack
          */
         function getCurrentTrack() {
@@ -183,7 +183,7 @@
         /**
          * Accessor for currentPolyline
          * @memberof trackService
-         * @method getCurrentPolyline
+         * @function getCurrentPolyline
          * @returns {L.polyline} currentPolyline
          */
         function getCurrentPolyline(p) {
@@ -193,7 +193,7 @@
         /**
          * Add a latitude and longitude coordinate to the current polyline
          * @memberof trackService
-         * @method addToCurrentPolyline
+         * @function addToCurrentPolyline
          * @param {double} lat
          * @param {double} long
          */
@@ -204,7 +204,7 @@
         /**
          * Delete a track from the tracks list
          * @memberof trackService
-         * @method deleteTrack
+         * @function deleteTrack
          * @param {object} track track to delete
          */
         function deleteTrack(track) {
@@ -218,7 +218,7 @@
         /**
          * Add a track to imported tracks list
          * @memberof trackService
-         * @method addToImportedTracks
+         * @function addToImportedTracks
          * @param {object} track track to add
          * @param {string} name track name
          */
@@ -234,7 +234,7 @@
         /**
          * Accessor for imported tracks list
          * @memberof trackService
-         * @method getImportedTracks
+         * @function getImportedTracks
          * @returns {list} importedTracks
          */
         function getImportedTracks() {
