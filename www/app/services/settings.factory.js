@@ -4,10 +4,10 @@
     /**
      * @memberof TractNotes
      * @ngdoc factory
-     * @param {service} $rootScope highest level scope in Angular
-     * @param {service} drawnItemsService
-     * @description
-     *   Stores and provides accessor functions for available settings
+     * @name settingsService
+     * @param {service} $rootScope top level scope in Angular
+     * @param {service} drawnItemsService drawn items layer factory
+     * @desc The settingsService provides accessor functions for available settings and stores the settings in local storage.
      */
 
     angular
@@ -19,10 +19,13 @@
     /* @ngInject */
     function settingsService($rootScope, drawnItemsService) {
         var currentDiskUsage = 0;
-        var offlineMode = {checked: false};
+        var offlineMode = {
+            checked: false
+        };
 
         /**
          * @memberof settingsService
+         * @name drawControl
          * @member {object}
          * @property {drawControl} Draw control object
          * @property {drawControl.text} Textual representation of variable name
@@ -45,6 +48,7 @@
 
         /**
          * @memberof settingsService
+         * @name scaleControl
          * @member {object}
          * @property {scaleControl} Scale control object
          * @property {scaleControl.text} Textual representation of variable name
@@ -60,6 +64,7 @@
 
         /**
          * @memberof settingsService
+         * @name searchControl
          * @member {object}
          * @property {searchControl} Search control object
          * @property {searchControl.text} Textual representation of variable name
@@ -75,6 +80,7 @@
 
         /**
          * @memberof settingsService
+         * @name zoomControl
          * @member {object}
          * @property {zoomControl} Zoom Slider control object
          * @property {zoomControl.text} Textual representation of variable name
@@ -95,7 +101,7 @@
             getZoomControl: getZoomControl,
             getCurrentDiskUsage: getCurrentDiskUsage,
             setCurrentDiskUsage: setCurrentDiskUsage,
-             getOfflineMode: getOfflineMode
+            getOfflineMode: getOfflineMode
         };
         return service;
 
@@ -104,6 +110,7 @@
         /**
          * Accessor for draw control object
          * @memberof settingsService
+         * @method getDrawControl
          * @returns {L.control} Draw control initialized to the top left of map
          */
         function getDrawControl() {
@@ -113,6 +120,7 @@
         /**
          * Accessor for scale control object
          * @memberof settingsService
+         * @method getScaleControl
          * @returns {L.control} Scale control initialized to the bottom left of map
          */
         function getScaleControl() {
@@ -122,6 +130,7 @@
         /**
          * Accessor for search control object
          * @memberof settingsService
+         * @method getSearchControl
          * @returns {L.control} Geocoder control initialized to the top right of map
          */
         function getSearchControl() {
@@ -131,20 +140,39 @@
         /**
          * Accessor for zoom slider object
          * @memberof settingsService
+         * @method getZoomControl
          * @returns {L.control} Zoom slider control initialized to the top left of map
          */
         function getZoomControl() {
             return zoomControl;
         }
 
+        /**
+         * Accessor for current disk usage by cached tiles
+         * @memberof settingsService
+         * @method getCurrentDiskUsage
+         * @returns {int} Number of bytes used by cached tiles
+         */
         function getCurrentDiskUsage() {
             return currentDiskUsage;
         }
 
+        /**
+         * Accessor for offline mode
+         * @memberof settingsService
+         * @method getOfflineMode
+         * @returns {boolean} offlineMode status
+         */
         function getOfflineMode() {
             return offlineMode;
         }
 
+        /**
+         * Set current disk usage
+         * @memberof settingsService
+         * @method setCurrentDiskUsage
+         * @param {int} n disk usage
+         */
         function setCurrentDiskUsage(n) {
             currentDiskUsage = n;
         }
