@@ -60,6 +60,14 @@
             getGoogleID();
         }
 
+        /**
+         * Set current control to add to map
+         * @memberof settingsController
+         * @function setControl
+         * @fires $rootScope#AddControl
+         * @fires $rootScope#RemoveControl
+         * @eventType emit
+         */
         function setControl(control) {
             if (control.checked) {
                 if (control.text == 'Zoom Slider Control' && vm.drawControl.checked) {
@@ -68,8 +76,7 @@
                     $rootScope.$emit('RemoveControl', vm.drawControl);
                     $rootScope.$emit('AddControl', control);
                     $rootScope.$emit('AddControl', vm.drawControl);
-                }
-                else {
+                } else {
                     $rootScope.$emit('AddControl', control);
                 }
             } else {
@@ -77,17 +84,39 @@
             }
         }
 
-        function changeMapStatus(){
+        /**
+         * Toggle between offline and online mode
+         * @memberof settingsController
+         * @function changeMapStatus
+         * @fires $rootScope#ChangeMapStatus
+         * @eventType emit
+         */
+        function changeMapStatus() {
             console.log(vm.offlineMode.checked)
             $rootScope.$emit('ChangeMapStatus', vm.offlineMode.checked);
         }
 
+        /**
+         * Send a cache event
+         * @memberof settingsController
+         * @function cacheCurrentBounds
+         * @fires $rootScope#CacheByBounds
+         * @eventType emit
+         */
         function cacheCurrentBounds() {
             console.log('cachecurrentbounds')
-             $rootScope.$emit('CacheByBounds', true);
+            $rootScope.$emit('CacheByBounds', true);
         }
 
-        function emptyCurrentCache(){
+
+        /**
+         * Send an empty cache event
+         * @memberof settingsController
+         * @function emptyCurrentCache
+         * @fires $rootScope#EmptyCache
+         * @eventType emit
+         */
+        function emptyCurrentCache() {
             $rootScope.$emit('EmptyCache', true);
         }
 
@@ -131,7 +160,7 @@
 
         function updateUnits(units) {
             console.log(units);
-            switch(units) {
+            switch (units) {
                 case 'Meters':
                     drawnItemsService.setUnitsInfo('Meters', 'm', '0', '1');
                     break;
@@ -145,7 +174,7 @@
                     console.log('Error setting units');
             }
             var drawnItems = drawnItemsService.getDrawnItems();
-            drawnItems.eachLayer(function (layer) {
+            drawnItems.eachLayer(function(layer) {
                 drawnItemsService.updatePopup(layer);
             });
         }
@@ -185,7 +214,7 @@
             var drawnItems = drawnItemsService.getDrawnItems();
             console.log(drawnItems);
             var weightNum;
-            switch(weight) {
+            switch (weight) {
                 case 'Thin':
                     weightNum = 2;
                     break;
@@ -200,8 +229,8 @@
                 stroke: stroke,
                 color: color,
                 weight: weightNum,
-                opacity: strokeOpacity/100,
-                fillOpacity: fillOpacity/100
+                opacity: strokeOpacity / 100,
+                fillOpacity: fillOpacity / 100
             });
         }
     }

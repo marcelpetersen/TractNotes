@@ -1,6 +1,14 @@
 (function() {
     'use strict';
 
+        /**
+     * @memberof TractNotes
+     * @ngdoc controller
+     * @name MapController
+     * @property {object} vm Variable binding inside controller.
+     * @desc This factory assists in dynamically rendering individual track views.
+     */
+
     angular
         .module('TractNotes')
         .controller('MapController', MapController);
@@ -60,7 +68,7 @@
 
             vm.map = L.mapbox.map('map');
 
-        /*    vm.streets = L.tileLayerCordova(streetsTiles, {
+            vm.streets = L.tileLayerCordova(streetsTiles, {
                 'minzoom': 0,
                 'maxzoom': 18,
                 attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -68,7 +76,6 @@
                 name: 'streets',
                 debug: true
             })
-*/
 
 
             vm.satellite = L.tileLayer(satelliteTiles, {
@@ -78,7 +85,7 @@
             })
 
             vm.baseMaps = {
-             //   'Mapbox Streets': vm.streets.addTo(vm.map),
+                'Mapbox Streets': vm.streets.addTo(vm.map),
                 'Mapbox Satellite': vm.satellite
             };
 
@@ -225,7 +232,10 @@
                 });
             }
 
-            $state.go($state.current, $stateParams, {reload: true, inherit: false});
+            $state.go($state.current, $stateParams, {
+                reload: true,
+                inherit: false
+            });
 
             //@todo should move to VM, better yet, move to map factory
             function addLayer(layer) {
@@ -322,10 +332,9 @@
         });
         // @todo remove once track.list.controller is refactored
         $rootScope.$on('RemoveTrack', function(event, data) {
-            if(data.imported) {
+            if (data.imported) {
                 layerControlService.removeLayerInGroup(vm.layercontrol, data);
-            }
-            else { 
+            } else {
                 layerControlService.removeLayerInGroup(vm.layercontrol, data.track);
             }
         });
@@ -345,12 +354,12 @@
             vm.caching = true;
             var tile_list = vm.streets.calculateXYZListFromBounds(vm.map.getBounds(), vm.map.getZoom(), 18)
             vm.streets.downloadXYZList(tile_list, false, function(done, total) {
-                var percent = Math.round((100 * (done + 1))/ total);
+                var percent = Math.round((100 * (done + 1)) / total);
                 console.log(done + " / " + total + " = " + percent + "%"); // @Todo inject this into innerhtml
                 $scope.$apply(function() {
                     vm.cacheMessage = (done + 1) + " / " + total + " = " + percent + "%";
                 });
-                if (percent == 100){
+                if (percent == 100) {
                     vm.caching = false;
                 }
             }, function() {
