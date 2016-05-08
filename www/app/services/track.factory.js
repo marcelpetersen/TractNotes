@@ -18,6 +18,7 @@
 
     trackService.$inject = [];
 
+    /* @ngInject */
     function trackService() {
         var tracks = [];
         var importedTracks = [];
@@ -141,7 +142,7 @@
         }
 
         /**
-         * Accessor for tracks list
+         * Get tracks list
          * @memberof trackService
          * @function getTracks
          * @returns {array} tracks
@@ -151,7 +152,7 @@
         }
 
         /**
-         * Accessor for currentTrack
+         * Get currentTrack
          * @memberof trackService
          * @function getCurrentTrack
          * @returns {object} currentTrack
@@ -161,7 +162,7 @@
         }
 
         /**
-         * Accessor for currentPolyline
+         * Get currentPolyline
          * @memberof trackService
          * @function getCurrentPolyline
          * @returns {L.polyline} currentPolyline
@@ -212,7 +213,7 @@
         }
 
         /**
-         * Accessor for imported tracks list
+         * Get imported tracks list
          * @memberof trackService
          * @function getImportedTracks
          * @returns {array} importedTracks

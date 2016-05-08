@@ -6,7 +6,9 @@
      * @ngdoc factory
      * @name drawnItemsService
      * @param {service} locationService geolocation and track creation factory
-     * @desc The drawnItemsService provides functions for maintaining the feature layer associated with the main Leaflet draw control.
+     * @property {L.FeatureGroup} drawnItems Feature layer containing all items created with draw control.
+     * @property {object} unitsInfo Current units, abbreviation and scale factor
+     * @desc The drawnItemsService provides functions for maintaining the feature layer associated with draw control.
      */
 
     angular
@@ -17,11 +19,6 @@
 
     /* @ngInject */
     function drawnItemsService(locationService) {
-        /**
-         * @memberof settingsService
-         * @name drawControl
-         * @member {object}
-         */
         var drawnItems = new L.FeatureGroup();
         var unitsInfo = {
             units: 'Kilometers',
@@ -44,18 +41,30 @@
 
         ////////////////
 
+        /**
+         * Add a feature to drawnItems layer
+         * @memberof drawnItemsService
+         * @function addToDrawnItems
+         * @param {object} e GeoJSON feature
+         */
         function addToDrawnItems(e) {
             drawnItems.addLayer(e);
         }
 
+        /**
+         * Get drawnItems layer
+         * @memberof drawnItemsService
+         * @function getDrawnItems
+         * @returns {L.FeatureGroup} drawnItems
+         */
         function getDrawnItems() {
             return drawnItems;
         }
 
         /**
-         * Show area/length of each layer on created.
-         * @function
-         * @param {object} layer
+         * Show area or length of each layer on create.
+         * @function showPolygonArea
+         * @param {object} e GeoJSON feature
          */
         function showPolygonArea(e) {
             var type = e.layerType;
@@ -97,11 +106,10 @@
             }
         }
 
-
         /**
-         * Recalculate area/length of each layer on edit.
+         * Recalculate area or length of each layer on edit.
          * @function showPolygonAreaEdited
-         * @param {object} layer
+         * @param {object} e GeoJSON feature
          */
         function showPolygonAreaEdited(e) {
             e.layers.eachLayer(function(layer) {
@@ -111,10 +119,23 @@
             });
         }
 
+        /**
+         * Get unitsInfo
+         * @function getUnitsInfo
+         * @returns {object} unitsInfo
+         */
         function getUnitsInfo() {
             return unitsInfo;
         }
 
+        /**
+         * Set unitsInfo units, abbreviation, decimal places, and scale factor
+         * @function setUnitsInfo
+         * @param {string} units Textual representation of units
+         * @param {string} unitsAbbrv Textual abbreviation of units
+         * @param {int} decimalPlaces Number of decimal places to display
+         * @param {int} scaleFactor Conversion factor to use with L.Geodesy area values
+         */
         function setUnitsInfo(units, unitsAbbrv, decimalPlaces, scaleFactor) {
             unitsInfo.units = units;
             unitsInfo.unitsAbbrv = unitsAbbrv;

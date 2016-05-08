@@ -9,10 +9,10 @@
      * @param {service} drawnItemsService drawn items layer factory
      * @property {int} currentDiskUsage Current disk usage in bytes by cached tiles.
      * @property {object} offlineMode offlineMode Toggle status.
-     * @property {object} drawControl Leaflet control for shape creation and measurement.
-     * @property {object} scaleControl Leaflet control for displaying scale level.
-     * @property {object} searchControl Leaflet control for geocoding.
-     * @property {object} zoomControl Leaflet control for zoom slider.
+     * @property {object} drawControl Draw control initialized to the top left of map
+     * @property {object} scaleControl Scale control initialized to the bottom left of map
+     * @property {object} searchControl Geocoder control initialized to the top right of map
+     * @property {object} zoomControl Zoom slider control initialized to the top left of map
      * @desc The settingsService provides accessor functions for available settings and stores the settings in local storage.
      */
 
@@ -22,6 +22,7 @@
 
     settingsService.$inject = ['$rootScope', 'drawnItemsService'];
 
+    /* @ngInject */
     function settingsService($rootScope, drawnItemsService) {
         var currentDiskUsage = 0;
         var offlineMode = {
@@ -53,10 +54,10 @@
         /**
          * @memberof settingsService
          * @namespace
-         * @property {string} text - Textual representation of control
-         * @property {boolean} checked - Toggle status
-         * @property {string} position - Position on map of control
-         * @property {object} control - Initialized L.Control.scale()
+         * @property {string} text Textual representation of control
+         * @property {boolean} checked Toggle status
+         * @property {string} position Position on map of control
+         * @property {object} control Initialized L.Control.scale()
          */
         var scaleControl = {
             text: 'Scale Control',
@@ -68,10 +69,10 @@
         /**
          * @memberof settingsService
          * @namespace
-         * @property {string} text - Textual representation of control
-         * @property {boolean} checked - Toggle status
-         * @property {string} position - Position on map of control
-         * @property {object} control - Initialized L.Control.geocoder()
+         * @property {string} text Textual representation of control
+         * @property {boolean} checked Toggle status
+         * @property {string} position Position on map of control
+         * @property {object} control Initialized L.Control.geocoder()
          */
         var searchControl = {
             text: 'Search Control',
@@ -83,10 +84,10 @@
         /**
          * @memberof settingsService
          * @namespace
-         * @property {string} text - Textual representation of control
-         * @property {boolean} checked - Toggle status
-         * @property {string} position - Position on map of control
-         * @property {object} control - Initialized L.Control.zoomslider()
+         * @property {string} text Textual representation of control
+         * @property {boolean} checked Toggle status
+         * @property {string} position Position on map of control
+         * @property {object} control Initialized L.Control.zoomslider()
          */
         var zoomControl = {
             text: 'Zoom Slider Control',
@@ -112,7 +113,7 @@
          * Get draw control object
          * @memberof settingsService
          * @function getDrawControl
-         * @returns {L.control} Draw control initialized to the top left of map
+         * @returns {L.control} drawControl
          */
         function getDrawControl() {
             return drawControl;
@@ -122,7 +123,7 @@
          * Get scale control object
          * @memberof settingsService
          * @function getScaleControl
-         * @returns {L.control} Scale control initialized to the bottom left of map
+         * @returns {L.control} scaleControl
          */
         function getScaleControl() {
             return scaleControl;
@@ -132,7 +133,7 @@
          * Get search control object
          * @memberof settingsService
          * @function getSearchControl
-         * @returns {L.control} Geocoder control initialized to the top right of map
+         * @returns {L.control} searchControl
          */
         function getSearchControl() {
             return searchControl;
@@ -142,7 +143,7 @@
          * Get zoom slider object
          * @memberof settingsService
          * @function getZoomControl
-         * @returns {L.control} Zoom slider control initialized to the top left of map
+         * @returns {L.control} zoomControl
          */
         function getZoomControl() {
             return zoomControl;
@@ -152,7 +153,7 @@
          * Get current disk usage by cached tiles
          * @memberof settingsService
          * @function getCurrentDiskUsage
-         * @returns {int} Number of bytes used by cached tiles
+         * @returns {int} currentDiskUsage
          */
         function getCurrentDiskUsage() {
             return currentDiskUsage;
@@ -162,7 +163,7 @@
          * Get the current map status
          * @memberof settingsService
          * @function getOfflineMode
-         * @returns {boolean} offlineMode status
+         * @returns {boolean} offlineMode
          */
         function getOfflineMode() {
             return offlineMode;
@@ -172,7 +173,7 @@
          * Set current disk usage
          * @memberof settingsService
          * @function setCurrentDiskUsage
-         * @param {int} n disk usage
+         * @param {int} n
          */
         function setCurrentDiskUsage(n) {
             currentDiskUsage = n;
