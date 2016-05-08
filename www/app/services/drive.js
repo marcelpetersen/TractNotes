@@ -20,8 +20,10 @@ angular.module('TractNotes')
         'drive': 'v2'
     })
 /**
- * Adapter for exposing gapi as an angular service. This registers a promise that will
- * resolve to gapi after all the APIs have been loaded.
+ * @memberof TractNotes
+ * @ngdoc factory
+ * @name googleApi
+ * @desc Adapter for exposing gapi as an angular service. This registers a promise that will resolve to gapi after all the APIs have been loaded.
  */
 .factory('googleApi', ['$rootScope', '$window', '$q', 'apiKey', 'loadApis', '$ionicPlatform',
     function($rootScope, $window, $q, apiKey, loadApis, $ionicPlatform) {
@@ -49,25 +51,73 @@ angular.module('TractNotes')
         return googleApi.promise;
     }
 ])
+
+    /**
+     * @memberof TractNotes
+     * @ngdoc service
+     * @name Drive
+     * @desc The Drive service handles Google Drive authentication, querying and uploading. 
+     */
     .service('Drive', ['$q', '$cacheFactory', 'googleApi', 'applicationId', '$cordovaOauthUtility',
         function($q, $cacheFactory, googleApi, applicationId, $cordovaOauthUtility) {
 
-            // Only fetch fields that we care about
+            /**
+             * @memberof Drive
+             * @name DEFAULT_FIELDS
+             * @member {string}
+             * @desc Only fetch relevant fields listed.
+             */
             var DEFAULT_FIELDS = 'id,title,mimeType,userPermission,editable,copyable,shared,fileSize';
 
+            /**
+             * @memberof Drive
+             * @name cache
+             * @member {$cacheFactory}
+             */
             var cache = $cacheFactory('files');
 
-            var fileList = []; //list of files with chosen type shown in drive.html
+            /**
+             * @memberof Drive
+             * @name fileList
+             * @member {list}
+             * @desc list of files with chosen type shown in drive.html
+             */
+            var fileList = [];
+
+            /**
+             * @memberof Drive
+             * @name id_token
+             * @member {string}
+             * @desc stores the oauth id_token after authentication
+             */
             var id_token;
 
+            /**
+             * Set fileList
+             * @memberof Drive
+             * @method setFileList
+             * @param {list} list
+             */
             this.setFileList = function(list) {
                 fileList = list;
             };
 
+            /**
+             * Get FileList
+             * @memberof Drive
+             * @method getFileList
+             * @returns {list} fileList
+             */
             this.getFileList = function() {
                 return fileList;
             };
 
+            /**
+             * Get id_token for currently authenticated user.
+             * @memberof Drive
+             * @method getID
+             * @returns {string} id_token
+             */
             this.getID = function() {
                 return id_token;
             };
@@ -77,6 +127,7 @@ angular.module('TractNotes')
              *
              * @param {Object} metadata File metadata
              * @param {String} content File content
+             * @method combineAndStoreResults
              * @return {Object} combined object
              */
             var combineAndStoreResults = function(metadata, content) {
@@ -88,36 +139,12 @@ angular.module('TractNotes')
                 return file;
             };
 
-
-
-
             /**
-             * Check if the current token is valid (exists & not expired.)
-             *
-             * @return {Boolean} True if token still valid (not expired)
-             */
-            /*var isTokenValid = function () {
-         var token = gapi.auth.getToken();
-         return (token && Date.now() < token.expires_at);
-         };*/
-
-
-            /**
-             * Attempt authorization.
-             *
-             * @param {Object} request Auth request
+             * Sign into the Google service
+             * @method authenticate
              * @return {Promise} promise that resolves on completion
              */
-
             this.authenticate = function() {
-                /*
-                 * Sign into the Google service
-                 *
-                 * @param    string clientId
-                 * @param    array appScope
-                 * @param    object options
-                 * @return   promise
-                 */
                 var clientId = "775512295394-hhg8etqdcmoc8i7r5a6m9d42d4ebu63d.apps.googleusercontent.com";
                 var appScope = ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/userinfo.email'];
                 var options = {redirect_uri: 'http://localhost/callback/'}
@@ -171,19 +198,23 @@ angular.module('TractNotes')
             };
 
             /**
-             * Open a form from Drive with InAppBrowser.
+             * Open form in inAppBrowser.
+             * @memberof Drive
+             * @method openForm
+             * @param {file} file
              */
             this.openForm = function(file) {
                 var url = file.url;
                 var browserRef = window.open(url, '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
             };
 
-
+            /**
+             * Print files.
+             * @memberof Drive
+             * @method readFiles
+             * @return {Promise} promise that resolves on completion
+             */
             this.readFiles = function() {
-                /*
-                 * Print files.
-                 **/
-
                 var deffer = $q.defer();
                 var request = gapi.client.drive.files.list({
                     // 'maxResults': 20
@@ -210,11 +241,13 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
+            /**
+             * Get all GPX and KML files from user's Drive.
+             * @memberof Drive
+             * @method readGPXAndKML
+             * @return {Promise} promise that resolves to an object containing a list of files.
+             */
             this.readGPXAndKML = function(fileName) {
-                /*
-                 * Return all GPX and KML files from user's Drive
-                 **/
-
                 var deffer = $q.defer();
                 var request;
                 if(fileName) {
@@ -255,10 +288,13 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
+            /**
+             * Get children of folder.
+             * @memberof Drive
+             * @method readGPXAndKML
+             * @return {Promise} promise that resolves to an object containing the folder's children
+             */
             this.getChildren = function(folder) {
-                /*
-                 * Return children of folder
-                 **/
                 var deffer = $q.defer();
                 var query = "'" + folder.id + "' in parents";
                 var request= gapi.client.drive.files.list({
@@ -289,11 +325,13 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
+            /**
+             * Get list of forms.
+             * @memberof Drive
+             * @method readForms
+             * @return {Promise} promise that resolves to an object containing a list of forms.
+             */
             this.readForms = function() {
-                /*
-                 * Return list of forms
-                 **/
-
                 var deffer = $q.defer();
                 var request = gapi.client.drive.files.list({
                     q: "mimeType='application/vnd.google-apps.form'"
@@ -320,11 +358,13 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
+            /**
+             * Get list of images.
+             * @memberof Drive
+             * @method readImages
+             * @return {Promise} promise that resolves to an object containing a list of images.
+             */
             this.readImages = function() {
-                /*
-                 * Return list of forms
-                 **/
-
                 var deffer = $q.defer();
                 var request = gapi.client.drive.files.list({
                     q: "mimeType contains 'image/'"
@@ -351,12 +391,13 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
-            /**
-             * Load a file from Drive. Fetches both the metadata & content in parallel.
-             *
-             * @param {String} fileID ID of the file to load
-             * @return {Promise} promise that resolves to an object containing the file metadata & content
-             */
+             /**
+              * Load a file from Drive. Fetches both the metadata & content in parallel.
+              * @memberof Drive
+              * @method loadFile
+              * @param {String} fileID ID of the file to load
+              * @return {Promise} promise that resolves to an object containing the file metadata & content.
+              */
             this.loadFile = function(fileId) {
                 var file = cache.get(fileId);
                 if (file) {
@@ -379,29 +420,9 @@ angular.module('TractNotes')
 
             /**
              * Delete a file from Drive. Permanently deletes a file by ID. Skips the trash. The currently authenticated user must own the file.
-             *
-             * @param {String} fileID ID of the file to load
-             * @return {Promise} promise that resolves to an object containing the file metadata & content
-             */
-            this.deleteFile = function(fileId) {
-                var deffer = $q.defer();
-
-                googleApi.then(function(gapi) {
-                    var deleteRequest = gapi.client.drive.files.delete({
-                        fileId: fileId
-                    });
-                    deleteRequest.execute(function(success) {
-                        deffer.resolve(success);
-                    }, function(error) {
-                        deffer.reject("File delete error: " + JSON.stringify(error));
-                    });
-                });
-                return deffer.promise;
-            };
-            /**
-             * Update a file from Drive. Edit a file by ID. The currently authenticated user must own the file.
-             *
-             * @param {String} fileID ID of the file to edit
+             * @memberof Drive
+             * @method deleteFile
+             * @param {String} fileID ID of the file to delete
              * @return {Promise} promise that resolves to an object containing the file metadata & content
              */
             this.deleteFile = function(fileId) {
@@ -421,8 +442,9 @@ angular.module('TractNotes')
             };
 
             /**
-             * Save a file to Drive using the mutlipart upload protocol.
-             *
+             * Save a file to Drive using the multipart upload protocol.
+             * @memberof Drive
+             * @method saveFile
              * @param {Object} metadata File metadata to save
              * @param {String} content File content
              * @return {Promise} promise that resolves to an object containing the current file metadata & content
@@ -465,6 +487,10 @@ angular.module('TractNotes')
 
             /**
              * Create a new folder for the given track in the TractNotes folder
+             * @memberof Drive
+             * @method trackFolder
+             * @param {string} folderName
+             * @param {string} tractNotesID
              * @return {Promise} promise that resolves the Track folder's id
              */
             this.trackFolder = function(folderName, tractNotesID) {
@@ -492,8 +518,9 @@ angular.module('TractNotes')
             };
 
             /**
-             * If the TractNotes folder exists
-             * Otherwise create the folder
+             * Create a TractNotes folder if it does not exist.
+             * @memberof Drive
+             * @method trackNotesFolder
              * @return {Promise} promise that resolves the TractNotes folder's id
              */
             this.tractNotesFolder = function() {
@@ -533,7 +560,7 @@ angular.module('TractNotes')
                 return deffer.promise;
             };
 
-            /**
+            /* (unused)
              * Displays the Drive file picker configured for selecting text files
              *
              * @return {Promise} Promise that resolves with the ID of the selected file
@@ -561,7 +588,7 @@ angular.module('TractNotes')
                 });
             };
 
-            /**
+            /* (unused)
              * Displays the Drive sharing dialog
              *
              * @param {String} id ID of the file to share

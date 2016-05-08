@@ -1,6 +1,13 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberof TractNotes
+     * @ngdoc controller
+     * @name FormController
+     * @desc The FormController handles opening forms from Google Drive.
+     */
+
     angular
         .module('TractNotes')
         .controller('FormController', FormController);
@@ -13,12 +20,24 @@
         vm.title = 'FormController';
         vm.getForms = getForms;
         vm.openForm = openForm;
+
+        /**
+         * @memberof FormController
+         * @name files
+         * @member {list}
+         * @desc This list stores all currently queried Drive files.
+         */
         vm.files = [];
 
         activate();
 
         ////////////////
 
+        /**
+         * Authenticate if not already signed in, then initalize file list with files obtained from Google Drive.
+         * @memberof DriveController
+         * @method activate
+         */
         function activate() {
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
@@ -39,6 +58,11 @@
 
         }
 
+        /**
+         * Obtain all forms from Google Drive and save to file list.
+         * @memberof FormController
+         * @method getForms
+         */
         function getForms() {
             Drive.readForms().then(function(files) {
                 console.log("FileRead: success.");
@@ -48,6 +72,12 @@
             });
         }
 
+        /**
+         * Open a Google Form on click.
+         * @memberof FormController
+         * @method openForm
+         * @param {Object} file
+         */
         function openForm(file) {
             Drive.openForm(file);
         }
