@@ -5,6 +5,7 @@
      * @memberof TractNotes
      * @ngdoc controller
      * @name DriveController
+     * @property {list} files - This list stores all currently queried Drive files.
      * @desc The DriveController handles importing and searching for files as well as navigating folders from Google Drive.
      */
 
@@ -19,12 +20,6 @@
         var vm = this;
         vm.title = 'DriveController';
 
-        /**
-         * @memberof DriveController
-         * @name files
-         * @member {list}
-         * @desc This list stores all currently queried Drive files.
-         */
         vm.files = []; /**@param name, id, url, mimeType, isDirectory **/
         vm.onClick = onClick;
         vm.onSearchChange = onSearchChange;

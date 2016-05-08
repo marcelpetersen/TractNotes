@@ -5,6 +5,7 @@
      * @memberof TractNotes
      * @ngdoc controller
      * @name FormController
+     * @property {list} files - This list stores all currently queried Drive files.
      * @desc The FormController handles opening forms from Google Drive.
      */
 
@@ -20,13 +21,7 @@
         vm.title = 'FormController';
         vm.getForms = getForms;
         vm.openForm = openForm;
-
-        /**
-         * @memberof FormController
-         * @name files
-         * @member {list}
-         * @desc This list stores all currently queried Drive files.
-         */
+        
         vm.files = [];
 
         activate();
