@@ -1,6 +1,14 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberof TractNotes
+     * @ngdoc factory
+     * @name drawnItemsService
+     * @param {service} locationService geolocation and track creation factory
+     * @desc The drawnItemsService provides functions for maintaining the feature layer associated with the main Leaflet draw control.
+     */
+
     angular
         .module('TractNotes')
         .factory('drawnItemsService', drawnItemsService);
@@ -9,6 +17,11 @@
 
     /* @ngInject */
     function drawnItemsService(locationService) {
+        /**
+         * @memberof settingsService
+         * @name drawControl
+         * @member {object}
+         */
         var drawnItems = new L.FeatureGroup();
         var unitsInfo = {
             units: 'Kilometers',
@@ -42,7 +55,6 @@
         /**
          * Show area/length of each layer on created.
          * @function
-         * @author https://stackoverflow.com/questions/31221088/how-to-calculate-the-distance-of-a-polyline-in-leaflet-like-geojson-io
          * @param {object} layer
          */
         function showPolygonArea(e) {
@@ -88,7 +100,7 @@
 
         /**
          * Recalculate area/length of each layer on edit.
-         * @function
+         * @function showPolygonAreaEdited
          * @param {object} layer
          */
         function showPolygonAreaEdited(e) {

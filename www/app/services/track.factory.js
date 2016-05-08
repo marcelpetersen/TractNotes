@@ -5,6 +5,10 @@
      * @memberof TractNotes
      * @ngdoc factory
      * @name trackService
+     * @property {array} tracks List of user created tracks.
+     * @property {array} importedTracks List of user imported tracks.
+     * @property {object} currentTrack Current track available for use.
+     * @property {L.polyline} currentPolyline Current polyline available for us.
      * @desc The trackService provides functions to create, delete, and edit tracks.
      */
 
@@ -14,44 +18,20 @@
 
     trackService.$inject = [];
 
-    /* @ngInject */
     function trackService() {
-        /**
-         * @memberof trackService
-         * @name tracks
-         * @member {list}
-         * @desc This list stores all user created tracks.
-         */
         var tracks = [];
-
-        /**
-         * @memberof trackService
-         * @name importedTracks
-         * @member {list}
-         * @desc This list stores all user created tracks.
-         */
         var importedTracks = [];
 
         /**
          * @memberof trackService
-         * @name currentTrack
-         * @member {object}
-         * @property {currentTrack} The current track available for modification.
-         * @property {currentTrack.track} L.FeatureGroup object
-         * @property {currentTrack.name} Name of track
-         * @property {currentTrack.polyline} Polyline associated with track
-         * @property {currentTrack.markers} List of markers associated with track
-         * @property {currentTrack.metadata} GPX and KML metadata
-         * @property {currentTrack.image} Screenshot of track
+         * @namespace
+         * @property {L.FeatureGroup} track L.FeatureGroup object
+         * @property {string} name Name of track
+         * @property {L.polyline} polyline Polyline associated with track
+         * @property {array} markers List of markers associated with track
+         * @property {object} metadata GPX and KML metadata
          */
         var currentTrack = null;
-
-        /**
-         * @memberof trackService
-         * @name currentPolyline
-         * @member {L.polyline}
-         * @desc The current polyline available for modification.
-         */
         var currentPolyline = null;
 
         var service = {
@@ -164,7 +144,7 @@
          * Accessor for tracks list
          * @memberof trackService
          * @function getTracks
-         * @returns {list} tracks
+         * @returns {array} tracks
          */
         function getTracks() {
             return tracks;
@@ -194,8 +174,8 @@
          * Add a latitude and longitude coordinate to the current polyline
          * @memberof trackService
          * @function addToCurrentPolyline
-         * @param {double} lat
-         * @param {double} long
+         * @param {int} lat
+         * @param {int} long
          */
         function addToCurrentPolyline(lat, long) {
             currentPolyline.addLatLng(L.latLng(lat, long));
@@ -235,7 +215,7 @@
          * Accessor for imported tracks list
          * @memberof trackService
          * @function getImportedTracks
-         * @returns {list} importedTracks
+         * @returns {array} importedTracks
          */
         function getImportedTracks() {
             return importedTracks;
