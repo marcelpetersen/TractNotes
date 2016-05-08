@@ -32,7 +32,11 @@
             }
         }
 
-        /** @todo Upload files to drive */
+        /**
+         * Ensures the user is logged in and calls uploadToDrive.
+         * @memberof TrackViewController
+         * @function exportTrack
+         */
         function exportTrack() {
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
@@ -52,6 +56,11 @@
             }
         }
 
+        /**
+         * Generates GPX and KML files from toExport and uploads them to Google Drive in the TractNotes folder.
+         * @memberof TrackViewController
+         * @function uploadToDrive
+         */
         function uploadToDrive() {
             var toExport = {
                 "type": "FeatureCollection",

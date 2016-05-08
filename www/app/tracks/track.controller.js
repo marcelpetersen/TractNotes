@@ -41,8 +41,11 @@
             });
         }
 
-        // restructured import.html so it now uses 3 buttons
-        // load all gpx/kml files in this function (eventually we should have a search bar that dynamically generates lists based on user input)
+        /**
+         * Ensures the user is logged in and calls getDriveFiles
+         * @memberof TrackController
+         * @function goToDrive
+         */
         function goToDrive() {
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
@@ -70,6 +73,11 @@
             //         });
         }
 
+        /**
+         * Loads all gpx/kml files and routes to drive.html.
+         * @memberof TrackController
+         * @function getDriveFiles
+         */
         function getDriveFiles() {
             Drive.readGPXAndKML(null).then(function(files) {
                 console.log("FileRead: success.");
