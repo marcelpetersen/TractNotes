@@ -5,7 +5,7 @@
      * @memberOf TractNotes
      * @ngdoc controller
      * @name LayerController
-     * @param {service} $rootScope - Highest level scope in Angular
+     * @param {service} $rootScope - Root application model in AngularJS
      * @param {service} layerControlService - Layer control service
      * @param {service} layerViewService - Layer view service
      * @param {service} ctecoDataService - CT ECO data service
@@ -15,7 +15,7 @@
      * @property {object} vm - ViewModel capture variable for *this*
      * @description Manages the Layers view and maintains lists of each type of layer
      */
-    
+
     angular
         .module('TractNotes')
         .controller('LayerController', LayerController);
@@ -73,17 +73,13 @@
             layerDeletePopup.then(function(res) {
                 if(res) {
                     console.log('Layer deletion (' + layer.name + ') confirmed');
-                    if (layer.layerType == 'cteco' || layer.layerType == 'ortho') 
-                    {
+                    if (layer.layerType == 'cteco' || layer.layerType == 'ortho') {
                         ctecoDataService.deleteLayer(layer);
-                    }
-                    else if (layer.layerType == 'wms')
-                    {
+                    } else if (layer.layerType == 'wms') {
                         wmsService.deleteLayer(layer);
                     }
-                    layer.checked = false; 
-                }
-                else {
+                    layer.checked = false;
+                } else {
                     console.log('Layer deletion (' + layer.name + ') cancelled');
                 }
             });
