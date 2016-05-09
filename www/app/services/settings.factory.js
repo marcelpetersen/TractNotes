@@ -7,7 +7,7 @@
      * @name settingsService
      * @param {service} $rootScope Root application model in AngularJS
      * @param {service} drawnItemsService Drawn items layer factory
-     * @property {int} currentDiskUsage Current disk usage in bytes by cached tiles.
+     * @property {number} currentDiskUsage Current disk usage in bytes by cached tiles.
      * @property {object} offlineMode offlineMode Toggle status.
      * @property {object} drawControl Draw control initialized to the top left of map
      * @property {object} scaleControl Scale control initialized to the bottom left of map
@@ -153,7 +153,7 @@
          * Get current disk usage by cached tiles
          * @memberof settingsService
          * @function getCurrentDiskUsage
-         * @returns {int} currentDiskUsage
+         * @returns {number} currentDiskUsage
          */
         function getCurrentDiskUsage() {
             return currentDiskUsage;
@@ -173,7 +173,7 @@
          * Set current disk usage
          * @memberof settingsService
          * @function setCurrentDiskUsage
-         * @param {int} n
+         * @param {number} n
          */
         function setCurrentDiskUsage(n) {
             currentDiskUsage = n;

@@ -35,8 +35,8 @@
      * @property {object} ortho2014 - Contains the Ortho 2014 4Band NAIP image and layers.
      * @property {object} categories - Contains all the CT ECO layer categories, with their associated layers.
      * @property {object} orthoLayers - Contains all the Orthophoto layers.
-     * @property {list} activeCTECOLayers - Contains all the CT ECO layers that have been added to the map.
-     * @property {list} activeOrthoLayers - Contains all the Orthophoto layers that have been added to the map.
+     * @property {array} activeCTECOLayers - Contains all the CT ECO layers that have been added to the map.
+     * @property {array} activeOrthoLayers - Contains all the Orthophoto layers that have been added to the map.
      * @description This factory contains the data for the included CT ECO layers, along with functions to access, add, or delete them.
      */
 

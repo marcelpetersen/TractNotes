@@ -175,8 +175,8 @@
          * Add a latitude and longitude coordinate to the current polyline
          * @memberof trackService
          * @function addToCurrentPolyline
-         * @param {int} lat
-         * @param {int} long
+         * @param {number} lat
+         * @param {number} long
          */
         function addToCurrentPolyline(lat, long) {
             currentPolyline.addLatLng(L.latLng(lat, long));

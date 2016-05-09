@@ -11,7 +11,7 @@
      * @property {object} vm - ViewModel capture variable for *this*
      * @description This controller manages the list of included WMS layers (CT ECO layers, orthophoto layers, and other WMS layers).
      */
-    
+
     angular
         .module('TractNotes')
         .controller('WMSListController', WMSListController);
@@ -78,7 +78,7 @@
          * Deselects group if already selected. Otherwise, selects the group.
          * @memberOf WMSListController
          * @function toggleGroup
-         * @param {list} group - List of layers
+         * @param {array} group - List of layers
          */
         function toggleGroup(group) {
             if (vm.isGroupShown(group)) {
@@ -92,8 +92,8 @@
          * Returns whether the group is shown or not.
          * @memberOf WMSListController
          * @function isGroupShown
-         * @param {list} group - List of layers
-         * @return {boolean} Whether group is shown or not 
+         * @param {array} group - List of layers
+         * @return {boolean} Whether group is shown or not
          */
         function isGroupShown(group) {
             return vm.shownGroup === group;

@@ -133,8 +133,8 @@
          * @function setUnitsInfo
          * @param {string} units Textual representation of units
          * @param {string} unitsAbbrv Textual abbreviation of units
-         * @param {int} decimalPlaces Number of decimal places to display
-         * @param {int} scaleFactor Conversion factor to use with L.Geodesy area values
+         * @param {number} decimalPlaces Number of decimal places to display
+         * @param {number} scaleFactor Conversion factor to use with L.Geodesy area values
          */
         function setUnitsInfo(units, unitsAbbrv, decimalPlaces, scaleFactor) {
             unitsInfo.units = units;

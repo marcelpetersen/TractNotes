@@ -6,7 +6,7 @@
      * @ngdoc factory
      * @name wmsService
      * @param {service} $rootScope - Root application model in AngularJS
-     * @property {list} activeWMSLayers - Contains all the WMS layers that have been added to the map.
+     * @property {array} activeWMSLayers - Contains all the WMS layers that have been added to the map.
      * @property {object} defaultWMSLayers - Contains all the included WMS layers.
      * @description This factory contains the data for the included WMS layers, along with functions to access, add, or delete either them or layers from a URL.
      */

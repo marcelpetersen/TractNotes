@@ -6,7 +6,7 @@
      * @ngdoc controller
      * @name FormController
      * @param {service} Drive Drive API service
-     * @property {list} files - This list stores all currently queried Drive files.
+     * @property {array} files - This list stores all currently queried Drive files.
      * @desc The FormController handles opening forms from Google Drive.
      */
 

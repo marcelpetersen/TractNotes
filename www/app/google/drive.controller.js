@@ -10,7 +10,7 @@
      * @param {service} Drive Drive API service
      * @param {service} $state State service in Angular UI Router
      * @param {service} importService Track import factory
-     * @property {list} files - This list stores all currently queried Drive files.
+     * @property {array} files - This list stores all currently queried Drive files.
      * @desc The DriveController handles importing and searching for files as well as navigating folders from Google Drive.
      */
 
