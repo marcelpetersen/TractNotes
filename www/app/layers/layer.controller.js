@@ -13,7 +13,7 @@
      * @param {service} popupService - Popup creation service
      * @param {service} IonicClosePopupService - Ionic close popup service
      * @property {object} vm - ViewModel capture variable for *this*
-     * @description Manages the Layers view and maintains lists of each type of layer
+     * @description This controller manages the Layers view and maintains lists of each type of layer.
      */
 
     angular
