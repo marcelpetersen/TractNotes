@@ -31,7 +31,7 @@
 
         /**
          * Authenticate if not already signed in, then initalize file list with files obtained from Google Drive.
-         * @memberof DriveController
+         * @memberof FormController
          * @function activate
          */
         function activate() {

@@ -8,7 +8,7 @@
      * @property {array} tracks List of user created tracks.
      * @property {array} importedTracks List of user imported tracks.
      * @property {object} currentTrack Current track available for use.
-     * @property {L.polyline} currentPolyline Current polyline available for us.
+     * @property {L.polyline} currentPolyline Current polyline available for use.
      * @desc The trackService provides functions to create, delete, and edit tracks.
      */
 

@@ -24,11 +24,11 @@
         ////////////////
 
         /**
-         * Remove a layer from a group in layer control
-         * @memberof trackViewService
-         * @function setTrackView
-         * @param {object} layercontrol Map layer control
-         * @param {object} layer Layer to remove
+         * Removes a layer from a group in layer control.
+         * @memberof layerControlService
+         * @function removeLayerInGroup
+         * @param {object} layercontrol - Map layer control
+         * @param {object} layer - Layer to remove
          */
         function removeLayerInGroup(layercontrol, layer) {
         	console.log(layercontrol)

@@ -1,6 +1,19 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberOf TractNotes
+     * @ngdoc controller
+     * @name WMSUrlController
+     * @param {service} wmsService - WMS data service
+     * @param {service} $scope - Application model in AngularJS
+     * @param {service} $rootScope - Root application model in AngularJS
+     * @param {service} $ionicHistory - Ionic view history service
+     * @param {service} popupService - Popup creation service
+     * @property {object} vm - ViewModel capture variable for *this*
+     * @description This controller manages view for adding a WMS layer from a URL.
+     */
+    
     angular
         .module('TractNotes')
         .controller('WMSUrlController', WMSUrlController);
@@ -36,6 +49,11 @@
 
         ////////////////
 
+        /**
+         * Initializes the layer type and opacity, as well as the placeholder text for the form's fields.
+         * @memberOf WMSUrlController
+         * @function activate
+         */
         function activate() {
             vm.input.wmsLayerType = 'Dynamic Map Layer';
             vm.input.layerType = 'wms';
@@ -44,10 +62,21 @@
             vm.placeholderURLText = vm.urlPlaceholder.dynamic;
         }
 
+        /**
+         * Goes back one state from the history.
+         * @memberOf WMSUrlController
+         * @function back
+         */
         function back() {
             $ionicHistory.goBack();
         }
 
+        /**
+         * Adds a WMS layer via wmsService.
+         * @memberOf WMSUrlController
+         * @function setWMSLayer
+         * @param {object} wmsInput - The layer name, type, opacity, and URL of the WMS layer
+         */
         function setWMSLayer(wmsInput) {
             console.log('WMS layer type: ' + wmsInput.wmsLayerType);
             console.log('Control layer type: ' + wmsInput.layerType);
@@ -60,6 +89,12 @@
             }
         }
 
+        /**
+         * Updates the placeholder text in the form based on the selected WMS layer type.
+         * @memberOf WMSUrlController
+         * @function updatePlaceholder
+         * @param {string} wmsLayerType - The currently selected WMS layer type from the drop down
+         */
         function updatePlaceholder(wmsLayerType) {
             switch (wmsLayerType) {
                 case 'Dynamic Map Layer':

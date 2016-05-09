@@ -14,7 +14,7 @@
      * @param {service} trackService Track creation factory
      * @param {service} drawnItemsService Drawn items layer factory
      * @param {service} importService Track import factory
-     * @param {service} ctecoDataService @TODO
+     * @param {service} ctecoDataService - CT ECO layer data factory
      * @param {service} settingsService Setting storage factory
      * @param {service} $ionicModal Ionic service to create a Modal
      * @param {service} popupService Popup storage factory

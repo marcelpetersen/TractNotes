@@ -40,7 +40,7 @@
         ////////////////
 
         /**
-         * Initialize ctecoLayers, orthoLayers, and wmsLayers from ctecoDataService and wmsService
+         * Initializes ctecoLayers, orthoLayers, and wmsLayers from ctecoDataService and wmsService.
          * @memberOf LayerController
          * @function activate
          */
@@ -51,7 +51,7 @@
         }
 
         /**
-         * Sends a layer object to Layer View Service
+         * Sends a layer object to Layer View Service.
          * @memberOf LayerController
          * @function sendLayer
          * @param {object} layer - The layer object to be sent to layer view service
@@ -61,7 +61,7 @@
         }
 
         /**
-         * Prompts user to confirm layer deletion and sends a layer object to CT ECO Data Service or WMS Data Service for deletion
+         * Prompts user to confirm layer deletion and sends a layer object to CT ECO Data Service or WMS Data Service for deletion.
          * @memberOf LayerController
          * @function sendLayerDelete
          * @param {object} layer - The layer object to be deleted

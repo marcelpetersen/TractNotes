@@ -1,6 +1,45 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberOf TractNotes
+     * @ngdoc factory
+     * @name ctecoDataService
+     * @param {service} $rootScope - Root application model in AngularJS
+     * @property {object} bedrockGeology - Contains the Bedrock Geology image and layers.
+     * @property {object} elevationB - Contains the Elevation and Bathymetry image and layers.
+     * @property {object} erosion - Contains the Erosion image and layers.
+     * @property {object} habitat - Contains the Habitat image and layers.
+     * @property {object} hurricaneEvac - Contains the Hurricane Evacuation Zones 2014 image and layers.
+     * @property {object} hurricaneSurge - Contains the Hurricane Surge Inundation image and layers.
+     * @property {object} nwiWetlands - Contains the NWI Wetlands Functions 2010 image and layers.
+     * @property {object} openSpace - Contains the Open Space image and layers.
+     * @property {object} quaternary - Contains the Quaternary Geology image and layers.
+     * @property {object} soils - Contains the Soils image and layers.
+     * @property {object} surficialMats - Contains the Surficial Materials image and layers.
+     * @property {object} waterResource - Contains the Water Resource Management image and layers.
+     * @property {object} watershed - Contains the Watershed image and layers.
+     * @property {object} ortho1990 - Contains the Ortho 1990 image and layers.
+     * @property {object} ortho2004 - Contains the Ortho 2004 image and layers.
+     * @property {object} ortho2004cc - Contains the Ortho 2004 Coast Color image and layers.
+     * @property {object} ortho2004ci - Contains the Ortho 2004 Coast Infrared image and layers.
+     * @property {object} ortho2005ci - Contains the Ortho 2005 Coast Infrared image and layers.
+     * @property {object} ortho2006 - Contains the Ortho 2006 Color NAIP image and layers.
+     * @property {object} ortho2008naip - Contains the Ortho 2008 4Band NAIP image and layers.
+     * @property {object} ortho2008ua - Contains the Ortho 2008 Urban Area Color image and layers.
+     * @property {object} ortho2009 - Contains the Ortho 2009 CRCOG Color image and layers.
+     * @property {object} ortho2010coast - Contains the Ortho 2010 Coast 4Band image and layers.
+     * @property {object} ortho2010naip - Contains the Ortho 2010 4Band NAIP image and layers.
+     * @property {object} ortho2012 - Contains the Ortho 2012 4Band image and layers.
+     * @property {object} ortho2012naip - Contains the Ortho 2012 4Band NAIP image and layers.
+     * @property {object} ortho2014 - Contains the Ortho 2014 4Band NAIP image and layers.
+     * @property {object} categories - Contains all the CT ECO layer categories, with their associated layers.
+     * @property {object} orthoLayers - Contains all the Orthophoto layers.
+     * @property {list} activeCTECOLayers - Contains all the CT ECO layers that have been added to the map.
+     * @property {list} activeOrthoLayers - Contains all the Orthophoto layers that have been added to the map.
+     * @description This factory contains the data for the included CT ECO layers, along with functions to access, add, or delete them.
+     */
+
     angular
         .module('TractNotes')
         .factory('ctecoDataService', ctecoDataService);
@@ -1067,26 +1106,66 @@
 
         ////////////////
 
+        /**
+         * Gets list of all CT ECO layer categories.
+         * @memberOf ctecoDataService
+         * @function getCtecoCategories
+         * @returns {object} List of CT ECO categories
+         */
         function getCtecoCategories() {
             return categories;
         }
 
+        /**
+         * Gets kist of all orthophoto layers.
+         * @memberOf ctecoDataService
+         * @function getOrthoLayers
+         * @returns {object} List of Orthophoto layers
+         */
         function getOrthoLayers() {
             return orthoLayers;
         }
 
+        /**
+         * Gets list of active CT ECO layers.
+         * @memberOf ctecoDataService
+         * @function getActiveCTECOLayers
+         * @returns {object} List of active CT ECO layers
+         */
         function getActiveCTECOLayers() {
             return activeCTECOLayers;
         }
 
+        /**
+         * Gets list of active orthophoto layers.
+         * @memberOf ctecoDataService
+         * @function getActiveOrthoLayers
+         * @returns {object} List of active orthophoto layers
+         */
         function getActiveOrthoLayers() {
             return activeOrthoLayers;
         }
 
+        /**
+         * Gets the opacity of a layer.
+         * @memberOf ctecoDataService
+         * @function getOpacity
+         * @param {object} layer - The layer to get the opacity of
+         * @returns {number} Opacity of layer (0 - 1)
+         */
         function getOpacity(layer) {
             return layer.options.opacity;
         }
 
+        /**
+         * Adds or removes a CT ECO layer.
+         * @memberOf ctecoDataService
+         * @function sendCTECOLayer
+         * @param {object} cteco - The CT ECO layer to add or remove
+         * @fires $rootScope#AddLayer
+         * @fires $rootScope#RemoveLayer
+         * @eventType emit
+         */
         function sendCTECOLayer(cteco) {
             console.log(cteco)
             if (cteco.checked) {
@@ -1101,6 +1180,15 @@
             }
         }
 
+        /**
+         * Adds or removes an orthophoto layer.
+         * @memberOf ctecoDataService
+         * @function sendOrthoLayer
+         * @param {object} ortho - The orthophoto layer to add or remove
+         * @fires $rootScope#AddLayer
+         * @fires $rootScope#RemoveLayer
+         * @eventType emit
+         */
         function sendOrthoLayer(ortho) {
             if (ortho.checked)
             {
@@ -1117,14 +1205,34 @@
             }
         }
 
+        /**
+         * Removes a CT ECO layer from activeCTECOLayers
+         * @memberOf ctecoDataService
+         * @function removeFromActiveCTECO
+         * @param {object} cteco - The CT ECO layer to remove
+         */
         function removeFromActiveCTECO(cteco) {
             activeCTECOLayers.splice(activeCTECOLayers.indexOf(cteco), 1);
         }
 
+        /**
+         * Removes an orthophoto layer from activeOrthoLayers
+         * @memberOf ctecoDataService
+         * @function removeFromActiveOrtho
+         * @param {object} ortho - The orthophoto layer to remove
+         */
         function removeFromActiveOrtho(ortho) {
             activeOrthoLayers.splice(activeOrthoLayers.indexOf(ortho), 1);
         }
 
+        /**
+         * Deletes an added layer.
+         * @memberOf ctecoDataService
+         * @function deleteLayer
+         * @param {object} layer - The layer to delete
+         * @fires $rootScope#RemoveLayer
+         * @eventType emit
+         */
         function deleteLayer(layer) {
             if (layer.layerType == 'cteco')
             {
@@ -1136,7 +1244,5 @@
             }
             $rootScope.$emit('RemoveLayer', layer);
         }
-
-
     }
 })();

@@ -1,6 +1,19 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberOf TractNotes
+     * @ngdoc controller
+     * @name SettingsController
+     * @param {service} settingsService - Settings service
+     * @param {service} $rootScope - Root application model in AngularJS
+     * @param {service} Drive - Drive API service
+     * @param {service} drawnItemsService - Drawn items service
+     * @param {service} trackService - Track service
+     * @property {object} vm - ViewModel capture variable for *this*
+     * @description This controller manages the settings of the app.
+     */
+    
     angular
         .module('TractNotes')
         .controller('SettingsController', SettingsController);
@@ -45,6 +58,11 @@
 
         ////////////////
 
+        /**
+         * Initializes the controls, units, offline mode, and disk usage settings from settingsService and drawnItemsService.
+         * @memberOf SettingsController
+         * @function activate
+         */
         function activate() {
             vm.drawControl = settingsService.getDrawControl();
             vm.scaleControl = settingsService.getScaleControl();
@@ -62,7 +80,7 @@
 
         /**
          * Set current control to add to map
-         * @memberof settingsController
+         * @memberof SettingsController
          * @function setControl
          * @fires $rootScope#AddControl
          * @fires $rootScope#RemoveControl
@@ -86,7 +104,7 @@
 
         /**
          * Toggle between offline and online mode
-         * @memberof settingsController
+         * @memberof SettingsController
          * @function changeMapStatus
          * @fires $rootScope#ChangeMapStatus
          * @eventType emit
@@ -98,7 +116,7 @@
 
         /**
          * Send a cache event
-         * @memberof settingsController
+         * @memberof SettingsController
          * @function cacheCurrentBounds
          * @fires $rootScope#CacheByBounds
          * @eventType emit
@@ -111,7 +129,7 @@
 
         /**
          * Send an empty cache event
-         * @memberof settingsController
+         * @memberof SettingsController
          * @function emptyCurrentCache
          * @fires $rootScope#EmptyCache
          * @eventType emit
@@ -158,6 +176,12 @@
             }
         }
 
+        /**
+         * Updates the units used for measuring drawn items.
+         * @memberOf SettingsController
+         * @function updateUnits
+         * @param {string} units - The units used for drawn item measurement
+         */
         function updateUnits(units) {
             console.log(units);
             switch (units) {
@@ -210,6 +234,16 @@
 
         // @TODO also set these in a factory and get them from the factory in activate so their values are preserved
         // this should also allow new shapes to be drawn with these settings, which currently isn't happening
+        /**
+         * Updates the settings of drawn items.
+         * @memberOf SettingsController
+         * @function updateDraw
+         * @param  {boolean} stroke - Whether the stroke of drawn items is enabled or not
+         * @param  {string} color - The color of drawn items
+         * @param  {number} weight - The width of the stroke of drawn items
+         * @param  {number} strokeOpacity - The opacity of the stroke of drawn items
+         * @param  {number} fillOpacity - The opacity of the fill of drawn items
+         */
         function updateDraw(stroke, color, weight, strokeOpacity, fillOpacity) {
             var drawnItems = drawnItemsService.getDrawnItems();
             console.log(drawnItems);

@@ -1,6 +1,14 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberof TractNotes
+     * @ngdoc factory
+     * @name popupService
+     * @param {service} $ionicPopup - Ionic popup service
+     * @desc This factory creates the popups that are used throughout the app.
+     */
+
     angular
         .module('TractNotes')
         .factory('popupService', popupService);
@@ -19,7 +27,14 @@
 
         ////////////////
 
-        // confirmation popup for track/layer deletion
+        /**
+         * Creates confirmation popup for track or layer deletion.
+         * @memberOf popupService
+         * @function getDeletePopup
+         * @param {object} data - User input (track or layer name)
+         * @param {string} type - Type of object to be deleted (track or layer)
+         * @returns {$ionicPopup} Popup
+         */
         function getDeletePopup(data, type) {
             return $ionicPopup.show({
                 title: 'Confirm ' + type + ' Deletion',
@@ -37,7 +52,13 @@
             });
         }
 
-        // popup for getting URL from user input
+        /**
+         * Creates popup for getting a URL from user input.
+         * @memberOf popupService
+         * @function getUrlPopup
+         * @param {object} scope - Scope for the popup
+         * @returns {$ionicPopup} Popup
+         */
         function getUrlPopup(scope) {
             return $ionicPopup.show({
                 template: '<div ng-show="data.invalidUrl" style="color:red">Invalid URL.</div><input type="url" ng-model="data.urlInput" placeholder="http://www.google.com">',
@@ -64,7 +85,14 @@
             });
         }
 
-        // alert popup for adding wms from url
+        /**
+         * Creates alert popup for adding a WMS layer from a URL.
+         * @memberOf popupService
+         * @function getAlertPopup
+         * @param {string} layerName - Name of layer to be added
+         * @param {string} layerUrl - URL of layer to be added
+         * @returns {$ionicPopup} Alert popup
+         */
         function getAlertPopup(layerName, layerUrl) {
             var templateText = null;
             if (layerName == null && layerUrl == null) {

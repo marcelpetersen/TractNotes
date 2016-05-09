@@ -1,6 +1,16 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberof TractNotes
+     * @ngdoc factory
+     * @name wmsService
+     * @param {service} $rootScope - Root application model in AngularJS
+     * @property {list} activeWMSLayers - Contains all the WMS layers that have been added to the map.
+     * @property {object} defaultWMSLayers - Contains all the included WMS layers.
+     * @description This factory contains the data for the included WMS layers, along with functions to access, add, or delete either them or layers from a URL.
+     */
+    
     angular
         .module('TractNotes')
         .factory('wmsService', wmsService);
@@ -78,6 +88,14 @@
 
         ////////////////
 
+        /**
+         * Sends a user-defined WMS layer from a URL to be imported.
+         * @memberOf wmsService
+         * @function sendUrlLayerData
+         * @param {object} wmsInput - Contains the WMS layer name, type, URL, and opacity
+         * @fires $rootScope#AddLayer
+         * @eventType emit
+         */
         function sendUrlLayerData(wmsInput) {
             console.log(wmsInput);
             var featureLayer, imageLayer, dynamicLayer, tileLayer = null;
@@ -129,10 +147,24 @@
             }
         }
 
+        /**
+         * Removes a WMS layer from activeWMSLayers.
+         * @memberOf wmsService
+         * @function removeFromActiveWMS
+         * @param {object} wms - The WMS layer to be removed
+         */
         function removeFromActiveWMS(wms) {
             activeWMSLayers.splice(activeWMSLayers.indexOf(wms), 1);
         }
 
+        /**
+         * Sends one of the included WMS layers to be added or removed.
+         * @memberOf wmsService
+         * @function sendDefaultLayerData
+         * @param {object} defaultWMS - Contains the WMS layer name, type, URL, and opacity
+         * @fires $rootScope#AddLayer
+         * @eventType emit
+         */
         function sendDefaultLayerData(defaultWMS) {
             var tileLayer = null;
             if (defaultWMS.checked == true) {
@@ -161,14 +193,34 @@
             }
         }
 
+        /**
+         * Gets list of active WMS layers.
+         * @memberOf wmsService
+         * @function getActiveWMSLayers
+         * @returns {object} List of active WMS layers
+         */
         function getActiveWMSLayers() {
             return activeWMSLayers;
         }
 
+        /**
+         * Gets list of included WMS layers.
+         * @memberOf wmsService
+         * @function getDefaultWMSLayers
+         * @returns {object} List of included WMS layers
+         */
         function getDefaultWMSLayers() {
             return defaultWMSLayers;
         }
 
+        /**
+         * Deletes a WMS layer from the map.
+         * @memberOf wmsService
+         * @function deleteLayer
+         * @param {object} wms - The WMS layer to be deleted
+         * @fires $rootScope#RemoveLayer
+         * @eventType emit
+         */
         function deleteLayer(wms) {
             removeFromActiveWMS(wms);
             console.log('Send remove wms event');
