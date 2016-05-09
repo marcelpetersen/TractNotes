@@ -1,6 +1,13 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberOf TractNotes
+     * @ngdoc module
+     * @name TractNotesApp
+     * @desc The main app
+     */
+
     angular
         .module('TractNotes', [
             'ionic',
@@ -10,6 +17,11 @@
         .config(config)
         .run(run);
 
+    /**
+     * Configure application states, html templates, and controllers using controllerAs syntax
+     * @memberof TractNotes
+     * @function config
+     */
     function config($stateProvider, $urlRouterProvider, $ionicConfigProvider, $locationProvider) {
 
         $stateProvider
@@ -157,7 +169,11 @@
         $urlRouterProvider.otherwise('/app/map');
     }
 
-
+    /**
+     * Run the application on ready
+     * @memberof TractNotes
+     * @function run
+     */
     function run($state, $rootScope, $ionicPlatform, $ionicPopup, $ionicHistory) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

@@ -5,7 +5,7 @@
      * @memberof TractNotes
      * @ngdoc factory
      * @name locationService
-     * @param {service} trackService track creation factory
+     * @param {service} trackService Track creation factory
      * @property {object} watchID Variable that stores the current navigator
      * @property {int} zoom Default zoom level
      * @property {object} lastPos The last recorded position

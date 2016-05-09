@@ -5,7 +5,7 @@
      * @memberof TractNotes
      * @ngdoc factory
      * @name drawnItemsService
-     * @param {service} locationService geolocation and track creation factory
+     * @param {service} locationService Geolocation and track creation factory
      * @property {L.FeatureGroup} drawnItems Feature layer containing all items created with draw control.
      * @property {object} unitsInfo Current units, abbreviation and scale factor
      * @desc This factory provides functions for maintaining the feature layer associated with draw control.

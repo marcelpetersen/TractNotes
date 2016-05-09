@@ -1,6 +1,21 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberof TractNotes
+     * @ngdoc controller
+     * @name TrackViewController
+     * @param {service} $scope Application model in AngularJS
+     * @param {service} $rootScope Root application model in AngularJS
+     * @param {service} trackService Track creation factory
+     * @param {service} trackViewService Track view rendering factory
+     * @param {service} $ionicHistory State history service in Ionic
+     * @param {service} Drive Drive API service
+     * @param {service} $state State service in Angular UI Router
+     * @property {object} vm ViewModel capture variable for *this*.
+     * @desc This controller manages individual track views.
+     */
+
     angular
         .module('TractNotes')
         .controller('TrackViewController', TrackViewController);
@@ -25,9 +40,14 @@
 
         ////////////////
 
+        /**
+         * Initialize currentTrack to view to be rendered from trackViewService
+         * @memberof TrackViewController
+         * @function activate
+         */
         function activate() {
             vm.currentTrack = trackViewService.getTrackView();
-            if(vm.currentTrack) {
+            if (vm.currentTrack) {
                 vm.input = angular.copy(vm.currentTrack.metadata);
             }
         }
@@ -41,8 +61,7 @@
             var auth_token = gapi.auth.getToken();
             if (auth_token) {
                 uploadToDrive();
-            }
-            else {
+            } else {
                 Drive.authenticate()
                     .then(function(response) { //authenticate
                             if (response) {
@@ -85,7 +104,7 @@
             console.log(kml);
 
             //Ensure TractNotes Folder exists or create one
-            Drive.tractNotesFolder().then(function(tractNotesID) {                
+            Drive.tractNotesFolder().then(function(tractNotesID) {
                 //Make Folder for Track
                 Drive.trackFolder(vm.currentTrack.metadata.name, tractNotesID).then(function(folderID) {
                     console.log("Track Folder: success.");
@@ -93,10 +112,12 @@
                     /** Export GPX */
                     var name = vm.currentTrack.metadata.name + ".gpx";
                     var metadata = {
-                      'title': name,
-                      'mimeType': 'application/gpx+xml',
-                      'parents':[{"id":folderID}]
-                      // "description": vm.currentTrack.metadata.desc
+                        'title': name,
+                        'mimeType': 'application/gpx+xml',
+                        'parents': [{
+                            "id": folderID
+                        }]
+                        // "description": vm.currentTrack.metadata.desc
                     };
                     Drive.saveFile(metadata, gpx).then(function(files) {
                         console.log("FileSave: success.");
@@ -108,10 +129,12 @@
                     /** Export KML */
                     name = vm.currentTrack.metadata.name + ".kml";
                     metadata = {
-                      'title': name,
-                      'mimeType': 'application/vnd.google-earth.kml+xml',
-                      'parents':[{"id":folderID}]
-                      // "description": vm.currentTrack.metadata.desc
+                        'title': name,
+                        'mimeType': 'application/vnd.google-earth.kml+xml',
+                        'parents': [{
+                            "id": folderID
+                        }]
+                        // "description": vm.currentTrack.metadata.desc
                     };
                     Drive.saveFile(metadata, kml).then(function(files) {
                         console.log("FileSave: success.");
@@ -126,7 +149,6 @@
                 }, function() {
                     console.log("Track Folder: error.");
                 });
-  
             });
         }
 
@@ -135,10 +157,21 @@
             console.log('Export to device not yet implemented.');
         }
 
+        /**
+         * Go back a single state by history
+         * @memberof TrackViewController
+         * @function back
+         */
         function back() {
             $ionicHistory.goBack();
         }
 
+        /**
+         * Update changes in track metadata
+         * Calls vm.back()
+         * @memberof TrackViewController
+         * @function updateMetadata
+         */
         function updateMetadata() {
             trackService.setCurrentTrack(vm.currentTrack);
             trackService.setTrackMetadata(vm.input);
@@ -147,6 +180,12 @@
             vm.back();
         }
 
+        /**
+         * Discard changes in track metadata
+         * Calls vm.back()
+         * @memberof TrackViewController
+         * @function discardChanges
+         */
         function discardChanges() {
             vm.back();
         }

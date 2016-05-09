@@ -5,8 +5,8 @@
      * @memberof TractNotes
      * @ngdoc factory
      * @name settingsService
-     * @param {service} $rootScope top level scope in Angular
-     * @param {service} drawnItemsService drawn items layer factory
+     * @param {service} $rootScope Root application model in AngularJS
+     * @param {service} drawnItemsService Drawn items layer factory
      * @property {int} currentDiskUsage Current disk usage in bytes by cached tiles.
      * @property {object} offlineMode offlineMode Toggle status.
      * @property {object} drawControl Draw control initialized to the top left of map

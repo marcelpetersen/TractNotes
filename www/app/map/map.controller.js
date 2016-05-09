@@ -5,8 +5,23 @@
      * @memberof TractNotes
      * @ngdoc controller
      * @name MapController
+     * @param {service} $state State service in Angular UI Router
+     * @param {service} $rootScope Root application model in AngularJS
+     * @param {service} $scope Application model in AngularJS
+     * @param {service} $stateParams Access state parameters with Angular UI Router
+     * @param {service} layerControlService Delete a layer from layer control group
+     * @param {service} locationService Geolocation and track creation factory
+     * @param {service} trackService Track creation factory
+     * @param {service} drawnItemsService Drawn items layer factory
+     * @param {service} importService Track import factory
+     * @param {service} ctecoDataService @TODO
+     * @param {service} settingsService Setting storage factory
+     * @param {service} $ionicModal Ionic service to create a Modal
+     * @param {service} popupService Popup storage factory
+     * @param {service} IonicClosePopupService Service to close popups by tapping outside popup
+     * @param {service} Drive Drive API service
      * @property {object} vm ViewModel capture variable for *this*.
-     * @desc This factory assists in dynamically rendering individual track views.
+     * @desc This controller renders the main map view and marker and track modals.
      */
 
     angular

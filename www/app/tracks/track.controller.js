@@ -1,6 +1,23 @@
 (function() {
     'use strict';
 
+    /**
+     * @memberof TractNotes
+     * @ngdoc controller
+     * @name TrackController
+     * @param {service} $scope Application model in AngularJS
+     * @param {service} $rootScope Root application model in AngularJS
+     * @param {service} importService Track import factory
+     * @param {service} trackService Track creation factory
+     * @param {service} trackViewService Track view rendering factory
+     * @param {service} Drive Drive API service
+     * @param {service} popupService Popup storage factory
+     * @param {service} IonicClosePopupService Service to close popups by tapping outside popup
+     * @param {service} $state State service in Angular UI Router
+     * @property {object} vm ViewModel capture variable for *this*.
+     * @desc This controller manages the tracks view and maintains a list of tracks.
+     */
+
     angular
         .module('TractNotes')
         .controller('TrackController', TrackController);
@@ -27,13 +44,23 @@
 
         ////////////////
 
+        /**
+         * Initialize tracks and importedTracks from trackService
+         * @memberof TrackController
+         * @function activate
+         */
         function activate() {
             vm.tracks = trackService.getTracks();
             vm.importedTracks = trackService.getImportedTracks();
         }
 
-        // todo : event -> service, name -> importfromdevice
-        // get text contents of file with cordova file thing, then use that
+        /**
+         * Fire an import from device event on user selected file
+         * @memberof TrackController
+         * @function importFromDevice
+         * @fires $rootScope#Import
+         * @eventType emit
+         */
         function importFromDevice() {
             fileChooser.open(function(uri) {
                 console.log(uri);
@@ -88,17 +115,38 @@
             });
         }
 
-        // todo event to service
+        /**
+         * Fire an import from device event on import from url
+         * @memberof TrackController
+         * @function importFromURL
+         * @fires $rootScope#Import
+         * @eventType emit
+         * @param {string} url URL to import
+         */
         function importFromURL(url) {
             console.log('URL: ' + url);
             importService.setImportURL(url);
             $rootScope.$emit('Import', url);
         }
 
+        /**
+         * Set track view to be rendered
+         * @memberof TrackController
+         * @function sendTrack
+         * @param {object} track Track to render
+         */
         function sendTrack(track) {
             trackViewService.setTrackView(track);
         }
 
+        /**
+         * Fire a track remove event
+         * @memberof TrackController
+         * @function sendTrackDelete
+         * @fires $rootScope#RemoveTrack
+         * @eventType emit
+         * @param {object} track Track to delete
+         */
         // @todo refactor to modify layer control in service, remove listener in map controller
         function sendTrackDelete(track) {
             // confirmation popup for track deletion
@@ -116,6 +164,11 @@
             IonicClosePopupService.register(trackDeletePopup);
         }
 
+        /**
+         * Bind URL input to ViewModel
+         * @memberof TrackController
+         * @function getURLInput
+         */
         function getUrlInput() {
             // gets URL input from user and passes it to vm.importFromURL
             $scope.data = {};

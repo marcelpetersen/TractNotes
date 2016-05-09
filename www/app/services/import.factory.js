@@ -5,7 +5,7 @@
      * @memberof TractNotes
      * @ngdoc factory
      * @name importService
-     * @param {service} $http Angular service
+     * @param {service} $http Angular service to perform XMLHttpRequests
      * @property {string} importURL URL of current layer to import.
      * @property {string} importURI Device path of current layer to import.
      * @desc This factory contains functions to import KML or GPX files from device or a URL.
