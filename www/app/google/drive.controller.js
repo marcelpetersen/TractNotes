@@ -5,6 +5,11 @@
      * @memberof TractNotes
      * @ngdoc controller
      * @name DriveController
+     * @param {service} $rootScope Root application model in AngularJS
+     * @param {service} $scope Application model in AngularJS
+     * @param {service} Drive Drive API service
+     * @param {service} $state State service in Angular UI Router
+     * @param {service} importService Track import factory
      * @property {list} files - This list stores all currently queried Drive files.
      * @desc The DriveController handles importing and searching for files as well as navigating folders from Google Drive.
      */
