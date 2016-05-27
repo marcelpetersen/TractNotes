@@ -1,3 +1,5 @@
+** Development will resume sometime this summer **
+
 # TractNotes
 A land trust property monitoring mobile application.
 
