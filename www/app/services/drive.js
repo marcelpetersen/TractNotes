@@ -79,7 +79,7 @@ angular.module('TractNotes')
         /**
          * @memberof Drive
          * @name fileList
-         * @member {array}
+         * @member {list}
          * @desc list of files with chosen type shown in drive.html
          */
         var fileList = [];
@@ -96,7 +96,7 @@ angular.module('TractNotes')
          * Set fileList
          * @memberof Drive
          * @function setFileList
-         * @param {array} list
+         * @param {list} list
          */
         this.setFileList = function(list) {
             fileList = list;
@@ -106,7 +106,7 @@ angular.module('TractNotes')
          * Get FileList
          * @memberof Drive
          * @function getFileList
-         * @returns {array} fileList
+         * @returns {list} fileList
          */
         this.getFileList = function() {
             return fileList;
