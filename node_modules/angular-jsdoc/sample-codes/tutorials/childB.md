@@ -1,3 +1,0 @@
-child B
-
-test
