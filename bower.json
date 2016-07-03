@@ -5,11 +5,19 @@
     "ionic": "driftyco/ionic-bower#1.2.4"
   },
   "dependencies": {
-    "leaflet-control-geocoder": "^1.5.1",
-    "leaflet-groupedlayercontrol": "^0.4.0",
+    "esri-leaflet": "^2.0.0",
+    "L.TileLayer.Cordova": "git://github.com/gregallensworth/L.TileLayer.Cordova.git",
     "Leaflet.draw": "git://github.com/water42/Leaflet.draw.git#1.0.0",
+    "Leaflet.MeasureControl": "git://github.com/makinacorpus/Leaflet.MeasureControl.git/#gh-pages",
     "Leaflet.zoomslider": "git://github.com/kartena/Leaflet.zoomslider.git#^0.7.0",
-    "ng-cordova-oauth": "^0.2.5"
+    "leaflet-control-geocoder": "^1.5.1",
+    "leaflet-geodesy": "^0.2.1",
+    "leaflet-groupedlayercontrol": "^0.4.0",
+    "leaflet-omnivore": "^0.3.2",
+    "mapbox.js": "^2.4.0",
+    "ng-cordova-oauth": "^0.2.5",
+    "togpx": "git://github.com/tyrasd/togpx.git#^1.4.0",
+    "tokml": "git://github.com/mapbox/tokml.git#^0.4.0"
   },
   "homepage": "https://github.com/water42/TractNotes",
   "description": "A land trust property monitoring application.",
@@ -22,5 +30,8 @@
     "www/lib",
     "test",
     "tests"
+  ],
+  "authors": [
+    "water42 <sdemurjian@gmail.com>"
   ]
 }
