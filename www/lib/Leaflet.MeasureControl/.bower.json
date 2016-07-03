@@ -1,0 +1,14 @@
+{
+  "name": "Leaflet.MeasureControl",
+  "homepage": "https://github.com/makinacorpus/Leaflet.MeasureControl",
+  "_release": "2dbcc45e3e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "gh-pages",
+    "commit": "2dbcc45e3edb62f2700fe1480fbbefb35f02baf3"
+  },
+  "_source": "git://github.com/makinacorpus/Leaflet.MeasureControl.git",
+  "_target": "gh-pages",
+  "_originalSource": "git://github.com/makinacorpus/Leaflet.MeasureControl.git/",
+  "_direct": true
+}

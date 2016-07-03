@@ -6,9 +6,10 @@
 
 # Ionic
 build
-hooks
 platforms
 plugins
+# TODO Uncomment www/lib once all libraries are updated
+# www/lib
 
 # hooks
 

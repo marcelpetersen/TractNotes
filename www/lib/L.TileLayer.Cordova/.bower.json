@@ -1,0 +1,14 @@
+{
+  "name": "L.TileLayer.Cordova",
+  "homepage": "https://github.com/gregallensworth/L.TileLayer.Cordova",
+  "_release": "570ae8c0ad",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "570ae8c0ad66ae68309f46910c15967702d2797d"
+  },
+  "_source": "git://github.com/gregallensworth/L.TileLayer.Cordova.git",
+  "_target": "*",
+  "_originalSource": "git://github.com/gregallensworth/L.TileLayer.Cordova.git",
+  "_direct": true
+}
